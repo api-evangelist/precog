@@ -1,0 +1,80 @@
+openapi: 3.1.0
+info:
+  title: http-api Admin Loads API
+  version: '1.0'
+  summary: The Precog admin HTTP REST API.
+  description: The Precog admin HTTP REST API.
+  contact:
+    url: https://precog.com
+    email: support@precog.com
+servers:
+- url: http://localhost:30000
+security:
+- BearerAuth: []
+tags:
+- name: Loads
+paths:
+  /loads/{load-id}/metrics:
+    parameters:
+    - schema:
+        type: string
+      name: load-id
+      in: path
+      required: true
+    get:
+      summary: Get per-dataset, per-table metrics for a specific load
+      tags:
+      - Loads
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/load-metrics-response'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Load not found
+      description: Returns metrics for a specific pipeline load, grouped by dataset and table.
+components:
+  schemas:
+    load-metrics-response:
+      type: object
+      properties:
+        metrics:
+          type: object
+          description: Per-dataset metrics keyed by dataset ID
+          additionalProperties:
+            $ref: '#/components/schemas/dataset-load-metrics'
+        total:
+          $ref: '#/components/schemas/simple-pipeline-metric'
+      required:
+      - metrics
+      - total
+    dataset-load-metrics:
+      type: object
+      properties:
+        metrics:
+          type: object
+          description: Per-table metrics keyed by table name
+          additionalProperties:
+            $ref: '#/components/schemas/simple-pipeline-metric'
+        total:
+          $ref: '#/components/schemas/simple-pipeline-metric'
+      required:
+      - metrics
+      - total
+    simple-pipeline-metric:
+      type: object
+      properties:
+        rows:
+          type: number
+          readOnly: true
+        bytes:
+          type: number
+          readOnly: true
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

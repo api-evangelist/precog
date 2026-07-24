@@ -1,0 +1,39 @@
+openapi: 3.1.0
+info:
+  title: http-api Admin Datasets API
+  version: '1.0'
+  summary: The Precog admin HTTP REST API.
+  description: The Precog admin HTTP REST API.
+  contact:
+    url: https://precog.com
+    email: support@precog.com
+servers:
+- url: http://localhost:30000
+security:
+- BearerAuth: []
+tags:
+- name: Datasets
+paths:
+  /datasets/{dataset-id}/abort-loading:
+    parameters:
+    - name: dataset-id
+      schema:
+        type: string
+      in: path
+      required: true
+    post:
+      summary: Abort the loading of the given dataset in all loads
+      tags:
+      - Datasets
+      responses:
+        '202':
+          description: The request to abort the dataset has been accepted. Use pipeline and pipeline load dataset status to monitor the progress of this dataset in loads/pipelines which this dataset is a part of.
+        '404':
+          description: The provided dataset does not exist in the system
+      description: Abort the loading of the given dataset in all loads
+      operationId: abort-loading-for-dataset
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

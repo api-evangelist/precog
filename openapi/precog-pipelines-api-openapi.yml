@@ -1,0 +1,1704 @@
+openapi: 3.1.0
+info:
+  title: http-api Admin Pipelines API
+  version: '1.0'
+  summary: The Precog admin HTTP REST API.
+  description: The Precog admin HTTP REST API.
+  contact:
+    url: https://precog.com
+    email: support@precog.com
+servers:
+- url: http://localhost:30000
+security:
+- BearerAuth: []
+tags:
+- name: Pipelines
+paths:
+  /pipelines/{pipeline-id}/metadata:
+    parameters:
+    - schema:
+        type: string
+      name: pipeline-id
+      in: path
+      required: true
+    get:
+      summary: Get metadata related to this pipeline
+      tags:
+      - Pipelines
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pipeline-metadata'
+              examples:
+                example-1:
+                  value:
+                    metadata:
+                    - datasetId: 133425/example
+                      tables:
+                      - tableName: example
+                        primaryKey:
+                        - id
+                        columns:
+                        - columnName: id
+                          columnType: string
+                          maxObservedStringLength: 42
+                        - columnName: foo
+                          columnType: decimal
+                      - tableName: example_items
+                        primaryKey:
+                        - id_example
+                        - array_index
+                        foreignKeys:
+                          example:
+                          - local:
+                            - id_example
+                          - reference:
+                            - id
+                        columns:
+                        - columnName: id_example
+                          columnType: string
+                          maxObservedStringLength: 42
+                        - columnName: array_index
+                          columnType: long
+                        - columnName: bar
+                          columnType: boolean
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found.
+      operationId: get-pipelines-pipeline-id-metadata
+      description: Get metadata for a particular particular pipeline.
+  /pipelines/{pipeline-id}/dataset-properties:
+    parameters:
+    - schema:
+        type: string
+      name: pipeline-id
+      in: path
+      required: true
+    get:
+      summary: Get dataset properties related to the in-band datasets present in this pipeline
+      tags:
+      - Pipelines
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pipeline-datasets-properties'
+              examples:
+                example-1:
+                  value:
+                    pipelineId: a864cb9a-7be2-11f0-aa5e-2a65c4d820c0
+                    datasetProperties:
+                      70c7b714-7be3-11f0-a48c-2a65c4d820c0:/Question Bank:
+                        primaryKey:
+                          type: strict
+                          components:
+                          - $.data.results[:_].questionId
+                          - $.data.results[:_].questionBankId
+                      70c7b714-7be3-11f0-a48c-2a65c4d820c0:/Survey Categories:
+                        primaryKey:
+                          type: strict
+                          components:
+                          - $.data.results[:_].surveyCategoryId
+                          - $.data.results[:_].surveyId
+                      70c7b714-7be3-11f0-a48c-2a65c4d820c0:/Survey Templates:
+                        primaryKey:
+                          type: strict
+                          components:
+                          - $.data.results[:_].surveyTemplateId
+                          - $.data.results[:_].surveyId
+                          - $.data.results[:_].id
+                      70c7b714-7be3-11f0-a48c-2a65c4d820c0:/Surveys:
+                        primaryKey:
+                          type: strict
+                          components:
+                          - $.data.id
+        '422':
+          description: Returned when the pipeline does not have any in-band datasets
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found.
+      operationId: get-pipeline-id-dataset-properties
+      description: Get dataset properties for datasets in a particular pipeline.
+  /pipelines:
+    get:
+      summary: Get pipelines
+      tags:
+      - Pipelines
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/pipeline-listing'
+              examples:
+                example-1:
+                  value:
+                  - id: '1'
+                    name: Ecommerce
+                  - id: '2'
+                    name: Internal
+                  - id: '3'
+                    name: Staging environment
+                  - id: '4'
+                    name: Test environment
+        '401':
+          description: Unauthorized
+      operationId: get-pipelines
+      description: Get all pipelines.
+    post:
+      summary: Create pipeline
+      tags:
+      - Pipelines
+      operationId: post-pipelines
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/id'
+        '400':
+          description: 'Bad Request. Includes the case where `vectorize: true` is set on a pipeline whose destination does not support the Snowflake VECTOR column type (LD15) — only Snowflake-family destinations are vector-capable.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '401':
+          description: Unauthorized
+        '422':
+          description: Semantic error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+      description: Create a new pipeline.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pipeline'
+        description: ''
+  /pipelines/status:
+    parameters: []
+    get:
+      summary: Get the pipeline status
+      tags:
+      - Pipelines
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/pipeline-status'
+              examples:
+                example-1:
+                  value:
+                  - pipelineId: '1'
+                    status:
+                      at: 1632428787341
+                      state: loading
+                  - pipelineId: '3'
+                    status:
+                      at: 1632128787341
+                      state: succeeded
+                  - pipelineId: '4'
+                    status:
+                      at: 1631251787341
+                      state: failed
+        '401':
+          description: Unauthorized
+      operationId: get-pipelines-status
+      description: Get the status of all the pipelines.
+  /pipelines/{pipeline-id}:
+    parameters:
+    - schema:
+        type: string
+      name: pipeline-id
+      in: path
+      required: true
+    get:
+      summary: Get a pipeline
+      tags:
+      - Pipelines
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pipeline'
+              examples:
+                example:
+                  value:
+                    id: '1'
+                    name: Ecommerce
+                    destinationId: '1'
+                    columnNameStrategy:
+                      tableNamePostfix: true
+                    datasetIds:
+                    - source-1:path/to/dataset
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found.
+      operationId: get-pipelines-pipeline-id
+      description: Get a particular pipeline.
+    delete:
+      summary: ''
+      tags:
+      - Pipelines
+      operationId: delete-pipelines-pipeline-id
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+      description: Deletes the given pipeline
+  /pipelines/{pipeline-id}/metrics:
+    parameters:
+    - schema:
+        type: string
+      name: pipeline-id
+      in: path
+      required: true
+    get:
+      summary: Get the pipeline metrics
+      tags:
+      - Pipelines
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aggregated-pipeline-metrics'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found.
+      description: Get the metrics from a pipeline
+  /pipelines/{pipeline-id}/datasets:
+    parameters:
+    - schema:
+        type: string
+      name: pipeline-id
+      in: path
+      required: true
+    get:
+      summary: Get the pipeline datasets
+      tags:
+      - Pipelines
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/dataset'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found.
+      operationId: get-pipelines-pipeline-id-datasets
+      description: Get the datasets in the provided pipeline.
+    patch:
+      summary: ''
+      tags:
+      - Pipelines
+      operationId: patch-pipelines-pipeline-id-datasets
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found. <or> Datasets not found.
+        '422':
+          description: Semantic error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+      description: Add (or remove) datasets to (or from) the provided pipeline.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dataset-update'
+            examples:
+              example-1:
+                value:
+                  action: add
+                  datasetIds:
+                  - string
+  /pipelines/{pipeline-id}/details:
+    parameters:
+    - schema:
+        type: string
+      name: pipeline-id
+      in: path
+      required: true
+    get:
+      summary: Get pipeline details
+      tags:
+      - Pipelines
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pipeline-details'
+              examples:
+                example-1:
+                  value:
+                    datasets:
+                    - dataset:
+                      - id: '1'
+                        name: Abandoned checkouts
+                      - id: '2'
+                        name: Application charges
+                      - id: '3'
+                        name: Application credits
+                      - id: '4'
+                        name: Custom collections
+                      - id: '5'
+                        name: Customer saved searches
+                      - id: '6'
+                        name: Customers
+                      - id: '7'
+                        name: Locations
+                      - id: '8'
+                        name: Orders
+                      - id: '9'
+                        name: Price rules
+                      - id: '10'
+                        name: Products
+                      - id: '11'
+                        name: Recurring application charges
+                      source:
+                        id: '1'
+                        kind:
+                          id: '12'
+                          name: Shopify
+                        name: 'Shop name: MyShop'
+                    destination:
+                      id: '1'
+                      kind:
+                        id: '14'
+                        name: Snowflake
+                      name: 'Account: Precog, Database: Raw, Region: west-us-2.azure'
+                    pipeline:
+                      id: '1'
+                      name: Ecommerce
+                      columnNameStrategy:
+                        tableNamePostfix: false
+                    schedule:
+                    - '*/5 * * * *'
+                    notifications:
+                    - josie@email.com
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found
+      operationId: get-pipelines-pipeline-id-details
+      description: Get all the details for the provided pipeline.
+  /pipelines/{pipeline-id}/status:
+    parameters:
+    - schema:
+        type: string
+      name: pipeline-id
+      in: path
+      required: true
+    get:
+      summary: Get the pipeline datasets status
+      tags:
+      - Pipelines
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pipeline-dataset-status'
+              examples:
+                example-1:
+                  value:
+                    pipelineId: '1'
+                    status:
+                      state: succeeded
+                      at: 0
+                    datasets:
+                    - id: string
+                      outOfBand:
+                        state: staging
+                        at: 0
+                      inBand:
+                        state: staging
+                        at: 0
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found
+      operationId: get-pipelines-pipeline-id-status
+      description: Get the status of the provided pipeline.
+  /pipelines/{pipeline-id}/loads:
+    parameters:
+    - schema:
+        type: string
+      name: pipeline-id
+      in: path
+      required: true
+    post:
+      summary: Start a pipeline load
+      tags:
+      - Pipelines
+      operationId: post-pipelines-pipeline-id-loads
+      responses:
+        '202':
+          description: Accepted - there are in-band datasets and a load has been scheduled to start
+        '204':
+          description: No Content - there are no in-band datasets
+        '400':
+          description: Bad Request - there are no datasets in pipeline
+        '401':
+          description: Unauthorized
+        '402':
+          description: Payment Required - trial period has expired and there is no active subscription
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    required:
+                    - type
+                    - details
+                    properties:
+                      type:
+                        type: string
+                        minLength: 1
+                      details:
+                        type: string
+                  url:
+                    type: string
+                required:
+                - error
+        '404':
+          description: Pipeline not found.
+        '502':
+          description: Problematic Request to External Server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+      description: Start a load for this pipeline.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                returnUrl:
+                  type: string
+        description: ''
+  /pipelines/{pipeline-id}/rename:
+    parameters:
+    - schema:
+        type: string
+      name: pipeline-id
+      in: path
+      required: true
+    put:
+      summary: Rename a pipelne.
+      tags:
+      - Pipelines
+      operationId: put-pipelines-pipeline-id-rename
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found
+        '422':
+          description: Semantic error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+      description: Rename a pipeline.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pipeline-name'
+  /pipelines/{pipeline-id}/pii-config:
+    parameters:
+    - schema:
+        type: string
+      name: pipeline-id
+      in: path
+      required: true
+    put:
+      summary: Set PII handling policy for a pipeline.
+      tags:
+      - Pipelines
+      operationId: put-pipelines-pipeline-id-pii-config
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found
+      description: Set the PII handling policy for a pipeline. The policy controls how detected PII columns are transformed at load time.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - passthrough
+                  - hash
+                  - omit
+                  - nullify
+                  description: The PII handling policy to apply.
+              required:
+              - type
+  /pipelines/{pipeline-id}/vectorize:
+    parameters:
+    - schema:
+        type: string
+      name: pipeline-id
+      in: path
+      required: true
+    put:
+      summary: Set the vectorization opt-in flag for a pipeline.
+      tags:
+      - Pipelines
+      operationId: put-pipelines-pipeline-id-vectorize
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Destination does not support vectors. Returned when `vectorize` is `true` and the pipeline's destination is not vector-capable (LD15 — Snowflake-family destinations only).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found
+      description: "Set the vectorization opt-in flag for a pipeline (vectorization-spec-v4 / LD13).\nSemantics:\n  - `null` or omitted, or `false` → the pipeline does not vectorize;\n    its loads are byte-identical to a pipeline created before this\n    feature existed.\n  - `true` → subsequent loads of datasets in this pipeline produce\n    per-row embeddings (IBM Granite-30M, 384-dim) landed in\n    `<destination_database>.<pipeline-name>.PRETEXT` on the\n    pipeline's destination, in addition to the normal writer output.\n\nFlipping the flag is **not retroactive**. See the `vectorize` field on the `pipeline` schema for the full semantics.\nSetting `true` is only valid on Snowflake-family destinations (LD15); attempts on any other destination are rejected with 400."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vectorize:
+                  type: boolean
+                  nullable: true
+                  description: 'The new value of the vectorize flag. `null` and `false` are equivalent: the pipeline does not vectorize.'
+                sentimentAnalysis:
+                  type: boolean
+                  nullable: true
+                  description: Enables sentiment analysis on the pipeline. Requires vectorization to also be on, otherwise a 400 will be returned.
+              required:
+              - vectorize
+  /pipelines/{pipeline-id}/encode:
+    parameters:
+    - schema:
+        type: string
+      name: pipeline-id
+      in: path
+      required: true
+    post:
+      summary: Embed query text against the pipeline's vector model.
+      tags:
+      - Pipelines
+      operationId: post-pipelines-pipeline-id-encode
+      description: Embed a piece of text using the pipeline's vector model. The returned vector is directly comparable with those stored in the pipeline's PRETEXT destination table, making it suitable for cosine-similarity queries against the corpus.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The query text to embed. Must be non-empty.
+              required:
+              - text
+      responses:
+        '200':
+          description: Embedding produced successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vec:
+                    type: array
+                    items:
+                      type: number
+                    description: The embedding vector for the supplied text.
+                  dim:
+                    type: integer
+                    description: Dimensionality of the returned vector.
+                  model_id:
+                    type: string
+                    description: Identifier of the embedding model used to produce this vector.
+                required:
+                - vec
+                - dim
+                - model_id
+        '400':
+          description: Empty or whitespace-only text.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found
+  /pipelines/{pipeline-id}/semantic-contexts:
+    parameters:
+    - schema:
+        type: string
+      name: pipeline-id
+      in: path
+      required: true
+    get:
+      operationId: get-pipelines-pipeline-id-semantic-contexts
+      summary: Get existing semantic contexts of this pipeline
+      responses:
+        '200':
+          description: List of semantic contexts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/semantic-context'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found
+        '422':
+          description: Semantic error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+      tags:
+      - Pipelines
+    post:
+      operationId: post-pipelines-pipeline-id-semantic-contexts
+      summary: Add a semantic context to the pipeline
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/semantic-context-request'
+      responses:
+        '201':
+          description: Semantic context created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  semanticContextId:
+                    type: string
+                    description: ID generated for the newly created semantic context
+                    minLength: 1
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found
+        '422':
+          description: Semantic error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+      tags:
+      - Pipelines
+  /pipelines/{pipeline-id}/semantic-contexts/{semantic-context-id}:
+    parameters:
+    - schema:
+        type: string
+      name: pipeline-id
+      in: path
+      required: true
+    - schema:
+        type: string
+      name: semantic-context-id
+      in: path
+      required: true
+    get:
+      operationId: get-pipelines-pipeline-id-semantic-contexts-semantic-context-id
+      summary: Get the details of the particular semantic context
+      responses:
+        '200':
+          description: Semantic context retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/semantic-context'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Semantic context with this pipeline ID/semantic context ID combination not found
+        '422':
+          description: Semantic error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+      tags:
+      - Pipelines
+    put:
+      operationId: put-pipelines-pipeline-id-semantic-contexts-semantic-context-id
+      summary: Replace details of a semantic context
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/semantic-context-request'
+      responses:
+        '200':
+          description: Semantic context updated
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Semantic context with this pipeline ID/semantic context ID combination not found
+        '422':
+          description: Semantic error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+      tags:
+      - Pipelines
+    delete:
+      operationId: delete-pipelines-pipeline-id-semantic-contexts-semantic-context-id
+      summary: Delete the semantic context
+      responses:
+        '200':
+          description: Semantic context deleted
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Semantic context with this pipeline ID/semantic context ID combination not found
+        '422':
+          description: Semantic error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+      tags:
+      - Pipelines
+  /pipelines/{pipeline-id}/schedule:
+    parameters:
+    - schema:
+        type: string
+      name: pipeline-id
+      in: path
+      required: true
+    put:
+      summary: Schedule a pipeline.
+      tags:
+      - Pipelines
+      operationId: put-pipelines-pipeline-id-schedule
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found
+        '422':
+          description: Semantic error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+      description: Schedule a pipeline.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pipeline-schedule'
+        description: A list of cron expressions. An empty list means that the pipeline will not be loaded on a schedule.
+    get:
+      summary: Get the pipeline schedule
+      tags:
+      - Pipelines
+      operationId: get-pipelines-pipeline-id-schedule
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pipeline-schedule'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found
+      description: Get the pipeline schedule.
+  /pipelines/{pipeline-id}/notification:
+    parameters:
+    - schema:
+        type: string
+      name: pipeline-id
+      in: path
+      required: true
+    put:
+      summary: Set email addresses to be notified on pipeline events.
+      tags:
+      - Pipelines
+      operationId: put-pipelines-pipeline-id-notification
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found
+        '422':
+          description: Semantic error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+      description: Set email addresses to be notified on pipeline events.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pipeline-notification'
+        description: A list of email addresses. An empty list means that email notifications are disabled for the pipeline.
+    get:
+      summary: Get email addresses associated with the pipeline
+      tags:
+      - Pipelines
+      operationId: get-pipelines-pipeline-id-notification
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pipeline-notification'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pipeline not found
+      description: Get email addresses associated with the pipeline.
+components:
+  schemas:
+    dataset-telemetry:
+      title: dataset-telemetry
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/epoch-millis'
+        bytesStaged:
+          type: integer
+        ratelimitReset:
+          $ref: '#/components/schemas/epoch-millis'
+      required:
+      - at
+    dataset:
+      title: ''
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        sourceId:
+          type: string
+          minLength: 1
+      required:
+      - id
+      - name
+      - sourceId
+    id:
+      title: ''
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+    pipeline-metadata:
+      description: Tables in this pipeline
+      type: object
+      title: Pipeline metadata
+      properties:
+        metadata:
+          type: array
+          title: Datasets
+          items:
+            $ref: '#/components/schemas/dataset-metadata'
+    epoch-millis:
+      type: integer
+      title: epoch-millis
+      minimum: 0
+      example: 1742922912239
+    initial-load-params-message-limit:
+      title: initial-load-params-message-limit
+      type: object
+      properties:
+        maxMessages:
+          type: number
+      required:
+      - maxMessages
+    pipeline:
+      title: ''
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+          readOnly: true
+        name:
+          type: string
+          minLength: 1
+        destinationId:
+          type: string
+          minLength: 1
+        columnNameStrategy:
+          type: object
+          minLength: 1
+          required:
+          - tableNamePostfix
+          properties:
+            tableNamePostfix:
+              type: boolean
+        datasetIds:
+          type: array
+          readOnly: true
+          items:
+            type: string
+        piiConfig:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - passthrough
+              - hash
+              - omit
+              - nullify
+          required:
+          - type
+          description: Policy applied to detected PII columns. Optional — when absent, passthrough is assumed (PII columns are not transformed). Omitted from responses when passthrough.
+        vectorize:
+          type: boolean
+          nullable: true
+          description: 'vectorization-spec-v4 / LD13. When `true`, loads of datasets in this pipeline will additionally produce per-row text embeddings (IBM Granite-30M, 384-dim) landed in a sibling `<destination_database>.<pipeline-name>.PRETEXT` table on the pipeline''s destination, alongside the normal writer output.
+
+            Absent or `false` preserves pre-feature behaviour: no embeddings are produced, no `PRETEXT` table is touched, and the destination output is byte-identical to a pipeline created before this field existed.
+
+            Only Snowflake-family destinations support `true` (LD15); the destination must expose a `VECTOR(FLOAT, 384)` column type. Attempts to set `true` on a non-vector-capable destination are rejected with HTTP 400.
+
+            Flipping `false`/absent → `true` is **not retroactive**: rows loaded before the flip remain un-embedded; reloads after the flip will be embedded. Flipping `true` → `false` means subsequent loads stop embedding; existing `PRETEXT` rows remain until an operator deletes them by hand.'
+        sentimentAnalysis:
+          type: boolean
+          nullable: true
+          description: Enables sentiment analysis on the pipeline. Requires vectorization to also be on, otherwise a 400 will be returned.
+      required:
+      - id
+      - name
+      - destinationId
+    simple-pipeline-metric:
+      type: object
+      properties:
+        rows:
+          type: number
+          readOnly: true
+        bytes:
+          type: number
+          readOnly: true
+    foreignKey:
+      description: Foreign key
+      type: object
+      required:
+      - local
+      - reference
+      properties:
+        local:
+          type: array
+          items:
+            type: string
+            minLength: 1
+        reference:
+          type: array
+          items:
+            type: string
+            minLength: 1
+    pipeline-details:
+      title: pipeline-details
+      type: object
+      properties:
+        pipeline:
+          type: object
+          required:
+          - id
+          - name
+          - columnNameStrategy
+          properties:
+            id:
+              type: string
+              minLength: 1
+            name:
+              type: string
+              minLength: 1
+            columnNameStrategy:
+              type: object
+              required:
+              - tableNamePostfix
+              properties:
+                tableNamePostfix:
+                  type: boolean
+        destination:
+          type: object
+          required:
+          - id
+          - name
+          - kind
+          properties:
+            id:
+              type: string
+              minLength: 1
+            name:
+              type: string
+              minLength: 1
+            kind:
+              type: object
+              required:
+              - id
+              - name
+              properties:
+                id:
+                  type: string
+                  minLength: 1
+                name:
+                  type: string
+                  minLength: 1
+        datasets:
+          type: array
+          uniqueItems: true
+          items:
+            type: object
+            properties:
+              source:
+                type: object
+                required:
+                - id
+                - name
+                - kind
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  name:
+                    type: string
+                    minLength: 1
+                  kind:
+                    type: object
+                    required:
+                    - id
+                    - name
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                      name:
+                        type: string
+                        minLength: 1
+              dataset:
+                type: array
+                uniqueItems: true
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      minLength: 1
+                    name:
+                      type: string
+                      minLength: 1
+                  required:
+                  - id
+                  - name
+            required:
+            - source
+            - dataset
+        schedule:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+        notifications:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+      required:
+      - pipeline
+      - destination
+      - datasets
+      - schedule
+      - notifications
+    action:
+      title: action
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - oauth2-request-authorization
+        url:
+          type: string
+        fieldName:
+          type: string
+      required:
+      - type
+      - url
+      - fieldName
+    pipeline-listing:
+      title: ''
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+          readOnly: true
+        name:
+          type: string
+          minLength: 1
+      required:
+      - id
+      - name
+    table:
+      description: Table schema
+      type: object
+      title: Table schema
+      properties:
+        tableName:
+          type: string
+          minLength: 1
+        primaryKey:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        foreignKeys:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/foreignKey'
+        columns:
+          type: array
+          title: Columns
+          items:
+            $ref: '#/components/schemas/column'
+    aggregated-pipeline-metrics:
+      type: object
+      properties:
+        lastWeek:
+          $ref: '#/components/schemas/simple-pipeline-metric'
+    column:
+      description: Column
+      type: object
+      title: Column
+      required:
+      - columnName
+      - columnType
+      properties:
+        columnName:
+          type: string
+          minLength: 1
+        columnType:
+          oneOf:
+          - properties: {}
+            enum:
+            - boolean
+            - long
+            - double
+            - decimal
+            - localTime
+            - localDatetime
+            - localDate
+            - offsetDatetime
+            - string
+        maxObservedStringLength:
+          type: integer
+        piiHandling:
+          description: 'Optional PII handling strategy for this column. When omitted, the column is treated as non-PII (passthrough). Possible values: - hash: replace values with a deterministic HMAC-SHA256 digest - omit: exclude the column from output entirely - nullify: replace values with empty strings'
+          type: string
+          enum:
+          - hash
+          - omit
+          - nullify
+    pipeline-schedule:
+      title: ''
+      type: object
+      properties:
+        schedule:
+          type: array
+          items:
+            type: string
+      required:
+      - schedule
+    pipeline-status:
+      title: ''
+      type: object
+      properties:
+        pipelineId:
+          type: string
+          minLength: 1
+        status:
+          $ref: '#/components/schemas/pipeline-load-state'
+        driftedDatasets:
+          type: array
+          readOnly: true
+          description: Datasets within this pipeline that have drifted from their initial schema. Only present when non-empty.
+          items:
+            $ref: '#/components/schemas/drifted-dataset'
+      required:
+      - pipelineId
+      - status
+    dataset-metadata:
+      description: Dataset tables
+      type: object
+      title: Dataset tables
+      properties:
+        datasetId:
+          type: string
+          minLength: 1
+        tables:
+          type: array
+          title: Datasets
+          items:
+            $ref: '#/components/schemas/table'
+    error-message:
+      title: error-message
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - details
+          properties:
+            type:
+              type: string
+              minLength: 1
+            details:
+              type: string
+      required:
+      - error
+    pipeline-load-state:
+      title: ''
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+          - succeeded
+          - failed
+          - errored
+          - loading
+          - accepted
+        at:
+          $ref: '#/components/schemas/epoch-millis'
+      required:
+      - state
+      - at
+    dataset-update-new:
+      type: object
+      required:
+      - action
+      - dataset
+      properties:
+        action:
+          type: string
+          enum:
+          - add
+          - remove
+          - renew
+          - abort
+        dataset:
+          type: object
+          minProperties: 1
+          additionalProperties:
+            $ref: '#/components/schemas/initial-load-params'
+    pipeline-datasets-properties:
+      description: Datasets properties used in the in-band datasets in this pipeline
+      type: object
+      title: Pipeline datasets properties
+      properties:
+        pipelineId:
+          type: string
+        datasetProperties:
+          type: object
+          title: Datasets properties
+          additionalProperties:
+            $ref: '#/components/schemas/dataset-properties'
+      required:
+      - pipelineId
+      - datasetProperties
+    outofband-state:
+      title: ''
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+          - accepted
+          - staging
+          - scheming
+          - empty
+          - failed
+          - errored
+          - aborted
+          - aborting
+        at:
+          $ref: '#/components/schemas/epoch-millis'
+        message:
+          type: string
+        action:
+          $ref: '#/components/schemas/action'
+      required:
+      - state
+      - at
+    dataset-update:
+      title: dataset-update
+      oneOf:
+      - $ref: '#/components/schemas/dataset-update-new'
+      - $ref: '#/components/schemas/dataset-update-legacy'
+    reuse-previous-primary-key:
+      description: Legacy boolean or new strategy object.
+      oneOf:
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - detect-anew
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - reuse-previous
+      - type: object
+        required:
+        - type
+        - primaryKey
+        properties:
+          type:
+            type: string
+            enum:
+            - use-provided
+          primaryKey:
+            $ref: '#/components/schemas/primary-key-property'
+      - type: boolean
+      examples:
+      - type: detect-anew
+      - type: reuse-previous
+      - type: use-provided
+        primaryKey:
+          type: strict
+          components:
+          - $.path.to.id
+      - true
+    inband-state:
+      title: ''
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+          - discovered
+          - staging
+          - writing
+          - waiting
+          - written
+          - failed
+          - errored
+          - aborted
+          - aborting
+        at:
+          $ref: '#/components/schemas/epoch-millis'
+        message:
+          type: string
+        action:
+          $ref: '#/components/schemas/action'
+      required:
+      - state
+      - at
+    dataset-update-legacy:
+      deprecated: true
+      type: object
+      required:
+      - action
+      - datasetIds
+      properties:
+        action:
+          type: string
+          enum:
+          - add
+          - remove
+          - renew
+          - abort
+        datasetIds:
+          type: array
+          description: List of dataset IDs to affect.
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+        loadParameters:
+          $ref: '#/components/schemas/initial-load-params'
+    drifted-dataset:
+      title: ''
+      type: object
+      description: Drift information for a single dataset.
+      properties:
+        datasetId:
+          type: string
+          description: The ID of the drifted dataset.
+        driftedAt:
+          type: string
+          format: date-time
+          description: When the schema drift was detected.
+        offset:
+          type: object
+          nullable: true
+          description: The offset at which schema drift was detected.
+          properties:
+            type:
+              type: string
+              enum:
+              - num
+              - str
+            value:
+              oneOf:
+              - type: number
+              - type: string
+          required:
+          - type
+          - value
+      required:
+      - datasetId
+      - driftedAt
+    initial-load-params:
+      title: initial-load-params
+      type: object
+      properties:
+        initialWrite:
+          type: boolean
+        readRequired:
+          type: boolean
+          default: false
+        reusePreviousSchema:
+          type: boolean
+          default: false
+        reusePreviousPrimaryKey:
+          $ref: '#/components/schemas/reuse-previous-primary-key'
+        sampleParameters:
+          $ref: '#/components/schemas/initial-load-params-message-limit'
+      required:
+      - initialWrite
+    dataset-status:
+      title: ''
+      type: object
+      description: ''
+      properties:
+        id:
+          type: string
+          minLength: 1
+        outOfBand:
+          $ref: '#/components/schemas/outofband-state'
+        inBand:
+          $ref: '#/components/schemas/inband-state'
+        telemetry:
+          $ref: '#/components/schemas/dataset-telemetry'
+      required:
+      - id
+    primary-key-property:
+      description: Primary key for a given dataset
+      type: object
+      title: pipeline dataset properties
+      properties:
+        primaryKey:
+          type: object
+          description: A primary key property
+          properties:
+            type:
+              oneOf:
+              - type: string
+                enum:
+                - strict
+                - optional
+                description: Indicates whether the key is strict or optional
+            components:
+              type: array
+              title: Primary key components
+              items:
+                type: string
+                minLength: 1
+          required:
+          - type
+          - components
+      required:
+      - primaryKey
+      additionalProperties: false
+    pipeline-dataset-status:
+      title: ''
+      type: object
+      properties:
+        pipelineId:
+          type: string
+          minLength: 1
+        status:
+          $ref: '#/components/schemas/pipeline-load-state'
+        datasets:
+          type: array
+          items:
+            $ref: '#/components/schemas/dataset-status'
+        driftedDatasets:
+          type: array
+          readOnly: true
+          description: Datasets within this pipeline that have drifted from their initial schema. Only present when non-empty.
+          items:
+            $ref: '#/components/schemas/drifted-dataset'
+      required:
+      - pipelineId
+      - datasets
+    pipeline-name:
+      title: ''
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+      required:
+      - name
+    pipeline-notification:
+      title: ''
+      type: object
+      properties:
+        emails:
+          type: array
+          items:
+            type: string
+      required:
+      - emails
+    dataset-properties:
+      description: Dataset properties for a particular dataset in a pipeline
+      type: object
+      title: pipeline dataset properties
+      properties:
+        primaryKey:
+          $ref: '#/components/schemas/primary-key-property'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

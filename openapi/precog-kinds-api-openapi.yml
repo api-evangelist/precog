@@ -1,0 +1,270 @@
+openapi: 3.1.0
+info:
+  title: http-api Admin Kinds API
+  version: '1.0'
+  summary: The Precog admin HTTP REST API.
+  description: The Precog admin HTTP REST API.
+  contact:
+    url: https://precog.com
+    email: support@precog.com
+servers:
+- url: http://localhost:30000
+security:
+- BearerAuth: []
+tags:
+- name: Kinds
+paths:
+  /kinds/{kind-id}:
+    parameters:
+    - schema:
+        type: string
+      name: kind-id
+      in: path
+      required: true
+    get:
+      summary: Get connector schema
+      tags:
+      - Kinds
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  schema:
+                    $ref: '#/components/schemas/kind-schema'
+                  auth:
+                    $ref: '#/components/schemas/auth-schema'
+                required:
+                - schema
+        '401':
+          description: Unauthorized
+        '404':
+          description: Kind not found.
+      operationId: get-kinds-kind-id
+      description: Get the configuration schema for a particular kind of source.
+  /kinds/source:
+    get:
+      summary: Get source kinds
+      tags:
+      - Kinds
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/connector-kind'
+              examples:
+                example-1:
+                  value:
+                  - id: '1'
+                    name: Active Campaign
+                    image: data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI0LjAuMywgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA0NjggMjIyLjUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ2OCAyMjIuNTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtmaWxsOiM2MzVCRkY7fQo8L3N0eWxlPgo8Zz4KCTxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik00MTQsMTEzLjRjMC0yNS42LTEyLjQtNDUuOC0zNi4xLTQ1LjhjLTIzLjgsMC0zOC4yLDIwLjItMzguMiw0NS42YzAsMzAuMSwxNyw0NS4zLDQxLjQsNDUuMwoJCWMxMS45LDAsMjAuOS0yLjcsMjcuNy02LjV2LTIwYy02LjgsMy40LTE0LjYsNS41LTI0LjUsNS41Yy05LjcsMC0xOC4zLTMuNC0xOS40LTE1LjJoNDguOUM0MTMuOCwxMjEsNDE0LDExNS44LDQxNCwxMTMuNHoKCQkgTTM2NC42LDEwMy45YzAtMTEuMyw2LjktMTYsMTMuMi0xNmM2LjEsMCwxMi42LDQuNywxMi42LDE2SDM2NC42eiIvPgoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTMwMS4xLDY3LjZjLTkuOCwwLTE2LjEsNC42LTE5LjYsNy44bC0xLjMtNi4yaC0yMnYxMTYuNmwyNS01LjNsMC4xLTI4LjNjMy42LDIuNiw4LjksNi4zLDE3LjcsNi4zCgkJYzE3LjksMCwzNC4yLTE0LjQsMzQuMi00Ni4xQzMzNS4xLDgzLjQsMzE4LjYsNjcuNiwzMDEuMSw2Ny42eiBNMjk1LjEsMTM2LjVjLTUuOSwwLTkuNC0yLjEtMTEuOC00LjdsLTAuMS0zNy4xCgkJYzIuNi0yLjksNi4yLTQuOSwxMS45LTQuOWM5LjEsMCwxNS40LDEwLjIsMTUuNCwyMy4zQzMxMC41LDEyNi41LDMwNC4zLDEzNi41LDI5NS4xLDEzNi41eiIvPgoJPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyMjMuOCw2MS43IDI0OC45LDU2LjMgMjQ4LjksMzYgMjIzLjgsNDEuMyAJIi8+Cgk8cmVjdCB4PSIyMjMuOCIgeT0iNjkuMyIgY2xhc3M9InN0MCIgd2lkdGg9IjI1LjEiIGhlaWdodD0iODcuNSIvPgoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTE5Ni45LDc2LjdsLTEuNi03LjRoLTIxLjZ2ODcuNWgyNVY5Ny41YzUuOS03LjcsMTUuOS02LjMsMTktNS4ydi0yM0MyMTQuNSw2OC4xLDIwMi44LDY1LjksMTk2LjksNzYuN3oiLz4KCTxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xNDYuOSw0Ny42bC0yNC40LDUuMmwtMC4xLDgwLjFjMCwxNC44LDExLjEsMjUuNywyNS45LDI1LjdjOC4yLDAsMTQuMi0xLjUsMTcuNS0zLjNWMTM1CgkJYy0zLjIsMS4zLTE5LDUuOS0xOS04LjlWOTAuNmgxOVY2OS4zaC0xOUwxNDYuOSw0Ny42eiIvPgoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTc5LjMsOTQuN2MwLTMuOSwzLjItNS40LDguNS01LjRjNy42LDAsMTcuMiwyLjMsMjQuOCw2LjRWNzIuMmMtOC4zLTMuMy0xNi41LTQuNi0yNC44LTQuNgoJCUM2Ny41LDY3LjYsNTQsNzguMiw1NCw5NS45YzAsMjcuNiwzOCwyMy4yLDM4LDM1LjFjMCw0LjYtNCw2LjEtOS42LDYuMWMtOC4zLDAtMTguOS0zLjQtMjcuMy04djIzLjhjOS4zLDQsMTguNyw1LjcsMjcuMyw1LjcKCQljMjAuOCwwLDM1LjEtMTAuMywzNS4xLTI4LjJDMTE3LjQsMTAwLjYsNzkuMywxMDUuOSw3OS4zLDk0Ljd6Ii8+CjwvZz4KPC9zdmc+Cg
+                  - id: '2'
+                    name: Ariba Analytics
+                  - id: '3'
+                    name: Bing Ads
+                  - id: '4'
+                    name: Chargeback
+                  - id: '5'
+                    name: Clockify
+                  - id: '6'
+                    name: Everflow
+                  - id: '7'
+                    name: Facebook Ads
+                  - id: '8'
+                    name: Google Ads
+                  - id: '9'
+                    name: Gravity Forms
+                  - id: '10'
+                    name: Hubspot
+                  - id: '11'
+                    name: Salesforce
+                  - id: '12'
+                    name: Shopify
+                  - id: '13'
+                    name: WooCommerce
+        '401':
+          description: Unauthorized
+      operationId: get-kinds-source
+      description: Retrieve the available kinds of sources.
+  /kinds/destination:
+    get:
+      summary: Get destination kinds
+      tags:
+      - Kinds
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/connector-kind'
+              examples:
+                example-1:
+                  value:
+                  - id: '14'
+                    name: Snowflake
+                    image: data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI0LjAuMywgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA0NjggMjIyLjUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ2OCAyMjIuNTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtmaWxsOiM2MzVCRkY7fQo8L3N0eWxlPgo8Zz4KCTxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik00MTQsMTEzLjRjMC0yNS42LTEyLjQtNDUuOC0zNi4xLTQ1LjhjLTIzLjgsMC0zOC4yLDIwLjItMzguMiw0NS42YzAsMzAuMSwxNyw0NS4zLDQxLjQsNDUuMwoJCWMxMS45LDAsMjAuOS0yLjcsMjcuNy02LjV2LTIwYy02LjgsMy40LTE0LjYsNS41LTI0LjUsNS41Yy05LjcsMC0xOC4zLTMuNC0xOS40LTE1LjJoNDguOUM0MTMuOCwxMjEsNDE0LDExNS44LDQxNCwxMTMuNHoKCQkgTTM2NC42LDEwMy45YzAtMTEuMyw2LjktMTYsMTMuMi0xNmM2LjEsMCwxMi42LDQuNywxMi42LDE2SDM2NC42eiIvPgoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTMwMS4xLDY3LjZjLTkuOCwwLTE2LjEsNC42LTE5LjYsNy44bC0xLjMtNi4yaC0yMnYxMTYuNmwyNS01LjNsMC4xLTI4LjNjMy42LDIuNiw4LjksNi4zLDE3LjcsNi4zCgkJYzE3LjksMCwzNC4yLTE0LjQsMzQuMi00Ni4xQzMzNS4xLDgzLjQsMzE4LjYsNjcuNiwzMDEuMSw2Ny42eiBNMjk1LjEsMTM2LjVjLTUuOSwwLTkuNC0yLjEtMTEuOC00LjdsLTAuMS0zNy4xCgkJYzIuNi0yLjksNi4yLTQuOSwxMS45LTQuOWM5LjEsMCwxNS40LDEwLjIsMTUuNCwyMy4zQzMxMC41LDEyNi41LDMwNC4zLDEzNi41LDI5NS4xLDEzNi41eiIvPgoJPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyMjMuOCw2MS43IDI0OC45LDU2LjMgMjQ4LjksMzYgMjIzLjgsNDEuMyAJIi8+Cgk8cmVjdCB4PSIyMjMuOCIgeT0iNjkuMyIgY2xhc3M9InN0MCIgd2lkdGg9IjI1LjEiIGhlaWdodD0iODcuNSIvPgoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTE5Ni45LDc2LjdsLTEuNi03LjRoLTIxLjZ2ODcuNWgyNVY5Ny41YzUuOS03LjcsMTUuOS02LjMsMTktNS4ydi0yM0MyMTQuNSw2OC4xLDIwMi44LDY1LjksMTk2LjksNzYuN3oiLz4KCTxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xNDYuOSw0Ny42bC0yNC40LDUuMmwtMC4xLDgwLjFjMCwxNC44LDExLjEsMjUuNywyNS45LDI1LjdjOC4yLDAsMTQuMi0xLjUsMTcuNS0zLjNWMTM1CgkJYy0zLjIsMS4zLTE5LDUuOS0xOS04LjlWOTAuNmgxOVY2OS4zaC0xOUwxNDYuOSw0Ny42eiIvPgoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTc5LjMsOTQuN2MwLTMuOSwzLjItNS40LDguNS01LjRjNy42LDAsMTcuMiwyLjMsMjQuOCw2LjRWNzIuMmMtOC4zLTMuMy0xNi41LTQuNi0yNC44LTQuNgoJCUM2Ny41LDY3LjYsNTQsNzguMiw1NCw5NS45YzAsMjcuNiwzOCwyMy4yLDM4LDM1LjFjMCw0LjYtNCw2LjEtOS42LDYuMWMtOC4zLDAtMTguOS0zLjQtMjcuMy04djIzLjhjOS4zLDQsMTguNyw1LjcsMjcuMyw1LjcKCQljMjAuOCwwLDM1LjEtMTAuMywzNS4xLTI4LjJDMTE3LjQsMTAwLjYsNzkuMywxMDUuOSw3OS4zLDk0Ljd6Ii8+CjwvZz4KPC9zdmc+Cg
+                  - id: '15'
+                    name: Panoply
+                  - id: '16'
+                    name: Redshift
+                  - id: '17'
+                    name: Google BigQuery
+                  - id: '18'
+                    name: Firebolt
+        '401':
+          description: Unauthorized
+      operationId: get-kinds-destination
+      description: Retrieve the available kinds of destinations.
+components:
+  schemas:
+    kind-schema:
+      description: ''
+      type: array
+      title: ''
+      items:
+        oneOf:
+        - $ref: '#/components/schemas/kind-schema-input-entry'
+        - $ref: '#/components/schemas/kind-schema-upload-entry'
+        - $ref: '#/components/schemas/kind-schema-dropdown-entry'
+    connector-kind:
+      description: ''
+      type: object
+      title: ''
+      properties:
+        name:
+          type: string
+          minLength: 1
+        id:
+          type: string
+          minLength: 1
+        image:
+          type: string
+      required:
+      - name
+      - id
+    kind-schema-upload-field:
+      description: ''
+      type: object
+      title: ''
+      properties:
+        name:
+          type: string
+          minLength: 1
+        description:
+          type: string
+      required:
+      - description
+      - name
+    kind-schema-dropdown-entry:
+      title: ''
+      type: object
+      properties:
+        input:
+          $ref: '#/components/schemas/kind-schema-dropdown-field'
+      required:
+      - input
+    kind-schema-dropdown-field:
+      description: ''
+      type: object
+      title: ''
+      properties:
+        name:
+          type: string
+          minLength: 1
+        description:
+          type: string
+        values:
+          type: array
+          minLength: 1
+          uniqueItems: true
+          items:
+            type: string
+      required:
+      - description
+      - name
+      - values
+    kind-schema-upload-entry:
+      title: ''
+      type: object
+      properties:
+        upload:
+          $ref: '#/components/schemas/kind-schema-upload-field'
+      required:
+      - upload
+    auth-schema:
+      title: auth-schema
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - OAuth 2.0 code authorization
+          - Google Service Account Key authorization
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/auth-schema-oauth2-details'
+          - $ref: '#/components/schemas/auth-schema-google-service-account-details'
+      required:
+      - type
+      - details
+    auth-schema-google-service-account-details:
+      title: auth-schema-google-service-account-details
+      type: object
+      properties:
+        scopes:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+      required:
+      - scopes
+    kind-schema-input-entry:
+      title: ''
+      type: object
+      properties:
+        input:
+          $ref: '#/components/schemas/kind-schema-input-field'
+      required:
+      - input
+    kind-schema-input-field:
+      description: ''
+      type: object
+      title: ''
+      properties:
+        description:
+          type: string
+        sensitive:
+          type: boolean
+        name:
+          type: string
+          minLength: 1
+        exampleValue:
+          type: string
+      required:
+      - description
+      - sensitive
+      - name
+    auth-schema-oauth2-details:
+      title: auth-schema-oauth2-details
+      type: object
+      properties:
+        uri:
+          type: string
+          minLength: 1
+      required:
+      - uri
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

@@ -1,0 +1,326 @@
+openapi: 3.1.0
+info:
+  title: http-api Admin Destinations API
+  version: '1.0'
+  summary: The Precog admin HTTP REST API.
+  description: The Precog admin HTTP REST API.
+  contact:
+    url: https://precog.com
+    email: support@precog.com
+servers:
+- url: http://localhost:30000
+security:
+- BearerAuth: []
+tags:
+- name: Destinations
+paths:
+  /destinations:
+    get:
+      summary: Get Destinations
+      tags:
+      - Destinations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/connector-listing'
+              examples:
+                example-1:
+                  value:
+                  - id: '1'
+                    kindId: '14'
+                    name: 'Account: Precog, Database: Raw, Region: west-us-2.azure'
+        '401':
+          description: Unauthorized
+      operationId: get-destinations
+      description: Retrieve the configured destinations, optionally filtering by kind.
+      parameters:
+      - schema:
+          type: string
+        in: query
+        name: kind-id
+    post:
+      summary: Create Destination
+      tags:
+      - Destinations
+      operationId: post-destinations
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connector-listing'
+              examples:
+                example-1:
+                  value:
+                    id: '1'
+                    kindId: '14'
+                    name: 'Account: Precog, Database: Raw, Region: west-us-2.azure'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '401':
+          description: Unauthorized
+        '422':
+          description: Destination kind unsupported or other semantic error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+      description: Configure a new destination.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/connector'
+  /destinations/{destination-id}:
+    parameters:
+    - schema:
+        type: string
+      name: destination-id
+      in: path
+      required: true
+    get:
+      summary: Get a destination
+      tags:
+      - Destinations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connector'
+              examples:
+                example-1:
+                  value:
+                    config: []
+                    id: '1'
+                    kindId: '14'
+                    name: 'Account: Precog, Database: Raw, Region: west-us-2.azure'
+                    status:
+                      type: ready
+                      at: 42
+        '401':
+          description: Unauthorized
+        '404':
+          description: Destination not found.
+      operationId: get-destinations-destination-id
+      description: Get a particular destination.
+    put:
+      summary: Redefine a destination
+      tags:
+      - Destinations
+      operationId: put-destinations-destination-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connector-listing'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Destination not found.
+        '422':
+          description: Destination kind unsupported or other semantic error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '502':
+          description: Problematic Request to External Server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+      description: Redefine an existing destination.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/connector'
+components:
+  schemas:
+    connector-config:
+      description: ''
+      type: array
+      title: ''
+      items:
+        $ref: '#/components/schemas/connector-config-entry'
+    action:
+      title: action
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - oauth2-request-authorization
+        url:
+          type: string
+        fieldName:
+          type: string
+      required:
+      - type
+      - url
+      - fieldName
+    error-message:
+      title: error-message
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - details
+          properties:
+            type:
+              type: string
+              minLength: 1
+            details:
+              type: string
+      required:
+      - error
+    epoch-millis:
+      type: integer
+      title: epoch-millis
+      minimum: 0
+      example: 1742922912239
+    connector:
+      description: ''
+      type: object
+      title: ''
+      properties:
+        id:
+          type: string
+          minLength: 1
+          readOnly: true
+        kindId:
+          type: string
+          minLength: 1
+        config:
+          $ref: '#/components/schemas/connector-config'
+        name:
+          type: string
+          minLength: 1
+          readOnly: true
+        auth:
+          $ref: '#/components/schemas/auth'
+          writeOnly: true
+        status:
+          type: object
+          required:
+          - type
+          - at
+          properties:
+            type:
+              oneOf:
+              - enum:
+                - ready
+                - input-required
+                - user-action
+                - authentication-required
+                - loading
+                - processing
+              type: string
+            message:
+              type: string
+            action:
+              $ref: '#/components/schemas/action'
+            at:
+              $ref: '#/components/schemas/epoch-millis'
+          readOnly: true
+      required:
+      - id
+      - kindId
+      - config
+      - name
+      - status
+    auth-google-service-account-details:
+      title: auth-google-service-account-details
+      type: object
+      properties:
+        keyFile:
+          type: string
+          minLength: 1
+      required:
+      - keyFile
+    auth:
+      title: auth
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - OAuth 2.0 code authorization
+          - Google Service Account Key authorization
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/auth-oauth2-details'
+          - $ref: '#/components/schemas/auth-google-service-account-details'
+      required:
+      - type
+      - details
+    auth-oauth2-details:
+      title: auth-oauth2-details
+      type: object
+      properties:
+        authCode:
+          type: string
+          minLength: 1
+        redirectUri:
+          type: string
+          minLength: 1
+      required:
+      - authCode
+      - redirectUri
+    connector-config-entry:
+      description: ''
+      type: object
+      properties:
+        value:
+          type: string
+        name:
+          type: string
+          minLength: 1
+      required:
+      - value
+      - name
+    connector-listing:
+      description: ''
+      type: object
+      title: ''
+      properties:
+        id:
+          type: string
+          minLength: 1
+          readOnly: true
+        kindId:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+      required:
+      - id
+      - kindId
+      - name
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

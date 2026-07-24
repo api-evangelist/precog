@@ -1,0 +1,505 @@
+openapi: 3.1.0
+info:
+  title: http-api Admin Sources API
+  version: '1.0'
+  summary: The Precog admin HTTP REST API.
+  description: The Precog admin HTTP REST API.
+  contact:
+    url: https://precog.com
+    email: support@precog.com
+servers:
+- url: http://localhost:30000
+security:
+- BearerAuth: []
+tags:
+- name: Sources
+paths:
+  /sources:
+    get:
+      summary: Get Sources
+      tags:
+      - Sources
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/connector-listing'
+              examples:
+                example-1:
+                  value:
+                  - id: '1'
+                    kindId: '12'
+                    name: 'Shop name: MyShop'
+        '401':
+          description: Unauthorized
+      operationId: get-sources
+      description: Retrieve the configured sources, optionally filtering by kind.
+      parameters:
+      - schema:
+          type: string
+        in: query
+        name: kind-id
+    post:
+      summary: Create Source
+      tags:
+      - Sources
+      operationId: post-sources
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connector-listing'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '401':
+          description: Unauthorized
+        '422':
+          description: Source kind unsupported or other semantic error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '502':
+          description: Problematic Request to External Server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+      description: Configure a new source.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/connector'
+  /sources/{source-id}/refresh:
+    parameters:
+    - schema:
+        type: string
+      name: source-id
+      in: path
+      required: true
+    post:
+      summary: Request source refresh
+      tags:
+      - Sources
+      responses:
+        '202':
+          description: Accepted
+        '401':
+          description: Unauthorized
+        '404':
+          description: Source not found.
+      operationId: refresh-source-by-id
+      description: Refresh a particular source.
+  /sources/{source-id}/auth:
+    parameters:
+    - schema:
+        type: string
+      name: source-id
+      in: path
+      required: true
+    put:
+      summary: Authenticate a source that needs authentication
+      tags:
+      - Sources
+      responses:
+        '202':
+          description: Accepted. Authentication attempt has been made. The source status will reflect the outcome of this operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connector'
+        '400':
+          description: The authentication values you provided are incompatible with the authentication strategy of the source's kind
+        '401':
+          description: Unauthorized
+        '404':
+          description: Source not found.
+      operationId: auth-source-by-id
+      description: Authenticate a source. If the source is already authenticated - the authentication details are overwritten.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/auth'
+  /sources/{source-id}:
+    parameters:
+    - schema:
+        type: string
+      name: source-id
+      in: path
+      required: true
+    get:
+      summary: Get a source
+      tags:
+      - Sources
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connector'
+              examples:
+                example-1:
+                  value:
+                    config:
+                    - name: Shop name
+                      value: MyShop
+                    id: '1'
+                    kindId: '12'
+                    name: 'Shop name: MyShop'
+                    status:
+                      type: ready
+                      at: 42
+        '401':
+          description: Unauthorized
+        '404':
+          description: Source not found.
+      operationId: get-sources-source-id
+      description: Get a particular source.
+    put:
+      summary: Redefine a source
+      tags:
+      - Sources
+      operationId: put-sources-source-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connector-listing'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Source not found.
+        '422':
+          description: Source kind unsupported or other semantic error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '502':
+          description: Problematic Request to External Server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+      description: Redefine an existing source.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/connector'
+    delete:
+      summary: Delete a source
+      tags:
+      - Sources
+      responses:
+        '204':
+          description: deleted
+        '401':
+          description: Unauthorized
+        '404':
+          description: Source not found
+      operationId: delete-sources-source-id
+      description: Delete the specified source and remove datasets using this source from all pipelines.
+  /sources/{source-id}/pipelines/{pipeline-id}:
+    delete:
+      summary: Delete a source
+      tags:
+      - Sources
+      responses:
+        '204':
+          description: deleted
+        '401':
+          description: Unauthorized
+        '404':
+          description: Source not found, pipeline not found or source not found in pipeline.
+        '422':
+          description: 'if force = false: source is used in other pipeline.'
+      parameters:
+      - schema:
+          type: string
+        name: source-id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: pipeline-id
+        in: path
+        required: true
+      - schema:
+          type: boolean
+        in: query
+        name: force
+        required: false
+      operationId: delete-sources-source-id-pipelines-pipeline-id
+      description: Delete the specified source and remove datasets using this source from specified pipeline. If force = true, then remove datasets using this source from all pipelines.
+  /sources/{source-id}/datasets:
+    parameters:
+    - schema:
+        type: string
+      name: source-id
+      in: path
+      required: true
+    get:
+      summary: Get datasets
+      tags:
+      - Sources
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/dataset'
+              examples:
+                example-1:
+                  value:
+                  - id: '1'
+                    name: Abandoned checkouts
+                    sourceId: '1'
+                  - id: '2'
+                    name: Application charges
+                    sourceId: '1'
+                  - id: '3'
+                    name: Application credits
+                    sourceId: '1'
+                  - id: '4'
+                    name: Custom collections
+                    sourceId: '1'
+                  - id: '5'
+                    name: Customer saved searches
+                    sourceId: '1'
+                  - id: '6'
+                    name: Customers
+                    sourceId: '1'
+                  - id: '7'
+                    name: Locations
+                    sourceId: '1'
+                  - id: '8'
+                    name: Orders
+                    sourceId: '1'
+                  - id: '9'
+                    name: Price rules
+                    sourceId: '1'
+                  - id: '10'
+                    name: Products
+                    sourceId: '1'
+                  - id: '11'
+                    name: Recurring application charges
+                    sourceId: '1'
+        '204':
+          description: Dataset hasn't been discovered yet
+        '401':
+          description: Unauthorized
+        '404':
+          description: Source not found.
+      operationId: get-sources-source-id-datasets
+      description: Get all available datasets for the provided source.
+components:
+  schemas:
+    dataset:
+      title: ''
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        sourceId:
+          type: string
+          minLength: 1
+      required:
+      - id
+      - name
+      - sourceId
+    connector-config:
+      description: ''
+      type: array
+      title: ''
+      items:
+        $ref: '#/components/schemas/connector-config-entry'
+    action:
+      title: action
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - oauth2-request-authorization
+        url:
+          type: string
+        fieldName:
+          type: string
+      required:
+      - type
+      - url
+      - fieldName
+    error-message:
+      title: error-message
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - details
+          properties:
+            type:
+              type: string
+              minLength: 1
+            details:
+              type: string
+      required:
+      - error
+    epoch-millis:
+      type: integer
+      title: epoch-millis
+      minimum: 0
+      example: 1742922912239
+    connector:
+      description: ''
+      type: object
+      title: ''
+      properties:
+        id:
+          type: string
+          minLength: 1
+          readOnly: true
+        kindId:
+          type: string
+          minLength: 1
+        config:
+          $ref: '#/components/schemas/connector-config'
+        name:
+          type: string
+          minLength: 1
+          readOnly: true
+        auth:
+          $ref: '#/components/schemas/auth'
+          writeOnly: true
+        status:
+          type: object
+          required:
+          - type
+          - at
+          properties:
+            type:
+              oneOf:
+              - enum:
+                - ready
+                - input-required
+                - user-action
+                - authentication-required
+                - loading
+                - processing
+              type: string
+            message:
+              type: string
+            action:
+              $ref: '#/components/schemas/action'
+            at:
+              $ref: '#/components/schemas/epoch-millis'
+          readOnly: true
+      required:
+      - id
+      - kindId
+      - config
+      - name
+      - status
+    auth-google-service-account-details:
+      title: auth-google-service-account-details
+      type: object
+      properties:
+        keyFile:
+          type: string
+          minLength: 1
+      required:
+      - keyFile
+    auth:
+      title: auth
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - OAuth 2.0 code authorization
+          - Google Service Account Key authorization
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/auth-oauth2-details'
+          - $ref: '#/components/schemas/auth-google-service-account-details'
+      required:
+      - type
+      - details
+    auth-oauth2-details:
+      title: auth-oauth2-details
+      type: object
+      properties:
+        authCode:
+          type: string
+          minLength: 1
+        redirectUri:
+          type: string
+          minLength: 1
+      required:
+      - authCode
+      - redirectUri
+    connector-config-entry:
+      description: ''
+      type: object
+      properties:
+        value:
+          type: string
+        name:
+          type: string
+          minLength: 1
+      required:
+      - value
+      - name
+    connector-listing:
+      description: ''
+      type: object
+      title: ''
+      properties:
+        id:
+          type: string
+          minLength: 1
+          readOnly: true
+        kindId:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+      required:
+      - id
+      - kindId
+      - name
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

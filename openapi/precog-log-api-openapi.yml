@@ -1,0 +1,80 @@
+openapi: 3.1.0
+info:
+  title: http-api Admin Log API
+  version: '1.0'
+  summary: The Precog admin HTTP REST API.
+  description: The Precog admin HTTP REST API.
+  contact:
+    url: https://precog.com
+    email: support@precog.com
+servers:
+- url: http://localhost:30000
+security:
+- BearerAuth: []
+tags:
+- name: Log
+paths:
+  /log:
+    post:
+      summary: Log a message
+      tags:
+      - Log
+      operationId: post-log
+      responses:
+        '204':
+          description: No Content - logged
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-message'
+        '401':
+          description: Unauthorized
+      description: Log a message
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/log-message'
+components:
+  schemas:
+    error-message:
+      title: error-message
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - details
+          properties:
+            type:
+              type: string
+              minLength: 1
+            details:
+              type: string
+      required:
+      - error
+    log-message:
+      title: log-message
+      type: object
+      properties:
+        level:
+          type: string
+          enum:
+          - error
+          - warn
+          - info
+          - debug
+          - trace
+        message:
+          type: string
+      required:
+      - level
+      - message
+      examples: []
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
