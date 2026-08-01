@@ -1,0 +1,32 @@
+generated: '2026-07-20'
+method: searched
+status: published
+source: https://studio.precog.cloud/.well-known/oauth-authorization-server
+server:
+  name: precog
+  transport: http
+  url: https://studio.precog.cloud/api/mcp
+  description: >-
+    Precog operates a hosted, OAuth 2.0-secured Model Context Protocol (MCP)
+    server that exposes the Precog "context engine" (semantic layers over
+    ingested business data) to AI assistants such as Claude and ChatGPT. The
+    server advertises OAuth 2.0 Authorization Server Metadata (RFC 8414) and
+    Protected Resource Metadata (RFC 9728) at studio.precog.cloud.
+auth:
+  type: oauth2
+  authorization_endpoint: https://studio.precog.cloud/api/mcp/oauth/authorize
+  token_endpoint: https://studio.precog.cloud/api/mcp/oauth/token
+  registration_endpoint: https://studio.precog.cloud/api/mcp/oauth/register
+  grant_types_supported: [authorization_code, client_credentials, refresh_token]
+  code_challenge_methods_supported: [S256]
+  token_endpoint_auth_methods_supported: [none, client_secret_post]
+  dynamic_client_registration: true
+  protected_resource: https://studio.precog.cloud
+  bearer_methods_supported: [header]
+  scopes_supported: [synesis:mcp, admin:read, admin:write]
+tools:
+  note: >-
+    The MCP tool list is served only to authenticated clients (bearer token with
+    the synesis:mcp scope), so the concrete tool inventory could not be
+    enumerated anonymously. The server is confirmed published and live via its
+    RFC 8414 / RFC 9728 discovery metadata.

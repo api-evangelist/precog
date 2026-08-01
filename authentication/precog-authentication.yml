@@ -1,0 +1,52 @@
+generated: '2026-07-20'
+method: searched
+source: >-
+  openapi/precog-public-http-api-openapi.yaml,
+  openapi/precog-admin-http-api-openapi.yaml,
+  openapi/precog-metadata-http-api-openapi.yaml,
+  https://studio.precog.cloud/.well-known/oauth-authorization-server
+docs: https://studio.precog.cloud/docs/
+summary:
+  types:
+  - http
+  - oauth2
+  api_key_in: []
+  oauth2_flows:
+  - authorizationCode
+  - clientCredentials
+  - refreshToken
+  human_login:
+  - Google
+  - Microsoft
+  - Email
+  - Magic Link
+  - Enterprise SSO
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  surface: Public HTTP REST API
+  description: >-
+    All Precog public/admin/metadata HTTP API operations require an HTTP Bearer
+    token (opaque access token). Applied globally in every spec.
+  sources:
+  - openapi/precog-public-http-api-openapi.yaml
+  - openapi/precog-admin-http-api-openapi.yaml
+  - openapi/precog-metadata-http-api-openapi.yaml
+- name: PrecogMcpOAuth
+  type: oauth2
+  surface: Model Context Protocol server
+  description: >-
+    The MCP server at studio.precog.cloud is secured with OAuth 2.0 (PKCE S256),
+    supporting authorization_code, client_credentials and refresh_token grants,
+    dynamic client registration (RFC 7591), and RFC 8414 / RFC 9728 discovery
+    metadata. Scopes: synesis:mcp, admin:read, admin:write.
+  flows:
+  - authorizationCode
+  - clientCredentials
+  - refreshToken
+  authorizationUrl: https://studio.precog.cloud/api/mcp/oauth/authorize
+  tokenUrl: https://studio.precog.cloud/api/mcp/oauth/token
+  registrationUrl: https://studio.precog.cloud/api/mcp/oauth/register
+  sources:
+  - https://studio.precog.cloud/.well-known/oauth-authorization-server

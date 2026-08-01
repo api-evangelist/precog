@@ -1,0 +1,17 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Precog public-http-api
+  version: 1.0.0
+extends: openapi/precog-public-http-api-openapi.yaml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-20'
+    x-apievangelist-provider: precog
+    x-apievangelist-production-server: https://api.precog.cloud
+    description: 'The Precog public HTTP REST API. Note: the published spec lists a http://localhost:30000 development server;
+      the production base URL is https://api.precog.cloud. Authenticate with an HTTP Bearer token.'
+- target: $.servers
+  update:
+  - url: https://api.precog.cloud
+    description: Production (API Evangelist annotation; spec ships a localhost dev server)

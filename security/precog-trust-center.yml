@@ -1,0 +1,22 @@
+generated: '2026-07-20'
+method: searched
+source: https://precog.com/pricing
+url: https://precog.com/express-security
+certifications:
+- SOC 2 Type II
+posture:
+- All connectivity to the Precog Express application is encrypted by default (TLS).
+- Data at rest is encrypted with industry-standard AES-256 encryption.
+- Backend systems are hardened to industry-standard security benchmarks.
+evidence:
+- source: https://precog.com/pricing
+  detail: >-
+    Pricing page states all plans include "SOC 2 Type II security reports".
+- source: https://precog.com/express-security
+  detail: >-
+    Express Security page documents default TLS encryption in transit, AES-256
+    encryption at rest, and hardened backend systems.
+notes: >-
+  Precog publishes a SOC 2 Type II compliance posture. No standalone trust-portal
+  subdomain (trust.precog.com) was found; security posture is documented on the
+  Express Security marketing page.

@@ -1,0 +1,38 @@
+generated: '2026-07-20'
+method: searched
+source: live probe of /.well-known/ on Precog hosts
+notes: >-
+  studio.precog.cloud serves OAuth 2.0 metadata for its Model Context Protocol
+  (MCP) server. Paths not listed below returned the SPA/app HTML shell (Next.js
+  catch-all) rather than a real document and are treated as absent. The RFC 9116
+  security.txt is served from the api.precog.cloud host.
+hosts:
+- host: https://studio.precog.cloud
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: precog-oauth-authorization-server.json
+    spec: RFC 8414 (OAuth 2.0 Authorization Server Metadata)
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: precog-oauth-protected-resource.json
+    spec: RFC 9728 (OAuth 2.0 Protected Resource Metadata)
+  - path: /.well-known/openid-configuration
+    status: 200
+    note: returned HTML app shell, not OIDC discovery JSON — treated as absent
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://api.precog.cloud
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: precog-security.txt
+    spec: RFC 9116
+- host: https://precog.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404

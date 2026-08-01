@@ -1,0 +1,39 @@
+{
+  "provider": "precog",
+  "sources": [
+    "precog-admin-api-openapi.yml",
+    "precog-data-model-api-openapi.yml",
+    "precog-datasets-api-openapi.yml",
+    "precog-destinations-api-openapi.yml",
+    "precog-issues-api-openapi.yml",
+    "precog-kinds-api-openapi.yml",
+    "precog-loads-api-openapi.yml",
+    "precog-log-api-openapi.yml",
+    "precog-pipelines-api-openapi.yml",
+    "precog-semantic-model-api-openapi.yml",
+    "precog-sources-api-openapi.yml",
+    "precog-stripe-api-openapi.yml"
+  ],
+  "outputs": [
+    "precog-admin-api-openapi.yml",
+    "precog-data-model-api-openapi.yml",
+    "precog-datasets-api-openapi.yml",
+    "precog-destinations-api-openapi.yml",
+    "precog-issues-api-openapi.yml",
+    "precog-kinds-api-openapi.yml",
+    "precog-loads-api-openapi.yml",
+    "precog-log-api-openapi.yml",
+    "precog-pipelines-api-openapi.yml",
+    "precog-semantic-model-api-openapi.yml",
+    "precog-sources-api-openapi.yml",
+    "precog-stripe-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [
+    "precog-pipelines-api-openapi.yml: dangling $ref: #/components/schemas/semantic-context",
+    "precog-pipelines-api-openapi.yml: dangling $ref: #/components/schemas/semantic-context-request"
+  ],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

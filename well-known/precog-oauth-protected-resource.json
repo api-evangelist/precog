@@ -1,0 +1,12 @@
+{
+  "resource": "https://studio.precog.cloud",
+  "authorization_servers": [
+    "https://studio.precog.cloud"
+  ],
+  "scopes_supported": [
+    "synesis:mcp"
+  ],
+  "bearer_methods_supported": [
+    "header"
+  ]
+}

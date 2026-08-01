@@ -1,7 +1,17 @@
 aid: precog
 name: Precog
-description: Precog is a company surfaced as a portfolio company of techstars and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Precog is an enterprise AI platform that acts as a "context engine" — turning
+  fragmented, context-stripped data from SaaS applications and databases into
+  live semantic layers that business users can query in natural language through
+  AI assistants like Claude and ChatGPT. Its Intelligent Ingest builds no-code
+  ETL pipelines from any business application into a data warehouse, detecting
+  data relationships automatically and injecting business logic, definitions and
+  relationships during ingestion, while its AI Assistants layer adds source
+  tracing and SQL visibility for trustworthy answers. Precog exposes a public
+  HTTP REST API (sources, destinations, pipelines, datasets, semantic-model
+  generation) and an OAuth-secured Model Context Protocol (MCP) server, and was
+  surfaced through the Techstars portfolio into the API Evangelist network.
 url: https://raw.githubusercontent.com/api-evangelist/precog/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -9,17 +19,245 @@ x-backed-by:
 - techstars
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
+image: https://studio.precog.cloud/precog-logo-full.svg
 tags:
 - Company
-apis: []
+- Data Integration
+- ETL
+- Artificial Intelligence
+- Semantic Layer
+- Model Context Protocol
+- Data Pipelines
+- Analytics
+- Enterprise
+apis:
+- aid: precog:precog-admin-api
+  name: Precog Admin API
+  description: The Admin API from Precog — 4 operation(s) for admin.
+  humanURL: https://studio.precog.cloud/docs/
+  baseURL: https://api.precog.cloud
+  tags:
+  - Admin
+  properties:
+  - type: OpenAPI
+    url: openapi/precog-admin-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/precog-foundation-semantic-model.schema.json
+- aid: precog:precog-data-model-api
+  name: Precog Data Model API
+  description: The Data Model API from Precog — 1 operation(s) for data model.
+  humanURL: https://studio.precog.cloud/docs/
+  baseURL: https://api.precog.cloud
+  tags:
+  - Data Model
+  properties:
+  - type: OpenAPI
+    url: openapi/precog-data-model-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/precog-foundation-semantic-model.schema.json
+- aid: precog:precog-datasets-api
+  name: Precog Datasets API
+  description: The Datasets API from Precog — 1 operation(s) for datasets.
+  humanURL: https://studio.precog.cloud/docs/
+  baseURL: https://api.precog.cloud
+  tags:
+  - Datasets
+  properties:
+  - type: OpenAPI
+    url: openapi/precog-datasets-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/precog-foundation-semantic-model.schema.json
+- aid: precog:precog-destinations-api
+  name: Precog Destinations API
+  description: The Destinations API from Precog — 2 operation(s) for destinations.
+  humanURL: https://studio.precog.cloud/docs/
+  baseURL: https://api.precog.cloud
+  tags:
+  - Destinations
+  properties:
+  - type: OpenAPI
+    url: openapi/precog-destinations-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/precog-foundation-semantic-model.schema.json
+- aid: precog:precog-issues-api
+  name: Precog Issues API
+  description: The Issues API from Precog — 4 operation(s) for issues.
+  humanURL: https://studio.precog.cloud/docs/
+  baseURL: https://api.precog.cloud
+  tags:
+  - Issues
+  properties:
+  - type: OpenAPI
+    url: openapi/precog-issues-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/precog-foundation-semantic-model.schema.json
+- aid: precog:precog-kinds-api
+  name: Precog Kinds API
+  description: The Kinds API from Precog — 3 operation(s) for kinds.
+  humanURL: https://studio.precog.cloud/docs/
+  baseURL: https://api.precog.cloud
+  tags:
+  - Kinds
+  properties:
+  - type: OpenAPI
+    url: openapi/precog-kinds-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/precog-foundation-semantic-model.schema.json
+- aid: precog:precog-loads-api
+  name: Precog Loads API
+  description: The Loads API from Precog — 1 operation(s) for loads.
+  humanURL: https://studio.precog.cloud/docs/
+  baseURL: https://api.precog.cloud
+  tags:
+  - Loads
+  properties:
+  - type: OpenAPI
+    url: openapi/precog-loads-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/precog-foundation-semantic-model.schema.json
+- aid: precog:precog-log-api
+  name: Precog Log API
+  description: The Log API from Precog — 1 operation(s) for log.
+  humanURL: https://studio.precog.cloud/docs/
+  baseURL: https://api.precog.cloud
+  tags:
+  - Log
+  properties:
+  - type: OpenAPI
+    url: openapi/precog-log-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/precog-foundation-semantic-model.schema.json
+- aid: precog:precog-pipelines-api
+  name: Precog Pipelines API
+  description: The Pipelines API from Precog — 18 operation(s) for pipelines.
+  humanURL: https://studio.precog.cloud/docs/
+  baseURL: https://api.precog.cloud
+  tags:
+  - Pipelines
+  properties:
+  - type: OpenAPI
+    url: openapi/precog-pipelines-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/precog-foundation-semantic-model.schema.json
+- aid: precog:precog-semantic-model-api
+  name: Precog Semantic Model API
+  description: The Semantic Model API from Precog — 3 operation(s) for semantic model.
+  humanURL: https://studio.precog.cloud/docs/
+  baseURL: https://api.precog.cloud
+  tags:
+  - Semantic Model
+  properties:
+  - type: OpenAPI
+    url: openapi/precog-semantic-model-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/precog-foundation-semantic-model.schema.json
+- aid: precog:precog-sources-api
+  name: Precog Sources API
+  description: The Sources API from Precog — 6 operation(s) for sources.
+  humanURL: https://studio.precog.cloud/docs/
+  baseURL: https://api.precog.cloud
+  tags:
+  - Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/precog-sources-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/precog-foundation-semantic-model.schema.json
+- aid: precog:precog-stripe-api
+  name: Precog Stripe API
+  description: The Stripe API from Precog — 2 operation(s) for stripe.
+  humanURL: https://studio.precog.cloud/docs/
+  baseURL: https://api.precog.cloud
+  tags:
+  - Stripe
+  properties:
+  - type: OpenAPI
+    url: openapi/precog-stripe-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/precog-foundation-semantic-model.schema.json
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/precog-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/precog-agentic-access.yml
+- type: Authentication
+  url: authentication/precog-authentication.yml
 - type: Website
   url: https://precog.com/
+- type: DeveloperPortal
+  url: https://studio.precog.cloud/docs/
+- type: Documentation
+  url: https://studio.precog.cloud/docs/
+- type: SignUp
+  url: https://studio.precog.cloud/login
+- type: Pricing
+  url: https://precog.com/pricing
+- type: Blog
+  url: https://precog.com/blog
+- type: Support
+  url: https://precog.com/contact
+- type: TermsOfService
+  url: https://precog.com/end-user-license-agreement
+- type: PrivacyPolicy
+  url: https://precog.com/privacy-policy
+- type: GitHubOrganization
+  url: https://github.com/precog
+- type: MCPServer
+  url: mcp/precog-mcp.yml
+- type: WellKnown
+  url: well-known/precog-well-known.yml
+- type: SecurityTxt
+  url: well-known/precog-security.txt
+- type: OAuthScopes
+  url: scopes/precog-scopes.yml
+- type: VulnerabilityDisclosure
+  url: security/precog-vulnerability-disclosure.yml
+- type: Security
+  url: https://api.precog.cloud/.well-known/security.txt
+- type: TrustCenter
+  url: security/precog-trust-center.yml
+- type: Compliance
+  url: https://precog.com/express-security
+- type: Conformance
+  url: conformance/precog-conformance.yml
+- type: ErrorCatalog
+  url: errors/precog-problem-types.yml
+- type: Conventions
+  url: conventions/precog-conventions.yml
+- type: DataModel
+  url: data-model/precog-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/precog-llms.txt
+- type: Overlay
+  url: overlays/precog-public-http-api-overlay.yaml
+- type: Overlay
+  url: overlays/precog-admin-http-api-overlay.yaml
+- type: Overlay
+  url: overlays/precog-metadata-http-api-overlay.yaml
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 27
+  pass: local-v1

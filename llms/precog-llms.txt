@@ -1,0 +1,24 @@
+# Precog
+
+> Precog is an enterprise AI "context engine" that turns fragmented, context-stripped data from SaaS applications and databases into live semantic layers business users can query in natural language through AI assistants like Claude and ChatGPT. Its Intelligent Ingest builds no-code ETL pipelines into a data warehouse; its AI Assistants add source tracing and SQL visibility. Precog exposes a public HTTP REST API and an OAuth-secured Model Context Protocol (MCP) server.
+
+## APIs
+- [Precog Public HTTP API docs](https://studio.precog.cloud/docs/): Manage sources, destinations, pipelines, datasets, and semantic-model generation. Base URL https://api.precog.cloud, HTTP Bearer auth.
+
+## Specs
+- [Public HTTP API OpenAPI 3.1](https://raw.githubusercontent.com/api-evangelist/precog/refs/heads/main/openapi/precog-public-http-api-openapi.yaml)
+- [Admin HTTP API OpenAPI 3.1](https://raw.githubusercontent.com/api-evangelist/precog/refs/heads/main/openapi/precog-admin-http-api-openapi.yaml)
+- [Metadata HTTP API OpenAPI 3.1](https://raw.githubusercontent.com/api-evangelist/precog/refs/heads/main/openapi/precog-metadata-http-api-openapi.yaml)
+- [Foundation semantic model JSON Schema](https://raw.githubusercontent.com/api-evangelist/precog/refs/heads/main/json-schema/precog-foundation-semantic-model.schema.json)
+
+## Agent surface
+- [MCP server (OAuth 2.0)](https://studio.precog.cloud/api/mcp): scopes synesis:mcp, admin:read, admin:write
+- [OAuth authorization server metadata](https://studio.precog.cloud/.well-known/oauth-authorization-server)
+- [Agent Skills](https://raw.githubusercontent.com/api-evangelist/precog/refs/heads/main/skills/_index.yml)
+
+## Docs
+- [Studio documentation](https://studio.precog.cloud/docs/)
+- [Pricing](https://precog.com/pricing)
+- [Blog](https://precog.com/blog)
+- [Security](https://precog.com/express-security)
+- [security.txt](https://api.precog.cloud/.well-known/security.txt)

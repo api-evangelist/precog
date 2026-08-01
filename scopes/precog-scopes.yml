@@ -1,0 +1,30 @@
+generated: '2026-07-20'
+method: searched
+source: https://studio.precog.cloud/.well-known/oauth-authorization-server
+docs: https://studio.precog.cloud/.well-known/oauth-protected-resource
+notes: >-
+  These OAuth 2.0 scopes are advertised by Precog's MCP authorization server
+  (RFC 8414 metadata). They govern the OAuth-secured MCP surface at
+  studio.precog.cloud. The public HTTP REST API (openapi/) itself uses opaque
+  bearer tokens (HTTP Bearer) rather than scoped OAuth, so its scheme carries no
+  scope list.
+schemes:
+- name: PrecogMcpOAuth
+  type: oauth2
+  source: https://studio.precog.cloud/.well-known/oauth-authorization-server
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://studio.precog.cloud/api/mcp/oauth/authorize
+    tokenUrl: https://studio.precog.cloud/api/mcp/oauth/token
+  - flow: clientCredentials
+    tokenUrl: https://studio.precog.cloud/api/mcp/oauth/token
+scopes:
+- scope: synesis:mcp
+  description: Access the Precog (Synesis) Model Context Protocol server and its tools.
+  flows: [authorizationCode, clientCredentials]
+- scope: admin:read
+  description: Read access to administrative resources over the MCP surface.
+  flows: [authorizationCode, clientCredentials]
+- scope: admin:write
+  description: Write/administrative access over the MCP surface.
+  flows: [authorizationCode, clientCredentials]

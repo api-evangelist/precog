@@ -1,0 +1,43 @@
+generated: '2026-07-20'
+method: searched
+source: >-
+  openapi/*, https://studio.precog.cloud/.well-known/oauth-authorization-server,
+  https://precog.com/pricing
+standards:
+- id: oauth2
+  conforms: true
+  evidence: >-
+    MCP server publishes RFC 8414 OAuth 2.0 Authorization Server Metadata with
+    authorization_code, client_credentials and refresh_token grants.
+- id: oauth2-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported includes S256.
+- id: rfc8414-oauth-metadata
+  conforms: true
+  evidence: /.well-known/oauth-authorization-server served as application/json.
+- id: rfc9728-protected-resource-metadata
+  conforms: true
+  evidence: /.well-known/oauth-protected-resource served as application/json.
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: registration_endpoint advertised for dynamic client registration.
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: /.well-known/security.txt served at api.precog.cloud.
+- id: mcp
+  conforms: true
+  evidence: Hosted Model Context Protocol server at studio.precog.cloud/api/mcp.
+- id: openapi-3.1
+  conforms: true
+  evidence: All three published specs declare openapi 3.1.0.
+- id: soc2-type-ii
+  conforms: true
+  evidence: SOC 2 Type II security reports advertised on the pricing page.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Error responses use a custom {error:{type,details}} envelope as
+    application/json, not application/problem+json.
+- id: bearer-token-auth
+  conforms: true
+  evidence: HTTP Bearer securityScheme applied globally across all specs.

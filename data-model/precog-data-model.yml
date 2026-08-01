@@ -1,0 +1,94 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/precog-public-http-api-openapi.yaml, openapi/precog-metadata-http-api-openapi.yaml
+notes: 'Entity graph derived from the Precog public/metadata OpenAPI schemas and path structure. Precog''s
+  core loop: a Source (a connected business application) is ingested through a Pipeline into a Destination
+  (a data warehouse), producing Datasets, over which Semantic Contexts and a generated Semantic Model
+  add business meaning.'
+entities:
+- name: source
+  description: A connected business application / data origin (a "connector").
+  key_paths:
+  - /sources
+  - /sources/{source-id}
+- name: destination
+  description: A target data warehouse the pipeline loads into.
+  key_paths:
+  - /destinations
+  - /destinations/{destination-id}
+- name: kind
+  description: A connector schema/type definition for a source or destination.
+  key_paths:
+  - /kinds/source
+  - /kinds/destination
+  - /kinds/{kind-id}
+- name: pipeline
+  description: A configured ingest flow moving data from a source to a destination.
+  key_paths:
+  - /pipelines
+  - /pipelines/{pipeline-id}
+- name: dataset
+  description: A table/collection materialized by a pipeline from a source.
+  key_paths:
+  - /sources/{source-id}/datasets
+  - /pipelines/{pipeline-id}/datasets
+- name: load
+  description: A single execution of a pipeline's data load.
+  key_paths:
+  - /pipelines/{pipeline-id}/loads
+  - /loads/{load-id}/metrics
+- name: semantic-context
+  description: Business logic/definitions/relationships attached to a pipeline.
+  key_paths:
+  - /pipelines/{pipeline-id}/semantic-contexts
+- name: semantic-model-generation-job
+  description: An async job that generates a semantic model over ingested data.
+  key_paths:
+  - /semantic-model/generation-jobs
+  - /semantic-model/generation-jobs/{job-id}
+- name: relationship-candidate
+  description: A detected cross-source data relationship suggestion.
+  key_paths:
+  - /data-model/relationship-candidates
+- name: issue
+  description: A support/data issue tracked against the workspace.
+  key_paths:
+  - /issues/
+  - /issues/{issue-id}
+relationships:
+- from: pipeline
+  to: source
+  type: belongs_to
+  via: source-id
+- from: pipeline
+  to: destination
+  type: belongs_to
+  via: destination-id
+- from: dataset
+  to: source
+  type: belongs_to
+  via: source-id
+- from: dataset
+  to: pipeline
+  type: belongs_to
+  via: pipeline-id
+- from: pipeline
+  to: dataset
+  type: has_many
+  via: /pipelines/{pipeline-id}/datasets
+- from: pipeline
+  to: semantic-context
+  type: has_many
+  via: /pipelines/{pipeline-id}/semantic-contexts
+- from: pipeline
+  to: load
+  type: has_many
+  via: /pipelines/{pipeline-id}/loads
+- from: source
+  to: kind
+  type: belongs_to
+  via: kind
+- from: relationship-candidate
+  to: source
+  type: references
+  via: column-ref

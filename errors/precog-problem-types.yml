@@ -1,0 +1,70 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/*
+format: custom
+envelope:
+  media_type: application/json
+  shape: '{ "error": { "type": string, "details": string } }'
+  note: Precog returns a custom error envelope, not RFC 9457 application/problem+json.
+problems:
+- status: 400
+  title: Bad Request
+  occurrences: 25
+  description: Bad Request
+  example_operations:
+  - post-sources
+  - auth-source-by-id
+  - put-sources-source-id
+  - post-destinations
+  - put-destinations-destination-id
+  - post-pipelines
+- status: 401
+  title: Unauthorized
+  occurrences: 60
+  description: Unauthorized
+  example_operations:
+  - get-sources
+  - post-sources
+  - refresh-source-by-id
+  - auth-source-by-id
+  - get-sources-source-id
+  - put-sources-source-id
+- status: 402
+  title: Payment Required
+  occurrences: 1
+  description: Payment Required - trial period has expired and there is no active subscription
+  example_operations:
+  - post-pipelines-pipeline-id-loads
+- status: 404
+  title: Not Found
+  occurrences: 44
+  description: Source not found.
+  example_operations:
+  - refresh-source-by-id
+  - auth-source-by-id
+  - get-sources-source-id
+  - put-sources-source-id
+  - delete-sources-source-id
+  - delete-sources-source-id-pipelines-pipeline-id
+- status: 422
+  title: Unprocessable Entity
+  occurrences: 20
+  description: Source kind unsupported or other semantic error.
+  example_operations:
+  - post-sources
+  - put-sources-source-id
+  - delete-sources-source-id-pipelines-pipeline-id
+  - post-destinations
+  - put-destinations-destination-id
+  - post-pipelines
+- status: 502
+  title: Bad Gateway
+  occurrences: 6
+  description: Problematic Request to External Server
+  example_operations:
+  - post-sources
+  - put-sources-source-id
+  - put-destinations-destination-id
+  - post-pipelines-pipeline-id-loads
+  - post-stripe-check
+  - post-stripe-session

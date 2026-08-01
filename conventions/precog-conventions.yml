@@ -1,0 +1,41 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/*, https://studio.precog.cloud/docs/
+authentication:
+  style: HTTP Bearer token (opaque access token), applied globally.
+  mcp: OAuth 2.0 (PKCE S256) on the MCP surface — see authentication/precog-authentication.yml
+  cross_ref: authentication/precog-authentication.yml
+idempotency:
+  supported: false
+  note: >-
+    No Idempotency-Key header or idempotency contract is declared in the
+    published specs. Mutating operations are not documented as idempotent.
+pagination:
+  style: none-detected
+  note: >-
+    Collection endpoints (GET /sources, /destinations, /pipelines, dataset
+    lists) return full arrays with no cursor/offset/limit parameters or Link
+    headers in the published specs.
+versioning:
+  scheme: spec-version
+  current: '1.0'
+  note: >-
+    Specs carry info.version 1.0; no version prefix appears in the URL paths and
+    no dated/header version scheme is documented.
+  cross_ref: lifecycle/precog-lifecycle.yml
+error_envelope:
+  media_type: application/json
+  shape: '{ "error": { "type": string, "details": string } }'
+  rfc9457: false
+  cross_ref: errors/precog-problem-types.yml
+rate_limit_signaling:
+  api_level: none-detected
+  note: >-
+    No 429 responses or X-RateLimit/Retry-After headers in the API. A
+    source-side `ratelimitReset` (epoch millis) appears only inside
+    dataset-telemetry, describing upstream connector throttling, not API limits.
+async_jobs:
+  pattern: >-
+    Long-running work (semantic-model generation, pipeline loads) uses a
+    job/resource model — POST returns 202 and a job id; poll GET
+    /semantic-model/generation-jobs/{job-id} for status.

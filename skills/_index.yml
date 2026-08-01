@@ -1,0 +1,24 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/precog-public-http-api-openapi.yaml
+skills:
+- file: precog-ingest-source-to-warehouse.md
+  name: Ingest a source into a data warehouse with Precog
+  api: openapi/precog-public-http-api-openapi.yaml
+  operations:
+  - get-kinds-source
+  - post-sources
+  - auth-source-by-id
+  - get-kinds-destination
+  - post-destinations
+  - post-pipelines
+  - post-pipelines-pipeline-id-loads
+  - get-pipelines-pipeline-id-status
+- file: precog-generate-semantic-model.md
+  name: Generate a semantic model and add context with Precog
+  api: openapi/precog-public-http-api-openapi.yaml
+  operations:
+  - post-semantic-model-generation-jobs
+  - get-semantic-model-generation-jobs-job-id
+  - get-data-model-relationship-candidates
+  - post-pipelines-pipeline-id-semantic-contexts
