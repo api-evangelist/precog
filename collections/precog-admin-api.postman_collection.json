@@ -1,0 +1,1176 @@
+{
+  "item": [
+    {
+      "id": "2797b10c-367a-4575-b87e-7a950133a584",
+      "name": "Admin",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "38f01e81-c9a1-4642-873e-2e09b47f0f86",
+          "name": "Create a new job override.",
+          "request": {
+            "name": "Create a new job override.",
+            "description": {
+              "content": "Create a new job override entry.\nAllocates a fresh JobOverridesId and persists a new override with the given\ndomain, appliesTo predicate, and toOverride patch.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "overrides"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain\": \"<string>\",\n  \"appliesTo\": {\n    \"datasetIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"pipelineIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"sourceIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"destinationIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"datasetPaths\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"sourceKindNames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"destinationKindNames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"tenantIds\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"toOverride\": {\n    \"envVars\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"limits\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\",\n      \"key_4\": \"<string>\"\n    },\n    \"requests\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"nodeSelector\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"podSpecFields\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "294c5b90-9612-4a28-be3d-99c1eb362d79",
+              "name": "Override created successfully. Returns the new JobOverridesId.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "overrides"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"schema\",\n  \"appliesTo\": {\n    \"datasetIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"pipelineIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"datasetPaths\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tenantIds\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"toOverride\": {\n    \"envVars\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"limits\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"requests\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"nodeSelector\": {\n      \"key_0\": \"string\"\n    },\n    \"podSpecFields\": {\n      \"key_0\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da6f0f35-f8b6-4279-996e-bc18614e08a1",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "overrides"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"schema\",\n  \"appliesTo\": {\n    \"datasetIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"pipelineIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"datasetPaths\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tenantIds\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"toOverride\": {\n    \"envVars\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"limits\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"requests\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"nodeSelector\": {\n      \"key_0\": \"string\"\n    },\n    \"podSpecFields\": {\n      \"key_0\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c6ac7ed0-180b-405f-9011-2c19b8f1571e",
+          "name": "Fetch a single job override by id.",
+          "request": {
+            "name": "Fetch a single job override by id.",
+            "description": {
+              "content": "Fetch a single job override entry by its JobOverridesId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "overrides",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The JobOverridesId."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "86bc9edd-6270-4bd9-be10-b5bd9d4f32ea",
+              "name": "The job override entry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "overrides",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The JobOverridesId."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"domain\": \"theta-sketch-compute\",\n  \"appliesTo\": {\n    \"datasetIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"pipelineIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"datasetPaths\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tenantIds\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"toOverride\": {\n    \"envVars\": {\n      \"key_0\": \"string\"\n    },\n    \"limits\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"requests\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"nodeSelector\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"podSpecFields\": {\n      \"key_0\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31d10759-3712-4672-85dd-ce0b127880ac",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "overrides",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The JobOverridesId."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3bc29a0d-885d-4242-b35a-c440fb254791",
+              "name": "No override entry with the given id exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "overrides",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The JobOverridesId."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8695ddc3-e2f6-4c77-a612-ab4d6cb556b8",
+          "name": "Replace an existing job override.",
+          "request": {
+            "name": "Replace an existing job override.",
+            "description": {
+              "content": "Full replacement of the override entry identified by id.\nThe domain, appliesTo, and toOverride fields are all overwritten.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "overrides",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The JobOverridesId."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain\": \"<string>\",\n  \"appliesTo\": {\n    \"datasetIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"pipelineIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"sourceIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"destinationIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"datasetPaths\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"sourceKindNames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"destinationKindNames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"tenantIds\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"toOverride\": {\n    \"envVars\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"limits\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\",\n      \"key_4\": \"<string>\"\n    },\n    \"requests\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"nodeSelector\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"podSpecFields\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a9ac3c88-db25-4dea-84b8-b5478209c6b4",
+              "name": "Override replaced successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "overrides",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The JobOverridesId."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"schema\",\n  \"appliesTo\": {\n    \"datasetIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"pipelineIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"datasetPaths\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tenantIds\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"toOverride\": {\n    \"envVars\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"limits\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"requests\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"nodeSelector\": {\n      \"key_0\": \"string\"\n    },\n    \"podSpecFields\": {\n      \"key_0\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "54c36869-bc5f-4937-9b49-7af38d80a4b0",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "overrides",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The JobOverridesId."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"schema\",\n  \"appliesTo\": {\n    \"datasetIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"pipelineIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"datasetPaths\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tenantIds\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"toOverride\": {\n    \"envVars\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"limits\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"requests\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"nodeSelector\": {\n      \"key_0\": \"string\"\n    },\n    \"podSpecFields\": {\n      \"key_0\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "aeecc0e8-688a-40fe-b6fa-69a96fa3b964",
+              "name": "No override entry with the given id exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "overrides",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The JobOverridesId."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"schema\",\n  \"appliesTo\": {\n    \"datasetIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"pipelineIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"datasetPaths\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tenantIds\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"toOverride\": {\n    \"envVars\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"limits\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"requests\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"nodeSelector\": {\n      \"key_0\": \"string\"\n    },\n    \"podSpecFields\": {\n      \"key_0\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c9c708d-7043-47ce-9cdc-ab975019e821",
+          "name": "Delete a job override.",
+          "request": {
+            "name": "Delete a job override.",
+            "description": {
+              "content": "Delete the override entry identified by id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "overrides",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The JobOverridesId."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "34aab2ac-8a42-4828-91b7-15a3585887b9",
+              "name": "Override deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "overrides",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The JobOverridesId."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0709f1af-c454-4f7e-a1cb-55051ac8ed8d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "overrides",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The JobOverridesId."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "79a9e4b9-6466-43e2-908b-bc5cfbe20ae7",
+              "name": "No override entry with the given id exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "overrides",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The JobOverridesId."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "995efc1a-5b33-4363-beee-46c12758ac16",
+          "name": "Append applicability constraints to an existing override.",
+          "request": {
+            "name": "Append applicability constraints to an existing override.",
+            "description": {
+              "content": "The stored entry's appliesTo is updated by set-union of selectors (per-field),\ni.e. values in appliesTo are added to the existing selector sets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "overrides",
+                ":id",
+                "applies-to"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The JobOverridesId."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"appliesTo\": {\n    \"datasetIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"pipelineIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"sourceIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"destinationIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"datasetPaths\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"sourceKindNames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"destinationKindNames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"tenantIds\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e67d2ec0-7e79-4d2b-88d4-1a4169c2c3c1",
+              "name": "AppliesTo appended successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "overrides",
+                    ":id",
+                    "applies-to"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The JobOverridesId."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"appliesTo\": {\n    \"datasetIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"pipelineIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"datasetPaths\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tenantIds\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ed21aada-9e49-4187-9254-b350b601d415",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "overrides",
+                    ":id",
+                    "applies-to"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The JobOverridesId."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"appliesTo\": {\n    \"datasetIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"pipelineIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"datasetPaths\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tenantIds\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "af28d4f1-ff5a-43b7-a319-26f68c5c8474",
+              "name": "No override entry with the given id exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "overrides",
+                    ":id",
+                    "applies-to"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The JobOverridesId."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"appliesTo\": {\n    \"datasetIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"pipelineIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"datasetPaths\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sourceKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"destinationKindNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"tenantIds\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e628f081-0802-4a03-af14-52295dad94da",
+          "name": "List all job overrides for a domain.",
+          "request": {
+            "name": "List all job overrides for a domain.",
+            "description": {
+              "content": "Stream all override entries for the given JobDomain.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "overrides",
+                "domain",
+                ":domain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "domain",
+                  "description": "(Required) The job domain to list overrides for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "44b3f663-85fb-434c-8c24-1093a58b13e2",
+              "name": "A JSON array of job override entries.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "overrides",
+                    "domain",
+                    ":domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain",
+                      "description": "(Required) The job domain to list overrides for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"domain\": \"theta-sketch-compute\",\n    \"appliesTo\": {\n      \"datasetIds\": [\n        \"string\",\n        \"string\"\n      ],\n      \"pipelineIds\": [\n        \"string\",\n        \"string\"\n      ],\n      \"sourceIds\": [\n        \"string\",\n        \"string\"\n      ],\n      \"destinationIds\": [\n        \"string\",\n        \"string\"\n      ],\n      \"datasetPaths\": [\n        \"string\",\n        \"string\"\n      ],\n      \"sourceKindNames\": [\n        \"string\",\n        \"string\"\n      ],\n      \"destinationKindNames\": [\n        \"string\",\n        \"string\"\n      ],\n      \"tenantIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"toOverride\": {\n      \"envVars\": {\n        \"key_0\": \"string\"\n      },\n      \"limits\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": \"string\"\n      },\n      \"requests\": {\n        \"key_0\": \"string\"\n      },\n      \"nodeSelector\": {\n        \"key_0\": \"string\"\n      },\n      \"podSpecFields\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    }\n  },\n  {\n    \"id\": \"string\",\n    \"domain\": \"statistic\",\n    \"appliesTo\": {\n      \"datasetIds\": [\n        \"string\",\n        \"string\"\n      ],\n      \"pipelineIds\": [\n        \"string\",\n        \"string\"\n      ],\n      \"sourceIds\": [\n        \"string\",\n        \"string\"\n      ],\n      \"destinationIds\": [\n        \"string\",\n        \"string\"\n      ],\n      \"datasetPaths\": [\n        \"string\",\n        \"string\"\n      ],\n      \"sourceKindNames\": [\n        \"string\",\n        \"string\"\n      ],\n      \"destinationKindNames\": [\n        \"string\",\n        \"string\"\n      ],\n      \"tenantIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"toOverride\": {\n      \"envVars\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"limits\": {\n        \"key_0\": \"string\"\n      },\n      \"requests\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": \"string\"\n      },\n      \"nodeSelector\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"podSpecFields\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": \"string\"\n      }\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "059d6013-a850-454b-8254-0d996e9a6888",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "overrides",
+                    "domain",
+                    ":domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain",
+                      "description": "(Required) The job domain to list overrides for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:30000",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a8d8d7c6-e2ec-446f-82bc-660bb5ba16e1",
+    "name": "http-api Admin API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Precog admin HTTP REST API.\n\nContact Support:\n Email: support@precog.com",
+      "type": "text/plain"
+    }
+  }
+}

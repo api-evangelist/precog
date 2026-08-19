@@ -1,0 +1,237 @@
+{
+  "item": [
+    {
+      "id": "6031d4b0-c998-4162-92ad-05de7322fd5a",
+      "name": "Loads",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7a0efe93-280e-4db7-8088-a71d14ec894e",
+          "name": "Get per-dataset, per-table metrics for a specific load",
+          "request": {
+            "name": "Get per-dataset, per-table metrics for a specific load",
+            "description": {
+              "content": "Returns metrics for a specific pipeline load, grouped by dataset and table.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "loads",
+                ":load-id",
+                "metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "load-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5c749ff7-27ae-408c-a571-6514562e35b3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loads",
+                    ":load-id",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "load-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"metrics\": {\n    \"key_0\": {\n      \"metrics\": {\n        \"key_0\": {\n          \"rows\": 2023.7128372454981,\n          \"bytes\": 4107.499064523856\n        },\n        \"key_1\": {\n          \"rows\": 6737.907673491968,\n          \"bytes\": 1559.4839824718076\n        }\n      },\n      \"total\": {\n        \"rows\": 1086.7564207445212,\n        \"bytes\": 5886.988630111808\n      }\n    },\n    \"key_1\": {\n      \"metrics\": {\n        \"key_0\": {\n          \"rows\": 2011.8587379790276,\n          \"bytes\": 5059.75643907498\n        },\n        \"key_1\": {\n          \"rows\": 2801.8675940200264,\n          \"bytes\": 6419.665814417615\n        }\n      },\n      \"total\": {\n        \"rows\": 4070.162750065116,\n        \"bytes\": 621.8209100131278\n      }\n    },\n    \"key_2\": {\n      \"metrics\": {\n        \"key_0\": {\n          \"rows\": 6559.177554311604,\n          \"bytes\": 5652.278472422168\n        }\n      },\n      \"total\": {\n        \"rows\": 1181.8192516082227,\n        \"bytes\": 8286.825191000158\n      }\n    },\n    \"key_3\": {\n      \"metrics\": {\n        \"key_0\": {\n          \"rows\": 3755.6399452913524,\n          \"bytes\": 7106.164830616646\n        },\n        \"key_1\": {\n          \"rows\": 6828.770253427391,\n          \"bytes\": 6099.186877569071\n        }\n      },\n      \"total\": {\n        \"rows\": 3624.662326372402,\n        \"bytes\": 435.71106497867663\n      }\n    }\n  },\n  \"total\": {\n    \"rows\": 9002.977270325715,\n    \"bytes\": 593.7237378151283\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dacea688-e659-4410-846d-860e57c87410",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loads",
+                    ":load-id",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "load-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ca8bcf5c-25f4-4eeb-a493-0160308f96f0",
+              "name": "Load not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "loads",
+                    ":load-id",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "load-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:30000",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "307cd78c-0239-4b6f-bf5a-68cc6ba88ba9",
+    "name": "http-api Admin Loads API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Precog admin HTTP REST API.\n\nContact Support:\n Email: support@precog.com",
+      "type": "text/plain"
+    }
+  }
+}

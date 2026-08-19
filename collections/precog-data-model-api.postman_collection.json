@@ -1,0 +1,298 @@
+{
+  "item": [
+    {
+      "id": "d053cbce-b5a3-4fd3-8c25-254664599e53",
+      "name": "Data Model",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fdc09924-e7fb-4657-be5d-e11f2db3530d",
+          "name": "Get cross-source relationship candidates",
+          "request": {
+            "name": "Get cross-source relationship candidates",
+            "description": {
+              "content": "Returns scored candidate join columns across the requested sources within a\npipeline. Each candidate pairs two fully-qualified destination columns with a\nscore indicating the likelihood that the join is useful.\n\nCandidates are ordered by score descending. Scores are ordinal within a single\nresponse and should not be compared across calls.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data-model",
+                "relationship-candidates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pipeline",
+                  "value": "<string>",
+                  "description": "(Required) ID of the pipeline whose destination layout is used to resolve column references."
+                },
+                {
+                  "disabled": false,
+                  "key": "sources",
+                  "value": "<string>",
+                  "description": "(Required) Comma-separated list of source IDs to consider. At least two sources must be\nprovided.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d48e60d4-0d5c-454b-a795-ea46542f92e8",
+              "name": "Relationship candidates computed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data-model",
+                    "relationship-candidates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pipeline",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sources",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"candidates\": [\n    {\n      \"referrer\": {\n        \"database\": \"string\",\n        \"schema\": \"string\",\n        \"table\": \"string\",\n        \"column\": \"string\"\n      },\n      \"referent\": {\n        \"database\": \"string\",\n        \"schema\": \"string\",\n        \"table\": \"string\",\n        \"column\": \"string\"\n      },\n      \"score\": 0.42403908480649877,\n      \"relationshipType\": \"oneToMany\"\n    },\n    {\n      \"referrer\": {\n        \"database\": \"string\",\n        \"schema\": \"string\",\n        \"table\": \"string\",\n        \"column\": \"string\"\n      },\n      \"referent\": {\n        \"database\": \"string\",\n        \"schema\": \"string\",\n        \"table\": \"string\",\n        \"column\": \"string\"\n      },\n      \"score\": 0.2891445200049694,\n      \"relationshipType\": \"oneToMany\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ff58f8f-327a-47a2-8a75-0ab5e061dc95",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data-model",
+                    "relationship-candidates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pipeline",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sources",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d881acfd-8de0-4b1c-b585-f571f776d0d4",
+              "name": "Pipeline not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data-model",
+                    "relationship-candidates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pipeline",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sources",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"details\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98cac5ba-8f56-41d9-90be-35859d3bd8fd",
+              "name": "One or more sources are not part of the pipeline, or the pipeline's destination\nis not a supported warehouse kind.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data-model",
+                    "relationship-candidates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pipeline",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sources",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"details\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:30000",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "334488c2-8b64-4494-8d71-9b07bb4ebe1c",
+    "name": "http-api Admin Data Model API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Precog admin HTTP REST API.\n\nContact Support:\n Email: support@precog.com",
+      "type": "text/plain"
+    }
+  }
+}

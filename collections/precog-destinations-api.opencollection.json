@@ -1,0 +1,97 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "http-api Admin Destinations API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Destinations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Destinations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/destinations",
+            "params": [
+              {
+                "name": "kind-id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve the configured destinations, optionally filtering by kind."
+        },
+        {
+          "info": {
+            "name": "Create Destination",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:30000/destinations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Configure a new destination."
+        },
+        {
+          "info": {
+            "name": "Get a destination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/destinations/:destination-id",
+            "params": [
+              {
+                "name": "destination-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a particular destination."
+        },
+        {
+          "info": {
+            "name": "Redefine a destination",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:30000/destinations/:destination-id",
+            "params": [
+              {
+                "name": "destination-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Redefine an existing destination."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

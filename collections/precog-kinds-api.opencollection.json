@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "http-api Admin Kinds API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Kinds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get connector schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/kinds/:kind-id",
+            "params": [
+              {
+                "name": "kind-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the configuration schema for a particular kind of source."
+        },
+        {
+          "info": {
+            "name": "Get source kinds",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/kinds/source"
+          },
+          "docs": "Retrieve the available kinds of sources."
+        },
+        {
+          "info": {
+            "name": "Get destination kinds",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/kinds/destination"
+          },
+          "docs": "Retrieve the available kinds of destinations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

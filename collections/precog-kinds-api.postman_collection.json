@@ -1,0 +1,473 @@
+{
+  "item": [
+    {
+      "id": "5f17a91a-1af8-4f73-91a9-e27a18ee5c49",
+      "name": "Kinds",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4310052d-4a66-40c9-a2eb-c6c952749999",
+          "name": "Get connector schema",
+          "request": {
+            "name": "Get connector schema",
+            "description": {
+              "content": "Get the configuration schema for a particular kind of source.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "kinds",
+                ":kind-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "kind-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "078f7791-875f-45da-9ed8-04698e779b6d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kinds",
+                    ":kind-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "kind-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"schema\": [\n    {\n      \"input\": {\n        \"description\": \"string\",\n        \"sensitive\": true,\n        \"name\": \"string\",\n        \"exampleValue\": \"string\"\n      }\n    },\n    {\n      \"input\": {\n        \"description\": \"string\",\n        \"sensitive\": true,\n        \"name\": \"string\",\n        \"exampleValue\": \"string\"\n      }\n    }\n  ],\n  \"auth\": {\n    \"type\": \"Google Service Account Key authorization\",\n    \"details\": {\n      \"uri\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e89e1d43-5fbd-4234-83b2-f6374b42078b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kinds",
+                    ":kind-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "kind-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "743ea57a-cc12-4328-a95b-cbd047b3557b",
+              "name": "Kind not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kinds",
+                    ":kind-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "kind-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "825f64a5-f218-4136-9afe-fe1dd450199a",
+          "name": "Get source kinds",
+          "request": {
+            "name": "Get source kinds",
+            "description": {
+              "content": "Retrieve the available kinds of sources.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "kinds",
+                "source"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "daf499ce-14df-41e9-844f-08e3c1f400e3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kinds",
+                    "source"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"1\",\n    \"name\": \"Active Campaign\",\n    \"image\": \"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI0LjAuMywgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA0NjggMjIyLjUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ2OCAyMjIuNTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtmaWxsOiM2MzVCRkY7fQo8L3N0eWxlPgo8Zz4KCTxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik00MTQsMTEzLjRjMC0yNS42LTEyLjQtNDUuOC0zNi4xLTQ1LjhjLTIzLjgsMC0zOC4yLDIwLjItMzguMiw0NS42YzAsMzAuMSwxNyw0NS4zLDQxLjQsNDUuMwoJCWMxMS45LDAsMjAuOS0yLjcsMjcuNy02LjV2LTIwYy02LjgsMy40LTE0LjYsNS41LTI0LjUsNS41Yy05LjcsMC0xOC4zLTMuNC0xOS40LTE1LjJoNDguOUM0MTMuOCwxMjEsNDE0LDExNS44LDQxNCwxMTMuNHoKCQkgTTM2NC42LDEwMy45YzAtMTEuMyw2LjktMTYsMTMuMi0xNmM2LjEsMCwxMi42LDQuNywxMi42LDE2SDM2NC42eiIvPgoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTMwMS4xLDY3LjZjLTkuOCwwLTE2LjEsNC42LTE5LjYsNy44bC0xLjMtNi4yaC0yMnYxMTYuNmwyNS01LjNsMC4xLTI4LjNjMy42LDIuNiw4LjksNi4zLDE3LjcsNi4zCgkJYzE3LjksMCwzNC4yLTE0LjQsMzQuMi00Ni4xQzMzNS4xLDgzLjQsMzE4LjYsNjcuNiwzMDEuMSw2Ny42eiBNMjk1LjEsMTM2LjVjLTUuOSwwLTkuNC0yLjEtMTEuOC00LjdsLTAuMS0zNy4xCgkJYzIuNi0yLjksNi4yLTQuOSwxMS45LTQuOWM5LjEsMCwxNS40LDEwLjIsMTUuNCwyMy4zQzMxMC41LDEyNi41LDMwNC4zLDEzNi41LDI5NS4xLDEzNi41eiIvPgoJPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyMjMuOCw2MS43IDI0OC45LDU2LjMgMjQ4LjksMzYgMjIzLjgsNDEuMyAJIi8+Cgk8cmVjdCB4PSIyMjMuOCIgeT0iNjkuMyIgY2xhc3M9InN0MCIgd2lkdGg9IjI1LjEiIGhlaWdodD0iODcuNSIvPgoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTE5Ni45LDc2LjdsLTEuNi03LjRoLTIxLjZ2ODcuNWgyNVY5Ny41YzUuOS03LjcsMTUuOS02LjMsMTktNS4ydi0yM0MyMTQuNSw2OC4xLDIwMi44LDY1LjksMTk2LjksNzYuN3oiLz4KCTxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xNDYuOSw0Ny42bC0yNC40LDUuMmwtMC4xLDgwLjFjMCwxNC44LDExLjEsMjUuNywyNS45LDI1LjdjOC4yLDAsMTQuMi0xLjUsMTcuNS0zLjNWMTM1CgkJYy0zLjIsMS4zLTE5LDUuOS0xOS04LjlWOTAuNmgxOVY2OS4zaC0xOUwxNDYuOSw0Ny42eiIvPgoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTc5LjMsOTQuN2MwLTMuOSwzLjItNS40LDguNS01LjRjNy42LDAsMTcuMiwyLjMsMjQuOCw2LjRWNzIuMmMtOC4zLTMuMy0xNi41LTQuNi0yNC44LTQuNgoJCUM2Ny41LDY3LjYsNTQsNzguMiw1NCw5NS45YzAsMjcuNiwzOCwyMy4yLDM4LDM1LjFjMCw0LjYtNCw2LjEtOS42LDYuMWMtOC4zLDAtMTguOS0zLjQtMjcuMy04djIzLjhjOS4zLDQsMTguNyw1LjcsMjcuMyw1LjcKCQljMjAuOCwwLDM1LjEtMTAuMywzNS4xLTI4LjJDMTE3LjQsMTAwLjYsNzkuMywxMDUuOSw3OS4zLDk0Ljd6Ii8+CjwvZz4KPC9zdmc+Cg\"\n  },\n  {\n    \"id\": \"2\",\n    \"name\": \"Ariba Analytics\"\n  },\n  {\n    \"id\": \"3\",\n    \"name\": \"Bing Ads\"\n  },\n  {\n    \"id\": \"4\",\n    \"name\": \"Chargeback\"\n  },\n  {\n    \"id\": \"5\",\n    \"name\": \"Clockify\"\n  },\n  {\n    \"id\": \"6\",\n    \"name\": \"Everflow\"\n  },\n  {\n    \"id\": \"7\",\n    \"name\": \"Facebook Ads\"\n  },\n  {\n    \"id\": \"8\",\n    \"name\": \"Google Ads\"\n  },\n  {\n    \"id\": \"9\",\n    \"name\": \"Gravity Forms\"\n  },\n  {\n    \"id\": \"10\",\n    \"name\": \"Hubspot\"\n  },\n  {\n    \"id\": \"11\",\n    \"name\": \"Salesforce\"\n  },\n  {\n    \"id\": \"12\",\n    \"name\": \"Shopify\"\n  },\n  {\n    \"id\": \"13\",\n    \"name\": \"WooCommerce\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89c4864a-43dd-4f0b-ba41-410d8af1d164",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kinds",
+                    "source"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6666b775-0a5b-41cf-83b5-f71d1f3e0f3a",
+          "name": "Get destination kinds",
+          "request": {
+            "name": "Get destination kinds",
+            "description": {
+              "content": "Retrieve the available kinds of destinations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "kinds",
+                "destination"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6b74f67e-99b8-4278-9802-af45d29608c2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kinds",
+                    "destination"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"14\",\n    \"name\": \"Snowflake\",\n    \"image\": \"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI0LjAuMywgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA0NjggMjIyLjUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ2OCAyMjIuNTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtmaWxsOiM2MzVCRkY7fQo8L3N0eWxlPgo8Zz4KCTxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik00MTQsMTEzLjRjMC0yNS42LTEyLjQtNDUuOC0zNi4xLTQ1LjhjLTIzLjgsMC0zOC4yLDIwLjItMzguMiw0NS42YzAsMzAuMSwxNyw0NS4zLDQxLjQsNDUuMwoJCWMxMS45LDAsMjAuOS0yLjcsMjcuNy02LjV2LTIwYy02LjgsMy40LTE0LjYsNS41LTI0LjUsNS41Yy05LjcsMC0xOC4zLTMuNC0xOS40LTE1LjJoNDguOUM0MTMuOCwxMjEsNDE0LDExNS44LDQxNCwxMTMuNHoKCQkgTTM2NC42LDEwMy45YzAtMTEuMyw2LjktMTYsMTMuMi0xNmM2LjEsMCwxMi42LDQuNywxMi42LDE2SDM2NC42eiIvPgoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTMwMS4xLDY3LjZjLTkuOCwwLTE2LjEsNC42LTE5LjYsNy44bC0xLjMtNi4yaC0yMnYxMTYuNmwyNS01LjNsMC4xLTI4LjNjMy42LDIuNiw4LjksNi4zLDE3LjcsNi4zCgkJYzE3LjksMCwzNC4yLTE0LjQsMzQuMi00Ni4xQzMzNS4xLDgzLjQsMzE4LjYsNjcuNiwzMDEuMSw2Ny42eiBNMjk1LjEsMTM2LjVjLTUuOSwwLTkuNC0yLjEtMTEuOC00LjdsLTAuMS0zNy4xCgkJYzIuNi0yLjksNi4yLTQuOSwxMS45LTQuOWM5LjEsMCwxNS40LDEwLjIsMTUuNCwyMy4zQzMxMC41LDEyNi41LDMwNC4zLDEzNi41LDI5NS4xLDEzNi41eiIvPgoJPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyMjMuOCw2MS43IDI0OC45LDU2LjMgMjQ4LjksMzYgMjIzLjgsNDEuMyAJIi8+Cgk8cmVjdCB4PSIyMjMuOCIgeT0iNjkuMyIgY2xhc3M9InN0MCIgd2lkdGg9IjI1LjEiIGhlaWdodD0iODcuNSIvPgoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTE5Ni45LDc2LjdsLTEuNi03LjRoLTIxLjZ2ODcuNWgyNVY5Ny41YzUuOS03LjcsMTUuOS02LjMsMTktNS4ydi0yM0MyMTQuNSw2OC4xLDIwMi44LDY1LjksMTk2LjksNzYuN3oiLz4KCTxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0xNDYuOSw0Ny42bC0yNC40LDUuMmwtMC4xLDgwLjFjMCwxNC44LDExLjEsMjUuNywyNS45LDI1LjdjOC4yLDAsMTQuMi0xLjUsMTcuNS0zLjNWMTM1CgkJYy0zLjIsMS4zLTE5LDUuOS0xOS04LjlWOTAuNmgxOVY2OS4zaC0xOUwxNDYuOSw0Ny42eiIvPgoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTc5LjMsOTQuN2MwLTMuOSwzLjItNS40LDguNS01LjRjNy42LDAsMTcuMiwyLjMsMjQuOCw2LjRWNzIuMmMtOC4zLTMuMy0xNi41LTQuNi0yNC44LTQuNgoJCUM2Ny41LDY3LjYsNTQsNzguMiw1NCw5NS45YzAsMjcuNiwzOCwyMy4yLDM4LDM1LjFjMCw0LjYtNCw2LjEtOS42LDYuMWMtOC4zLDAtMTguOS0zLjQtMjcuMy04djIzLjhjOS4zLDQsMTguNyw1LjcsMjcuMyw1LjcKCQljMjAuOCwwLDM1LjEtMTAuMywzNS4xLTI4LjJDMTE3LjQsMTAwLjYsNzkuMywxMDUuOSw3OS4zLDk0Ljd6Ii8+CjwvZz4KPC9zdmc+Cg\"\n  },\n  {\n    \"id\": \"15\",\n    \"name\": \"Panoply\"\n  },\n  {\n    \"id\": \"16\",\n    \"name\": \"Redshift\"\n  },\n  {\n    \"id\": \"17\",\n    \"name\": \"Google BigQuery\"\n  },\n  {\n    \"id\": \"18\",\n    \"name\": \"Firebolt\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73d6bd39-077b-4af2-a622-f71732360be9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "kinds",
+                    "destination"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:30000",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c5bc7190-404d-4cbb-b628-99fc21ac1eea",
+    "name": "http-api Admin Kinds API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Precog admin HTTP REST API.\n\nContact Support:\n Email: support@precog.com",
+      "type": "text/plain"
+    }
+  }
+}

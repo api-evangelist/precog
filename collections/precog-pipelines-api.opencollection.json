@@ -1,0 +1,530 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "http-api Admin Pipelines API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pipelines",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get metadata related to this pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/metadata",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get metadata for a particular particular pipeline."
+        },
+        {
+          "info": {
+            "name": "Get dataset properties related to the in-band datasets present in this pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/dataset-properties",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get dataset properties for datasets in a particular pipeline."
+        },
+        {
+          "info": {
+            "name": "Get pipelines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/pipelines"
+          },
+          "docs": "Get all pipelines."
+        },
+        {
+          "info": {
+            "name": "Create pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:30000/pipelines",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new pipeline."
+        },
+        {
+          "info": {
+            "name": "Get the pipeline status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/pipelines/status"
+          },
+          "docs": "Get the status of all the pipelines."
+        },
+        {
+          "info": {
+            "name": "Get a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/pipelines/:pipeline-id",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a particular pipeline."
+        },
+        {
+          "info": {
+            "name": "delete-pipelines-pipeline-id",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:30000/pipelines/:pipeline-id",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes the given pipeline"
+        },
+        {
+          "info": {
+            "name": "Get the pipeline metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/metrics",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the metrics from a pipeline"
+        },
+        {
+          "info": {
+            "name": "Get the pipeline datasets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/datasets",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the datasets in the provided pipeline."
+        },
+        {
+          "info": {
+            "name": "patch-pipelines-pipeline-id-datasets",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/datasets",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add (or remove) datasets to (or from) the provided pipeline."
+        },
+        {
+          "info": {
+            "name": "Get pipeline details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/details",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get all the details for the provided pipeline."
+        },
+        {
+          "info": {
+            "name": "Get the pipeline datasets status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/status",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the status of the provided pipeline."
+        },
+        {
+          "info": {
+            "name": "Start a pipeline load",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/loads",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start a load for this pipeline."
+        },
+        {
+          "info": {
+            "name": "Rename a pipelne.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/rename",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rename a pipeline."
+        },
+        {
+          "info": {
+            "name": "Set PII handling policy for a pipeline.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/pii-config",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the PII handling policy for a pipeline. The policy controls how detected PII columns are transformed at load time."
+        },
+        {
+          "info": {
+            "name": "Set the vectorization opt-in flag for a pipeline.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/vectorize",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the vectorization opt-in flag for a pipeline (vectorization-spec-v4 / LD13).\nSemantics:\n  - `null` or omitted, or `false` → the pipeline does not vectorize;\n    its loads are byte-identical to a pipeline created before this\n    feature existed.\n  - `true` → subsequent loads of datasets in this pipeline produce\n    per-row embeddings (IBM Granite-30M, 384-dim) landed in\n    `<destination_database>.<pipeline-name>.PRETEXT` on the\n    pipeline's destination, in addition to the normal writer out"
+        },
+        {
+          "info": {
+            "name": "Embed query text against the pipeline's vector model.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/encode",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Embed a piece of text using the pipeline's vector model. The returned vector is directly comparable with those stored in the pipeline's PRETEXT destination table, making it suitable for cosine-similarity queries against the corpus."
+        },
+        {
+          "info": {
+            "name": "Get existing semantic contexts of this pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/semantic-contexts",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get existing semantic contexts of this pipeline"
+        },
+        {
+          "info": {
+            "name": "Add a semantic context to the pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/semantic-contexts",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a semantic context to the pipeline"
+        },
+        {
+          "info": {
+            "name": "Get the details of the particular semantic context",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/semantic-contexts/:semantic-context-id",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "semantic-context-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the details of the particular semantic context"
+        },
+        {
+          "info": {
+            "name": "Replace details of a semantic context",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/semantic-contexts/:semantic-context-id",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "semantic-context-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace details of a semantic context"
+        },
+        {
+          "info": {
+            "name": "Delete the semantic context",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/semantic-contexts/:semantic-context-id",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "semantic-context-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete the semantic context"
+        },
+        {
+          "info": {
+            "name": "Get the pipeline schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/schedule",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the pipeline schedule."
+        },
+        {
+          "info": {
+            "name": "Schedule a pipeline.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/schedule",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedule a pipeline."
+        },
+        {
+          "info": {
+            "name": "Get email addresses associated with the pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/notification",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get email addresses associated with the pipeline."
+        },
+        {
+          "info": {
+            "name": "Set email addresses to be notified on pipeline events.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:30000/pipelines/:pipeline-id/notification",
+            "params": [
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set email addresses to be notified on pipeline events."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "http-api Admin Data Model API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Data Model",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get cross-source relationship candidates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/data-model/relationship-candidates",
+            "params": [
+              {
+                "name": "pipeline",
+                "value": "",
+                "type": "query",
+                "description": "ID of the pipeline whose destination layout is used to resolve column references."
+              },
+              {
+                "name": "sources",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of source IDs to consider. At least two sources must be\nprovided.\n"
+              }
+            ]
+          },
+          "docs": "Returns scored candidate join columns across the requested sources within a\npipeline. Each candidate pairs two fully-qualified destination columns with a\nscore indicating the likelihood that the join is useful.\n\nCandidates are ordered by score descending. Scores are ordinal within a single\nresponse and should not be compared across calls.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

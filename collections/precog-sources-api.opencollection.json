@@ -1,0 +1,201 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "http-api Admin Sources API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/sources",
+            "params": [
+              {
+                "name": "kind-id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve the configured sources, optionally filtering by kind."
+        },
+        {
+          "info": {
+            "name": "Create Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:30000/sources",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Configure a new source."
+        },
+        {
+          "info": {
+            "name": "Request source refresh",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:30000/sources/:source-id/refresh",
+            "params": [
+              {
+                "name": "source-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Refresh a particular source."
+        },
+        {
+          "info": {
+            "name": "Authenticate a source that needs authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:30000/sources/:source-id/auth",
+            "params": [
+              {
+                "name": "source-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a source. If the source is already authenticated - the authentication details are overwritten."
+        },
+        {
+          "info": {
+            "name": "Get a source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/sources/:source-id",
+            "params": [
+              {
+                "name": "source-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a particular source."
+        },
+        {
+          "info": {
+            "name": "Redefine a source",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:30000/sources/:source-id",
+            "params": [
+              {
+                "name": "source-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Redefine an existing source."
+        },
+        {
+          "info": {
+            "name": "Delete a source",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:30000/sources/:source-id",
+            "params": [
+              {
+                "name": "source-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete the specified source and remove datasets using this source from all pipelines."
+        },
+        {
+          "info": {
+            "name": "Delete a source",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:30000/sources/:source-id/pipelines/:pipeline-id",
+            "params": [
+              {
+                "name": "source-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "pipeline-id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete the specified source and remove datasets using this source from specified pipeline. If force = true, then remove datasets using this source from all pipelines."
+        },
+        {
+          "info": {
+            "name": "Get datasets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/sources/:source-id/datasets",
+            "params": [
+              {
+                "name": "source-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get all available datasets for the provided source."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,810 @@
+{
+  "item": [
+    {
+      "id": "0ce12ba2-5028-463c-8b0b-9b87f921bd31",
+      "name": "Semantic Model",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dc325e0c-7d70-470d-a136-de95454c3166",
+          "name": "Start a semantic-model generation job",
+          "request": {
+            "name": "Start a semantic-model generation job",
+            "description": {
+              "content": "Start an asynchronous semantic-model generation job for the given source, pipeline,\ndatasets, and use case. The response contains the freshly created job in its initial\nstate; clients should poll the per-job endpoint to observe progress.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "semantic-model",
+                "generation-jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sourceId\": \"<string>\",\n  \"pipelineId\": \"<string>\",\n  \"datasetNames\": [\n    \"<string>\"\n  ],\n  \"useCase\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8007e335-fed6-486f-82ce-9de5226e0210",
+              "name": "Job accepted. The body contains the newly created job in its initial state.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "semantic-model",
+                    "generation-jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sourceId\": \"<string>\",\n  \"pipelineId\": \"<string>\",\n  \"datasetNames\": [\n    \"<string>\"\n  ],\n  \"useCase\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jobId\": \"string\",\n  \"createdAt\": \"1965-11-18T07:04:12.870Z\",\n  \"pipelineId\": \"string\",\n  \"sourceId\": \"string\",\n  \"datasetNames\": [\n    \"string\"\n  ],\n  \"useCase\": \"string\",\n  \"status\": {\n    \"state\": \"succeeded\",\n    \"since\": \"1992-04-02T14:40:33.139Z\",\n    \"result\": {\n      \"value\": \"reference ./schemas/foundation_semantic_model.schema.json not found in the OpenAPI spec\"\n    },\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1fc5cc99-8c93-4692-ac84-fdbf19d62d48",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "semantic-model",
+                    "generation-jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sourceId\": \"<string>\",\n  \"pipelineId\": \"<string>\",\n  \"datasetNames\": [\n    \"<string>\"\n  ],\n  \"useCase\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "24f17e97-6cbb-4f0c-af8d-25abbab63fe5",
+              "name": "Pipeline or source referenced in the request does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "semantic-model",
+                    "generation-jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sourceId\": \"<string>\",\n  \"pipelineId\": \"<string>\",\n  \"datasetNames\": [\n    \"<string>\"\n  ],\n  \"useCase\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"details\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a9397ae-915b-4609-a422-1a7a47fc3c78",
+              "name": "Request body is malformed or fails validation (e.g. empty `datasetNames`).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "semantic-model",
+                    "generation-jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sourceId\": \"<string>\",\n  \"pipelineId\": \"<string>\",\n  \"datasetNames\": [\n    \"<string>\"\n  ],\n  \"useCase\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"details\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "60c0c3ba-1430-472d-a7d3-8c2e5e2e46ff",
+          "name": "List semantic-model generation jobs",
+          "request": {
+            "name": "List semantic-model generation jobs",
+            "description": {
+              "content": "List all semantic-model generation jobs visible to the caller. The summary representation\nintentionally omits the per-job result payload; use the per-job endpoint to retrieve the\nfull state including the generated model.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "semantic-model",
+                "generation-jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0eb4e663-0be6-41f1-82d5-44ce39e3af69",
+              "name": "List of semantic-model generation job summaries.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "semantic-model",
+                    "generation-jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jobs\": [\n    {\n      \"jobId\": \"string\",\n      \"createdAt\": \"2026-06-08T15:44:29.618Z\",\n      \"pipelineId\": \"string\",\n      \"sourceId\": \"string\",\n      \"datasetNames\": [\n        \"string\"\n      ],\n      \"useCase\": \"string\",\n      \"status\": {\n        \"state\": \"running\",\n        \"since\": \"1985-11-18T23:45:36.431Z\",\n        \"message\": \"string\"\n      }\n    },\n    {\n      \"jobId\": \"string\",\n      \"createdAt\": \"2001-08-25T08:28:16.582Z\",\n      \"pipelineId\": \"string\",\n      \"sourceId\": \"string\",\n      \"datasetNames\": [\n        \"string\"\n      ],\n      \"useCase\": \"string\",\n      \"status\": {\n        \"state\": \"errored\",\n        \"since\": \"1968-09-20T18:15:20.490Z\",\n        \"message\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f86da4e-78ea-423a-9fb5-9dfff61d61f9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "semantic-model",
+                    "generation-jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "432f3f99-a23e-4df0-8291-26d1644d9266",
+          "name": "Get a semantic-model generation job",
+          "request": {
+            "name": "Get a semantic-model generation job",
+            "description": {
+              "content": "Retrieve the full state of a semantic-model generation job, including the generated\nmodel payload when the job has succeeded.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "semantic-model",
+                "generation-jobs",
+                ":job-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "job-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bdc78274-9616-4ac9-93c1-b1d226ef11ab",
+              "name": "Job retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "semantic-model",
+                    "generation-jobs",
+                    ":job-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jobId\": \"string\",\n  \"createdAt\": \"1965-11-18T07:04:12.870Z\",\n  \"pipelineId\": \"string\",\n  \"sourceId\": \"string\",\n  \"datasetNames\": [\n    \"string\"\n  ],\n  \"useCase\": \"string\",\n  \"status\": {\n    \"state\": \"succeeded\",\n    \"since\": \"1992-04-02T14:40:33.139Z\",\n    \"result\": {\n      \"value\": \"reference ./schemas/foundation_semantic_model.schema.json not found in the OpenAPI spec\"\n    },\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "167f9b7f-a5d8-48f5-9b0c-f2b554e8cc25",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "semantic-model",
+                    "generation-jobs",
+                    ":job-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "706a193a-ce11-468f-a5d7-d7e8cf9a7ce1",
+              "name": "No semantic-model generation job exists with the given ID.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "semantic-model",
+                    "generation-jobs",
+                    ":job-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f7c500f3-7b97-45c2-b5b8-e14013f1a319",
+          "name": "Cancel a semantic-model generation job",
+          "request": {
+            "name": "Cancel a semantic-model generation job",
+            "description": {
+              "content": "Request cancellation of a semantic-model generation job. Cancellation is asynchronous;\nthe job transitions through `canceled` once the running work observes the request.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "semantic-model",
+                "generation-jobs",
+                ":job-id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "job-id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cef5acab-e913-41db-ad78-5bcfb412ad65",
+              "name": "Cancellation accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "semantic-model",
+                    "generation-jobs",
+                    ":job-id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b80eb012-e5a4-4bea-b6a1-9526437b12fb",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "semantic-model",
+                    "generation-jobs",
+                    ":job-id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c6bc2ceb-d1d7-43ca-a994-5895fca5dc78",
+              "name": "No semantic-model generation job exists with the given ID.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "semantic-model",
+                    "generation-jobs",
+                    ":job-id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job-id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"string\",\n    \"details\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:30000",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6e2a566e-5893-4aef-b8c9-cdd0c2584b83",
+    "name": "http-api Admin Semantic Model API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Precog admin HTTP REST API.\n\nContact Support:\n Email: support@precog.com",
+      "type": "text/plain"
+    }
+  }
+}

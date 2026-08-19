@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "http-api Admin Issues API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Issues",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:30000/issues/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new issue for engineering to look into"
+        },
+        {
+          "info": {
+            "name": "Attach asset to issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:30000/issues/:issue-id/assets",
+            "params": [
+              {
+                "name": "issue-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Attaches an asset to an issue - data examples, screenshots, etc."
+        },
+        {
+          "info": {
+            "name": "Respond to issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:30000/issues/:issue-id/respond",
+            "params": [
+              {
+                "name": "issue-id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Marks an issue as having been responded to by an engineer."
+        },
+        {
+          "info": {
+            "name": "Approve issue",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:30000/issues/:issue-id/approve",
+            "params": [
+              {
+                "name": "issue-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Marks an issue resolution as accepted by the customer."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

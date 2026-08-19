@@ -1,0 +1,42 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "http-api Admin Loads API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Loads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get per-dataset, per-table metrics for a specific load",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/loads/:load-id/metrics",
+            "params": [
+              {
+                "name": "load-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns metrics for a specific pipeline load, grouped by dataset and table."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

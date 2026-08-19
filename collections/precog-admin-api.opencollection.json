@@ -1,0 +1,142 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "http-api Admin API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Admin",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a new job override.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:30000/admin/overrides",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new job override entry.\nAllocates a fresh JobOverridesId and persists a new override with the given\ndomain, appliesTo predicate, and toOverride patch."
+        },
+        {
+          "info": {
+            "name": "Fetch a single job override by id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/admin/overrides/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The JobOverridesId."
+              }
+            ]
+          },
+          "docs": "Fetch a single job override entry by its JobOverridesId."
+        },
+        {
+          "info": {
+            "name": "Replace an existing job override.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:30000/admin/overrides/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The JobOverridesId."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Full replacement of the override entry identified by id.\nThe domain, appliesTo, and toOverride fields are all overwritten."
+        },
+        {
+          "info": {
+            "name": "Delete a job override.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:30000/admin/overrides/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The JobOverridesId."
+              }
+            ]
+          },
+          "docs": "Delete the override entry identified by id."
+        },
+        {
+          "info": {
+            "name": "Append applicability constraints to an existing override.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:30000/admin/overrides/:id/applies-to",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The JobOverridesId."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The stored entry's appliesTo is updated by set-union of selectors (per-field),\ni.e. values in appliesTo are added to the existing selector sets."
+        },
+        {
+          "info": {
+            "name": "List all job overrides for a domain.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/admin/overrides/domain/:domain",
+            "params": [
+              {
+                "name": "domain",
+                "value": "",
+                "type": "path",
+                "description": "The job domain to list overrides for."
+              }
+            ]
+          },
+          "docs": "Stream all override entries for the given JobDomain."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

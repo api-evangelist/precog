@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "http-api Admin Semantic Model API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Semantic Model",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List semantic-model generation jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/semantic-model/generation-jobs"
+          },
+          "docs": "List all semantic-model generation jobs visible to the caller. The summary representation\nintentionally omits the per-job result payload; use the per-job endpoint to retrieve the\nfull state including the generated model.\n"
+        },
+        {
+          "info": {
+            "name": "Start a semantic-model generation job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:30000/semantic-model/generation-jobs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start an asynchronous semantic-model generation job for the given source, pipeline,\ndatasets, and use case. The response contains the freshly created job in its initial\nstate; clients should poll the per-job endpoint to observe progress.\n"
+        },
+        {
+          "info": {
+            "name": "Get a semantic-model generation job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:30000/semantic-model/generation-jobs/:job-id",
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the full state of a semantic-model generation job, including the generated\nmodel payload when the job has succeeded.\n"
+        },
+        {
+          "info": {
+            "name": "Cancel a semantic-model generation job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:30000/semantic-model/generation-jobs/:job-id/cancel",
+            "params": [
+              {
+                "name": "job-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Request cancellation of a semantic-model generation job. Cancellation is asynchronous;\nthe job transitions through `canceled` once the running work observes the request.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,42 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "http-api Admin Datasets API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Datasets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Abort the loading of the given dataset in all loads",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:30000/datasets/:dataset-id/abort-loading",
+            "params": [
+              {
+                "name": "dataset-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Abort the loading of the given dataset in all loads"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
