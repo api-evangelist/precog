@@ -110,6 +110,8 @@ apis:
   humanURL: https://studio.precog.cloud/docs/
   baseURL: https://api.precog.cloud
   tags:
+  - Destination
+  tags_raw:
   - Destinations
   properties:
   - type: OpenAPI
