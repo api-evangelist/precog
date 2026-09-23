@@ -1,9 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: http-api Admin Data Model API
+  title: public-http-api Data Model API
   version: '1.0'
-  summary: The Precog admin HTTP REST API.
-  description: The Precog admin HTTP REST API.
+  description: The Precog public HTTP REST API.
   contact:
     url: https://precog.com
     email: support@precog.com
@@ -27,9 +26,7 @@ paths:
 
         Candidates are ordered by score descending. Scores are ordinal within a single
 
-        response and should not be compared across calls.
-
-        '
+        response and should not be compared across calls.'
       parameters:
       - name: pipeline
         in: query
@@ -78,6 +75,43 @@ paths:
       - Data Model
 components:
   schemas:
+    relationship-candidate-list:
+      title: Relationship candidate list
+      description: A list of scored cross-source join column candidates.
+      type: object
+      properties:
+        candidates:
+          type: array
+          items:
+            $ref: '#/components/schemas/relationship-candidate'
+      required:
+      - candidates
+    column-ref:
+      title: Column reference
+      description: Fully qualified reference to a column in a destination warehouse.
+      type: object
+      properties:
+        database:
+          description: Database name in the destination warehouse.
+          type: string
+          minLength: 1
+        schema:
+          description: Schema name in the destination warehouse.
+          type: string
+          minLength: 1
+        table:
+          description: Table name in the destination warehouse.
+          type: string
+          minLength: 1
+        column:
+          description: Column name in the destination warehouse.
+          type: string
+          minLength: 1
+      required:
+      - database
+      - schema
+      - table
+      - column
     relationship-candidate:
       title: Relationship candidate
       description: 'A scored candidate join between two columns in different sources within a
@@ -145,43 +179,6 @@ components:
               type: string
       required:
       - error
-    column-ref:
-      title: Column reference
-      description: Fully qualified reference to a column in a destination warehouse.
-      type: object
-      properties:
-        database:
-          description: Database name in the destination warehouse.
-          type: string
-          minLength: 1
-        schema:
-          description: Schema name in the destination warehouse.
-          type: string
-          minLength: 1
-        table:
-          description: Table name in the destination warehouse.
-          type: string
-          minLength: 1
-        column:
-          description: Column name in the destination warehouse.
-          type: string
-          minLength: 1
-      required:
-      - database
-      - schema
-      - table
-      - column
-    relationship-candidate-list:
-      title: Relationship candidate list
-      description: A list of scored cross-source join column candidates.
-      type: object
-      properties:
-        candidates:
-          type: array
-          items:
-            $ref: '#/components/schemas/relationship-candidate'
-      required:
-      - candidates
   securitySchemes:
     BearerAuth:
       type: http

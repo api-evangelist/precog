@@ -1,12 +1,11 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: http-api Admin Pipelines API
+  title: Precog Pipelines API
   version: '1.0'
-  summary: The Precog admin HTTP REST API.
-  description: The Precog admin HTTP REST API.
   contact:
     url: https://precog.com
     email: support@precog.com
+  description: 'Operations tagged Pipelines across 2 of this provider''s published API definitions: precog-metadata-http-api-openapi.yaml, precog-public-http-api-openapi.yaml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: http://localhost:30000
 security:
@@ -71,6 +70,8 @@ paths:
           description: Pipeline not found.
       operationId: get-pipelines-pipeline-id-metadata
       description: Get metadata for a particular particular pipeline.
+    servers:
+    - url: http://localhost:30000
   /pipelines/{pipeline-id}/dataset-properties:
     parameters:
     - schema:
@@ -126,6 +127,8 @@ paths:
           description: Pipeline not found.
       operationId: get-pipeline-id-dataset-properties
       description: Get dataset properties for datasets in a particular pipeline.
+    servers:
+    - url: http://localhost:30000
   /pipelines:
     get:
       summary: Get pipelines
@@ -188,6 +191,8 @@ paths:
             schema:
               $ref: '#/components/schemas/pipeline'
         description: ''
+    servers:
+    - url: http://localhost:30000
   /pipelines/status:
     parameters: []
     get:
@@ -222,6 +227,8 @@ paths:
           description: Unauthorized
       operationId: get-pipelines-status
       description: Get the status of all the pipelines.
+    servers:
+    - url: http://localhost:30000
   /pipelines/{pipeline-id}:
     parameters:
     - schema:
@@ -257,7 +264,7 @@ paths:
       operationId: get-pipelines-pipeline-id
       description: Get a particular pipeline.
     delete:
-      summary: ''
+      summary: Delete pipelines pipeline id
       tags:
       - Pipelines
       operationId: delete-pipelines-pipeline-id
@@ -267,6 +274,9 @@ paths:
         '404':
           description: Not Found
       description: Deletes the given pipeline
+      x-summary-source: derived
+    servers:
+    - url: http://localhost:30000
   /pipelines/{pipeline-id}/metrics:
     parameters:
     - schema:
@@ -290,6 +300,10 @@ paths:
         '404':
           description: Pipeline not found.
       description: Get the metrics from a pipeline
+      operationId: getPipelinesByPipelineIdMetrics
+      x-operation-id-source: derived
+    servers:
+    - url: http://localhost:30000
   /pipelines/{pipeline-id}/datasets:
     parameters:
     - schema:
@@ -317,7 +331,7 @@ paths:
       operationId: get-pipelines-pipeline-id-datasets
       description: Get the datasets in the provided pipeline.
     patch:
-      summary: ''
+      summary: Patch pipelines pipeline id datasets
       tags:
       - Pipelines
       operationId: patch-pipelines-pipeline-id-datasets
@@ -352,6 +366,9 @@ paths:
                   action: add
                   datasetIds:
                   - string
+      x-summary-source: derived
+    servers:
+    - url: http://localhost:30000
   /pipelines/{pipeline-id}/details:
     parameters:
     - schema:
@@ -424,6 +441,8 @@ paths:
           description: Pipeline not found
       operationId: get-pipelines-pipeline-id-details
       description: Get all the details for the provided pipeline.
+    servers:
+    - url: http://localhost:30000
   /pipelines/{pipeline-id}/status:
     parameters:
     - schema:
@@ -463,6 +482,8 @@ paths:
           description: Pipeline not found
       operationId: get-pipelines-pipeline-id-status
       description: Get the status of the provided pipeline.
+    servers:
+    - url: http://localhost:30000
   /pipelines/{pipeline-id}/loads:
     parameters:
     - schema:
@@ -524,6 +545,8 @@ paths:
                 returnUrl:
                   type: string
         description: ''
+    servers:
+    - url: http://localhost:30000
   /pipelines/{pipeline-id}/rename:
     parameters:
     - schema:
@@ -532,7 +555,7 @@ paths:
       in: path
       required: true
     put:
-      summary: Rename a pipelne.
+      summary: Rename a pipelne
       tags:
       - Pipelines
       operationId: put-pipelines-pipeline-id-rename
@@ -561,6 +584,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/pipeline-name'
+    servers:
+    - url: http://localhost:30000
   /pipelines/{pipeline-id}/pii-config:
     parameters:
     - schema:
@@ -569,7 +594,7 @@ paths:
       in: path
       required: true
     put:
-      summary: Set PII handling policy for a pipeline.
+      summary: Set PII handling policy for a pipeline
       tags:
       - Pipelines
       operationId: put-pipelines-pipeline-id-pii-config
@@ -597,6 +622,8 @@ paths:
                   description: The PII handling policy to apply.
               required:
               - type
+    servers:
+    - url: http://localhost:30000
   /pipelines/{pipeline-id}/vectorize:
     parameters:
     - schema:
@@ -605,7 +632,7 @@ paths:
       in: path
       required: true
     put:
-      summary: Set the vectorization opt-in flag for a pipeline.
+      summary: Set the vectorization opt-in flag for a pipeline
       tags:
       - Pipelines
       operationId: put-pipelines-pipeline-id-vectorize
@@ -622,7 +649,28 @@ paths:
           description: Unauthorized
         '404':
           description: Pipeline not found
-      description: "Set the vectorization opt-in flag for a pipeline (vectorization-spec-v4 / LD13).\nSemantics:\n  - `null` or omitted, or `false` → the pipeline does not vectorize;\n    its loads are byte-identical to a pipeline created before this\n    feature existed.\n  - `true` → subsequent loads of datasets in this pipeline produce\n    per-row embeddings (IBM Granite-30M, 384-dim) landed in\n    `<destination_database>.<pipeline-name>.PRETEXT` on the\n    pipeline's destination, in addition to the normal writer output.\n\nFlipping the flag is **not retroactive**. See the `vectorize` field on the `pipeline` schema for the full semantics.\nSetting `true` is only valid on Snowflake-family destinations (LD15); attempts on any other destination are rejected with 400."
+      description: 'Set the vectorization opt-in flag for a pipeline (vectorization-spec-v4 / LD13).
+
+        Semantics:
+
+        - `null` or omitted, or `false` → the pipeline does not vectorize;
+
+        its loads are byte-identical to a pipeline created before this
+
+        feature existed.
+
+        - `true` → subsequent loads of datasets in this pipeline produce
+
+        per-row embeddings (IBM Granite-30M, 384-dim) landed in
+
+        `..PRETEXT` on the
+
+        pipeline''s destination, in addition to the normal writer output.
+
+
+        Flipping the flag is **not retroactive**. See the `vectorize` field on the `pipeline` schema for the full semantics.
+
+        Setting `true` is only valid on Snowflake-family destinations (LD15); attempts on any other destination are rejected with 400.'
       requestBody:
         content:
           application/json:
@@ -639,6 +687,8 @@ paths:
                   description: Enables sentiment analysis on the pipeline. Requires vectorization to also be on, otherwise a 400 will be returned.
               required:
               - vectorize
+    servers:
+    - url: http://localhost:30000
   /pipelines/{pipeline-id}/encode:
     parameters:
     - schema:
@@ -647,7 +697,7 @@ paths:
       in: path
       required: true
     post:
-      summary: Embed query text against the pipeline's vector model.
+      summary: Embed query text against the pipeline's vector model
       tags:
       - Pipelines
       operationId: post-pipelines-pipeline-id-encode
@@ -701,6 +751,8 @@ paths:
           description: Unauthorized
         '404':
           description: Pipeline not found
+    servers:
+    - url: http://localhost:30000
   /pipelines/{pipeline-id}/semantic-contexts:
     parameters:
     - schema:
@@ -776,6 +828,8 @@ paths:
                 $ref: '#/components/schemas/error-message'
       tags:
       - Pipelines
+    servers:
+    - url: http://localhost:30000
   /pipelines/{pipeline-id}/semantic-contexts/{semantic-context-id}:
     parameters:
     - schema:
@@ -869,6 +923,8 @@ paths:
                 $ref: '#/components/schemas/error-message'
       tags:
       - Pipelines
+    servers:
+    - url: http://localhost:30000
   /pipelines/{pipeline-id}/schedule:
     parameters:
     - schema:
@@ -877,7 +933,7 @@ paths:
       in: path
       required: true
     put:
-      summary: Schedule a pipeline.
+      summary: Schedule a pipeline
       tags:
       - Pipelines
       operationId: put-pipelines-pipeline-id-schedule
@@ -924,6 +980,8 @@ paths:
         '404':
           description: Pipeline not found
       description: Get the pipeline schedule.
+    servers:
+    - url: http://localhost:30000
   /pipelines/{pipeline-id}/notification:
     parameters:
     - schema:
@@ -932,7 +990,7 @@ paths:
       in: path
       required: true
     put:
-      summary: Set email addresses to be notified on pipeline events.
+      summary: Set email addresses to be notified on pipeline events
       tags:
       - Pipelines
       operationId: put-pipelines-pipeline-id-notification
@@ -979,19 +1037,215 @@ paths:
         '404':
           description: Pipeline not found
       description: Get email addresses associated with the pipeline.
+    servers:
+    - url: http://localhost:30000
 components:
   schemas:
-    dataset-telemetry:
-      title: dataset-telemetry
+    pipeline-datasets-properties:
+      description: Datasets properties used in the in-band datasets in this pipeline
+      type: object
+      title: Pipeline datasets properties
+      properties:
+        pipelineId:
+          type: string
+        datasetProperties:
+          type: object
+          title: Datasets properties
+          additionalProperties:
+            $ref: '#/components/schemas/dataset-properties'
+      required:
+      - pipelineId
+      - datasetProperties
+    dataset-properties:
+      description: Dataset properties for a particular dataset in a pipeline
+      type: object
+      title: pipeline dataset properties
+      properties:
+        primaryKey:
+          $ref: '#/components/schemas/primary-key-property'
+    foreignKey:
+      description: Foreign key
+      type: object
+      required:
+      - local
+      - reference
+      properties:
+        local:
+          type: array
+          items:
+            type: string
+            minLength: 1
+        reference:
+          type: array
+          items:
+            type: string
+            minLength: 1
+    column:
+      description: Column
+      type: object
+      title: Column
+      required:
+      - columnName
+      - columnType
+      properties:
+        columnName:
+          type: string
+          minLength: 1
+        columnType:
+          oneOf:
+          - properties: {}
+            enum:
+            - boolean
+            - long
+            - double
+            - decimal
+            - localTime
+            - localDatetime
+            - localDate
+            - offsetDatetime
+            - string
+        maxObservedStringLength:
+          type: integer
+        piiHandling:
+          description: 'Optional PII handling strategy for this column. When omitted, the column is treated as non-PII (passthrough). Possible values: - hash: replace values with a deterministic HMAC-SHA256 digest - omit: exclude the column from output entirely - nullify: replace values with empty strings'
+          type: string
+          enum:
+          - hash
+          - omit
+          - nullify
+    dataset-metadata:
+      description: Dataset tables
+      type: object
+      title: Dataset tables
+      properties:
+        datasetId:
+          type: string
+          minLength: 1
+        tables:
+          type: array
+          title: Datasets
+          items:
+            $ref: '#/components/schemas/table'
+    primary-key-property:
+      description: Primary key for a given dataset
+      type: object
+      title: pipeline dataset properties
+      properties:
+        primaryKey:
+          type: object
+          description: A primary key property
+          properties:
+            type:
+              oneOf:
+              - type: string
+                enum:
+                - strict
+                - optional
+                description: Indicates whether the key is strict or optional
+            components:
+              type: array
+              title: Primary key components
+              items:
+                type: string
+                minLength: 1
+          required:
+          - type
+          - components
+      required:
+      - primaryKey
+      additionalProperties: false
+    pipeline-metadata:
+      description: Tables in this pipeline
+      type: object
+      title: Pipeline metadata
+      properties:
+        metadata:
+          type: array
+          title: Datasets
+          items:
+            $ref: '#/components/schemas/dataset-metadata'
+    table:
+      description: Table schema
+      type: object
+      title: Table schema
+      properties:
+        tableName:
+          type: string
+          minLength: 1
+        primaryKey:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        foreignKeys:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/foreignKey'
+        columns:
+          type: array
+          title: Columns
+          items:
+            $ref: '#/components/schemas/column'
+    initial-load-params-message-limit:
+      title: initial-load-params-message-limit
       type: object
       properties:
+        maxMessages:
+          type: number
+      required:
+      - maxMessages
+    pipeline-status:
+      title: ''
+      type: object
+      properties:
+        pipelineId:
+          type: string
+          minLength: 1
+        status:
+          $ref: '#/components/schemas/pipeline-load-state'
+        driftedDatasets:
+          type: array
+          readOnly: true
+          description: Datasets within this pipeline that have drifted from their initial schema. Only present when non-empty.
+          items:
+            $ref: '#/components/schemas/drifted-dataset'
+      required:
+      - pipelineId
+      - status
+    pipeline-notification:
+      title: ''
+      type: object
+      properties:
+        emails:
+          type: array
+          items:
+            type: string
+      required:
+      - emails
+    inband-state:
+      title: ''
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+          - discovered
+          - staging
+          - writing
+          - waiting
+          - written
+          - failed
+          - errored
+          - aborted
+          - aborting
         at:
           $ref: '#/components/schemas/epoch-millis'
-        bytesStaged:
-          type: integer
-        ratelimitReset:
-          $ref: '#/components/schemas/epoch-millis'
+        message:
+          type: string
+        action:
+          $ref: '#/components/schemas/action'
       required:
+      - state
       - at
     dataset:
       title: ''
@@ -1010,121 +1264,34 @@ components:
       - id
       - name
       - sourceId
-    id:
-      title: ''
+    action:
+      title: action
       type: object
       properties:
-        id:
+        type:
+          type: string
+          enum:
+          - oauth2-request-authorization
+        url:
+          type: string
+        fieldName:
           type: string
       required:
-      - id
-    pipeline-metadata:
-      description: Tables in this pipeline
-      type: object
-      title: Pipeline metadata
-      properties:
-        metadata:
-          type: array
-          title: Datasets
-          items:
-            $ref: '#/components/schemas/dataset-metadata'
-    epoch-millis:
-      type: integer
-      title: epoch-millis
-      minimum: 0
-      example: 1742922912239
-    initial-load-params-message-limit:
-      title: initial-load-params-message-limit
+      - type
+      - url
+      - fieldName
+    dataset-telemetry:
+      title: dataset-telemetry
       type: object
       properties:
-        maxMessages:
-          type: number
+        at:
+          $ref: '#/components/schemas/epoch-millis'
+        bytesStaged:
+          type: integer
+        ratelimitReset:
+          $ref: '#/components/schemas/epoch-millis'
       required:
-      - maxMessages
-    pipeline:
-      title: ''
-      type: object
-      properties:
-        id:
-          type: string
-          minLength: 1
-          readOnly: true
-        name:
-          type: string
-          minLength: 1
-        destinationId:
-          type: string
-          minLength: 1
-        columnNameStrategy:
-          type: object
-          minLength: 1
-          required:
-          - tableNamePostfix
-          properties:
-            tableNamePostfix:
-              type: boolean
-        datasetIds:
-          type: array
-          readOnly: true
-          items:
-            type: string
-        piiConfig:
-          type: object
-          properties:
-            type:
-              type: string
-              enum:
-              - passthrough
-              - hash
-              - omit
-              - nullify
-          required:
-          - type
-          description: Policy applied to detected PII columns. Optional — when absent, passthrough is assumed (PII columns are not transformed). Omitted from responses when passthrough.
-        vectorize:
-          type: boolean
-          nullable: true
-          description: 'vectorization-spec-v4 / LD13. When `true`, loads of datasets in this pipeline will additionally produce per-row text embeddings (IBM Granite-30M, 384-dim) landed in a sibling `<destination_database>.<pipeline-name>.PRETEXT` table on the pipeline''s destination, alongside the normal writer output.
-
-            Absent or `false` preserves pre-feature behaviour: no embeddings are produced, no `PRETEXT` table is touched, and the destination output is byte-identical to a pipeline created before this field existed.
-
-            Only Snowflake-family destinations support `true` (LD15); the destination must expose a `VECTOR(FLOAT, 384)` column type. Attempts to set `true` on a non-vector-capable destination are rejected with HTTP 400.
-
-            Flipping `false`/absent → `true` is **not retroactive**: rows loaded before the flip remain un-embedded; reloads after the flip will be embedded. Flipping `true` → `false` means subsequent loads stop embedding; existing `PRETEXT` rows remain until an operator deletes them by hand.'
-        sentimentAnalysis:
-          type: boolean
-          nullable: true
-          description: Enables sentiment analysis on the pipeline. Requires vectorization to also be on, otherwise a 400 will be returned.
-      required:
-      - id
-      - name
-      - destinationId
-    simple-pipeline-metric:
-      type: object
-      properties:
-        rows:
-          type: number
-          readOnly: true
-        bytes:
-          type: number
-          readOnly: true
-    foreignKey:
-      description: Foreign key
-      type: object
-      required:
-      - local
-      - reference
-      properties:
-        local:
-          type: array
-          items:
-            type: string
-            minLength: 1
-        reference:
-          type: array
-          items:
-            type: string
-            minLength: 1
+      - at
     pipeline-details:
       title: pipeline-details
       type: object
@@ -1241,23 +1408,12 @@ components:
       - datasets
       - schedule
       - notifications
-    action:
-      title: action
+    aggregated-pipeline-metrics:
       type: object
       properties:
-        type:
-          type: string
-          enum:
-          - oauth2-request-authorization
-        url:
-          type: string
-        fieldName:
-          type: string
-      required:
-      - type
-      - url
-      - fieldName
-    pipeline-listing:
+        lastWeek:
+          $ref: '#/components/schemas/simple-pipeline-metric'
+    pipeline:
       title: ''
       type: object
       properties:
@@ -1268,69 +1424,99 @@ components:
         name:
           type: string
           minLength: 1
+        destinationId:
+          type: string
+          minLength: 1
+        columnNameStrategy:
+          type: object
+          minLength: 1
+          required:
+          - tableNamePostfix
+          properties:
+            tableNamePostfix:
+              type: boolean
+        datasetIds:
+          type: array
+          readOnly: true
+          items:
+            type: string
+        piiConfig:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - passthrough
+              - hash
+              - omit
+              - nullify
+          required:
+          - type
+          description: Policy applied to detected PII columns. Optional — when absent, passthrough is assumed (PII columns are not transformed). Omitted from responses when passthrough.
+        vectorize:
+          type: boolean
+          nullable: true
+          description: 'vectorization-spec-v4 / LD13. When `true`, loads of datasets in this pipeline will additionally produce per-row text embeddings (IBM Granite-30M, 384-dim) landed in a sibling `<destination_database>.<pipeline-name>.PRETEXT` table on the pipeline''s destination, alongside the normal writer output.
+
+            Absent or `false` preserves pre-feature behaviour: no embeddings are produced, no `PRETEXT` table is touched, and the destination output is byte-identical to a pipeline created before this field existed.
+
+            Only Snowflake-family destinations support `true` (LD15); the destination must expose a `VECTOR(FLOAT, 384)` column type. Attempts to set `true` on a non-vector-capable destination are rejected with HTTP 400.
+
+            Flipping `false`/absent → `true` is **not retroactive**: rows loaded before the flip remain un-embedded; reloads after the flip will be embedded. Flipping `true` → `false` means subsequent loads stop embedding; existing `PRETEXT` rows remain until an operator deletes them by hand.'
+        sentimentAnalysis:
+          type: boolean
+          nullable: true
+          description: Enables sentiment analysis on the pipeline. Requires vectorization to also be on, otherwise a 400 will be returned.
       required:
       - id
       - name
-    table:
-      description: Table schema
+      - destinationId
+    drifted-dataset:
+      title: ''
       type: object
-      title: Table schema
+      description: Drift information for a single dataset.
       properties:
-        tableName:
+        datasetId:
           type: string
-          minLength: 1
-        primaryKey:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-        foreignKeys:
+          description: The ID of the drifted dataset.
+        driftedAt:
+          type: string
+          format: date-time
+          description: When the schema drift was detected.
+        offset:
           type: object
-          additionalProperties:
-            $ref: '#/components/schemas/foreignKey'
-        columns:
-          type: array
-          title: Columns
-          items:
-            $ref: '#/components/schemas/column'
-    aggregated-pipeline-metrics:
-      type: object
-      properties:
-        lastWeek:
-          $ref: '#/components/schemas/simple-pipeline-metric'
-    column:
-      description: Column
-      type: object
-      title: Column
+          nullable: true
+          description: The offset at which schema drift was detected.
+          properties:
+            type:
+              type: string
+              enum:
+              - num
+              - str
+            value:
+              oneOf:
+              - type: number
+              - type: string
+          required:
+          - type
+          - value
       required:
-      - columnName
-      - columnType
+      - datasetId
+      - driftedAt
+    simple-pipeline-metric:
+      type: object
       properties:
-        columnName:
-          type: string
-          minLength: 1
-        columnType:
-          oneOf:
-          - properties: {}
-            enum:
-            - boolean
-            - long
-            - double
-            - decimal
-            - localTime
-            - localDatetime
-            - localDate
-            - offsetDatetime
-            - string
-        maxObservedStringLength:
-          type: integer
-        piiHandling:
-          description: 'Optional PII handling strategy for this column. When omitted, the column is treated as non-PII (passthrough). Possible values: - hash: replace values with a deterministic HMAC-SHA256 digest - omit: exclude the column from output entirely - nullify: replace values with empty strings'
-          type: string
-          enum:
-          - hash
-          - omit
-          - nullify
+        rows:
+          type: number
+          readOnly: true
+        bytes:
+          type: number
+          readOnly: true
+    dataset-update:
+      title: dataset-update
+      oneOf:
+      - $ref: '#/components/schemas/dataset-update-new'
+      - $ref: '#/components/schemas/dataset-update-legacy'
     pipeline-schedule:
       title: ''
       type: object
@@ -1341,71 +1527,6 @@ components:
             type: string
       required:
       - schedule
-    pipeline-status:
-      title: ''
-      type: object
-      properties:
-        pipelineId:
-          type: string
-          minLength: 1
-        status:
-          $ref: '#/components/schemas/pipeline-load-state'
-        driftedDatasets:
-          type: array
-          readOnly: true
-          description: Datasets within this pipeline that have drifted from their initial schema. Only present when non-empty.
-          items:
-            $ref: '#/components/schemas/drifted-dataset'
-      required:
-      - pipelineId
-      - status
-    dataset-metadata:
-      description: Dataset tables
-      type: object
-      title: Dataset tables
-      properties:
-        datasetId:
-          type: string
-          minLength: 1
-        tables:
-          type: array
-          title: Datasets
-          items:
-            $ref: '#/components/schemas/table'
-    error-message:
-      title: error-message
-      type: object
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - details
-          properties:
-            type:
-              type: string
-              minLength: 1
-            details:
-              type: string
-      required:
-      - error
-    pipeline-load-state:
-      title: ''
-      type: object
-      properties:
-        state:
-          type: string
-          enum:
-          - succeeded
-          - failed
-          - errored
-          - loading
-          - accepted
-        at:
-          $ref: '#/components/schemas/epoch-millis'
-      required:
-      - state
-      - at
     dataset-update-new:
       type: object
       required:
@@ -1424,50 +1545,86 @@ components:
           minProperties: 1
           additionalProperties:
             $ref: '#/components/schemas/initial-load-params'
-    pipeline-datasets-properties:
-      description: Datasets properties used in the in-band datasets in this pipeline
-      type: object
-      title: Pipeline datasets properties
-      properties:
-        pipelineId:
-          type: string
-        datasetProperties:
-          type: object
-          title: Datasets properties
-          additionalProperties:
-            $ref: '#/components/schemas/dataset-properties'
-      required:
-      - pipelineId
-      - datasetProperties
-    outofband-state:
+    pipeline-load-state:
       title: ''
       type: object
       properties:
         state:
           type: string
           enum:
-          - accepted
-          - staging
-          - scheming
-          - empty
+          - succeeded
           - failed
           - errored
-          - aborted
-          - aborting
+          - loading
+          - accepted
         at:
           $ref: '#/components/schemas/epoch-millis'
-        message:
-          type: string
-        action:
-          $ref: '#/components/schemas/action'
       required:
       - state
       - at
-    dataset-update:
-      title: dataset-update
-      oneOf:
-      - $ref: '#/components/schemas/dataset-update-new'
-      - $ref: '#/components/schemas/dataset-update-legacy'
+    dataset-update-legacy:
+      deprecated: true
+      type: object
+      required:
+      - action
+      - datasetIds
+      properties:
+        action:
+          type: string
+          enum:
+          - add
+          - remove
+          - renew
+          - abort
+        datasetIds:
+          type: array
+          description: List of dataset IDs to affect.
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+        loadParameters:
+          $ref: '#/components/schemas/initial-load-params'
+    pipeline-name:
+      title: ''
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+      required:
+      - name
+    error-message:
+      title: error-message
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - details
+          properties:
+            type:
+              type: string
+              minLength: 1
+            details:
+              type: string
+      required:
+      - error
+    pipeline-listing:
+      title: ''
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+          readOnly: true
+        name:
+          type: string
+          minLength: 1
+      required:
+      - id
+      - name
     reuse-previous-primary-key:
       description: Legacy boolean or new strategy object.
       oneOf:
@@ -1508,148 +1665,6 @@ components:
           components:
           - $.path.to.id
       - true
-    inband-state:
-      title: ''
-      type: object
-      properties:
-        state:
-          type: string
-          enum:
-          - discovered
-          - staging
-          - writing
-          - waiting
-          - written
-          - failed
-          - errored
-          - aborted
-          - aborting
-        at:
-          $ref: '#/components/schemas/epoch-millis'
-        message:
-          type: string
-        action:
-          $ref: '#/components/schemas/action'
-      required:
-      - state
-      - at
-    dataset-update-legacy:
-      deprecated: true
-      type: object
-      required:
-      - action
-      - datasetIds
-      properties:
-        action:
-          type: string
-          enum:
-          - add
-          - remove
-          - renew
-          - abort
-        datasetIds:
-          type: array
-          description: List of dataset IDs to affect.
-          uniqueItems: true
-          items:
-            type: string
-            minLength: 1
-        loadParameters:
-          $ref: '#/components/schemas/initial-load-params'
-    drifted-dataset:
-      title: ''
-      type: object
-      description: Drift information for a single dataset.
-      properties:
-        datasetId:
-          type: string
-          description: The ID of the drifted dataset.
-        driftedAt:
-          type: string
-          format: date-time
-          description: When the schema drift was detected.
-        offset:
-          type: object
-          nullable: true
-          description: The offset at which schema drift was detected.
-          properties:
-            type:
-              type: string
-              enum:
-              - num
-              - str
-            value:
-              oneOf:
-              - type: number
-              - type: string
-          required:
-          - type
-          - value
-      required:
-      - datasetId
-      - driftedAt
-    initial-load-params:
-      title: initial-load-params
-      type: object
-      properties:
-        initialWrite:
-          type: boolean
-        readRequired:
-          type: boolean
-          default: false
-        reusePreviousSchema:
-          type: boolean
-          default: false
-        reusePreviousPrimaryKey:
-          $ref: '#/components/schemas/reuse-previous-primary-key'
-        sampleParameters:
-          $ref: '#/components/schemas/initial-load-params-message-limit'
-      required:
-      - initialWrite
-    dataset-status:
-      title: ''
-      type: object
-      description: ''
-      properties:
-        id:
-          type: string
-          minLength: 1
-        outOfBand:
-          $ref: '#/components/schemas/outofband-state'
-        inBand:
-          $ref: '#/components/schemas/inband-state'
-        telemetry:
-          $ref: '#/components/schemas/dataset-telemetry'
-      required:
-      - id
-    primary-key-property:
-      description: Primary key for a given dataset
-      type: object
-      title: pipeline dataset properties
-      properties:
-        primaryKey:
-          type: object
-          description: A primary key property
-          properties:
-            type:
-              oneOf:
-              - type: string
-                enum:
-                - strict
-                - optional
-                description: Indicates whether the key is strict or optional
-            components:
-              type: array
-              title: Primary key components
-              items:
-                type: string
-                minLength: 1
-          required:
-          - type
-          - components
-      required:
-      - primaryKey
-      additionalProperties: false
     pipeline-dataset-status:
       title: ''
       type: object
@@ -1672,33 +1687,81 @@ components:
       required:
       - pipelineId
       - datasets
-    pipeline-name:
+    initial-load-params:
+      title: initial-load-params
+      type: object
+      properties:
+        initialWrite:
+          type: boolean
+        readRequired:
+          type: boolean
+          default: false
+        reusePreviousSchema:
+          type: boolean
+          default: false
+        reusePreviousPrimaryKey:
+          $ref: '#/components/schemas/reuse-previous-primary-key'
+        sampleParameters:
+          $ref: '#/components/schemas/initial-load-params-message-limit'
+      required:
+      - initialWrite
+    id:
       title: ''
       type: object
       properties:
-        name:
+        id:
+          type: string
+      required:
+      - id
+    outofband-state:
+      title: ''
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+          - accepted
+          - staging
+          - scheming
+          - empty
+          - failed
+          - errored
+          - aborted
+          - aborting
+        at:
+          $ref: '#/components/schemas/epoch-millis'
+        message:
+          type: string
+        action:
+          $ref: '#/components/schemas/action'
+      required:
+      - state
+      - at
+    dataset-status:
+      title: ''
+      type: object
+      description: ''
+      properties:
+        id:
           type: string
           minLength: 1
+        outOfBand:
+          $ref: '#/components/schemas/outofband-state'
+        inBand:
+          $ref: '#/components/schemas/inband-state'
+        telemetry:
+          $ref: '#/components/schemas/dataset-telemetry'
       required:
-      - name
-    pipeline-notification:
-      title: ''
-      type: object
-      properties:
-        emails:
-          type: array
-          items:
-            type: string
-      required:
-      - emails
-    dataset-properties:
-      description: Dataset properties for a particular dataset in a pipeline
-      type: object
-      title: pipeline dataset properties
-      properties:
-        primaryKey:
-          $ref: '#/components/schemas/primary-key-property'
+      - id
+    epoch-millis:
+      type: integer
+      title: epoch-millis
+      minimum: 0
+      example: 1742922912239
   securitySchemes:
     BearerAuth:
       type: http
       scheme: bearer
+x-refined-from:
+- precog-metadata-http-api-openapi.yaml
+- precog-public-http-api-openapi.yaml

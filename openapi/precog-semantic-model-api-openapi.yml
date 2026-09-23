@@ -1,9 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: http-api Admin Semantic Model API
+  title: public-http-api Semantic Model API
   version: '1.0'
-  summary: The Precog admin HTTP REST API.
-  description: The Precog admin HTTP REST API.
+  description: The Precog public HTTP REST API.
   contact:
     url: https://precog.com
     email: support@precog.com
@@ -22,9 +21,7 @@ paths:
 
         datasets, and use case. The response contains the freshly created job in its initial
 
-        state; clients should poll the per-job endpoint to observe progress.
-
-        '
+        state; clients should poll the per-job endpoint to observe progress.'
       requestBody:
         required: true
         content:
@@ -61,9 +58,7 @@ paths:
 
         intentionally omits the per-job result payload; use the per-job endpoint to retrieve the
 
-        full state including the generated model.
-
-        '
+        full state including the generated model.'
       responses:
         '200':
           description: List of semantic-model generation job summaries.
@@ -87,9 +82,7 @@ paths:
       summary: Get a semantic-model generation job
       description: 'Retrieve the full state of a semantic-model generation job, including the generated
 
-        model payload when the job has succeeded.
-
-        '
+        model payload when the job has succeeded.'
       responses:
         '200':
           description: Job retrieved.
@@ -115,9 +108,7 @@ paths:
       summary: Cancel a semantic-model generation job
       description: 'Request cancellation of a semantic-model generation job. Cancellation is asynchronous;
 
-        the job transitions through `canceled` once the running work observes the request.
-
-        '
+        the job transitions through `canceled` once the running work observes the request.'
       responses:
         '202':
           description: Cancellation accepted.
@@ -143,6 +134,50 @@ components:
             $ref: '#/components/schemas/semantic-model-generation-job-summary'
       required:
       - jobs
+    semantic-model-generation-job-summary:
+      title: Semantic-model generation job summary
+      description: 'Summary representation of a semantic-model generation job. Identical to the full
+
+        representation except that the `result` payload is omitted from the status even when the
+
+        job has succeeded; clients must fetch the per-job endpoint to retrieve the generated
+
+        model.
+
+        '
+      type: object
+      properties:
+        jobId:
+          type: string
+          minLength: 1
+        createdAt:
+          type: string
+          format: date-time
+        pipelineId:
+          type: string
+          minLength: 1
+        sourceId:
+          type: string
+          minLength: 1
+        datasetNames:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            minLength: 1
+        useCase:
+          type: string
+          minLength: 1
+        status:
+          $ref: '#/components/schemas/semantic-model-generation-job-status-summary'
+      required:
+      - jobId
+      - createdAt
+      - pipelineId
+      - sourceId
+      - datasetNames
+      - useCase
+      - status
     semantic-model-generation-job:
       title: Semantic-model generation job
       description: 'Full representation of a semantic-model generation job, including the generated model
@@ -217,95 +252,6 @@ components:
       required:
       - state
       - since
-    semantic-model-generation-job-summary:
-      title: Semantic-model generation job summary
-      description: 'Summary representation of a semantic-model generation job. Identical to the full
-
-        representation except that the `result` payload is omitted from the status even when the
-
-        job has succeeded; clients must fetch the per-job endpoint to retrieve the generated
-
-        model.
-
-        '
-      type: object
-      properties:
-        jobId:
-          type: string
-          minLength: 1
-        createdAt:
-          type: string
-          format: date-time
-        pipelineId:
-          type: string
-          minLength: 1
-        sourceId:
-          type: string
-          minLength: 1
-        datasetNames:
-          type: array
-          minItems: 1
-          items:
-            type: string
-            minLength: 1
-        useCase:
-          type: string
-          minLength: 1
-        status:
-          $ref: '#/components/schemas/semantic-model-generation-job-status-summary'
-      required:
-      - jobId
-      - createdAt
-      - pipelineId
-      - sourceId
-      - datasetNames
-      - useCase
-      - status
-    semantic-model-generation-job-status:
-      title: Semantic-model generation job status
-      description: "Lifecycle status of a semantic-model generation job. Discriminated by `state`:\n  * `pending` and `running` carry only `state` and `since`;\n  * `succeeded` additionally carries the generated model under `result`;\n  * `errored` additionally carries a human-readable `message`;\n  * `canceled` carries only `state` and `since`.\n"
-      type: object
-      properties:
-        state:
-          type: string
-          enum:
-          - pending
-          - running
-          - succeeded
-          - errored
-          - canceled
-        since:
-          description: Timestamp at which the job entered its current state (ISO-8601).
-          type: string
-          format: date-time
-        result:
-          description: 'Generated semantic model payload. Present only when `state` is `succeeded`.
-
-            '
-          $ref: ./schemas/foundation_semantic_model.schema.json
-        message:
-          description: Failure message. Present only when `state` is `errored`.
-          type: string
-      required:
-      - state
-      - since
-    error-message:
-      title: error-message
-      type: object
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - details
-          properties:
-            type:
-              type: string
-              minLength: 1
-            details:
-              type: string
-      required:
-      - error
     semantic-model-generation-job-start-request:
       title: Semantic-model generation job start request
       description: Parameters required to start an asynchronous semantic-model generation job.
@@ -335,6 +281,51 @@ components:
       - pipelineId
       - datasetNames
       - useCase
+    error-message:
+      title: error-message
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - details
+          properties:
+            type:
+              type: string
+              minLength: 1
+            details:
+              type: string
+      required:
+      - error
+    semantic-model-generation-job-status:
+      title: Semantic-model generation job status
+      description: "Lifecycle status of a semantic-model generation job. Discriminated by `state`:\n  * `pending` and `running` carry only `state` and `since`;\n  * `succeeded` additionally carries the generated model under `result`;\n  * `errored` additionally carries a human-readable `message`;\n  * `canceled` carries only `state` and `since`.\n"
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+          - pending
+          - running
+          - succeeded
+          - errored
+          - canceled
+        since:
+          description: Timestamp at which the job entered its current state (ISO-8601).
+          type: string
+          format: date-time
+        result:
+          description: 'Generated semantic model payload. Present only when `state` is `succeeded`.
+
+            '
+          $ref: ./schemas/foundation_semantic_model.schema.json
+        message:
+          description: Failure message. Present only when `state` is `errored`.
+          type: string
+      required:
+      - state
+      - since
   securitySchemes:
     BearerAuth:
       type: http

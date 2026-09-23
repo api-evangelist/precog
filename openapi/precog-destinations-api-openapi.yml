@@ -1,9 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: http-api Admin Destinations API
+  title: public-http-api Destinations API
   version: '1.0'
-  summary: The Precog admin HTTP REST API.
-  description: The Precog admin HTTP REST API.
+  description: The Precog public HTTP REST API.
   contact:
     url: https://precog.com
     email: support@precog.com
@@ -157,28 +156,86 @@ paths:
               $ref: '#/components/schemas/connector'
 components:
   schemas:
+    auth-google-service-account-details:
+      title: auth-google-service-account-details
+      type: object
+      properties:
+        keyFile:
+          type: string
+          minLength: 1
+      required:
+      - keyFile
+    auth-oauth2-details:
+      title: auth-oauth2-details
+      type: object
+      properties:
+        authCode:
+          type: string
+          minLength: 1
+        redirectUri:
+          type: string
+          minLength: 1
+      required:
+      - authCode
+      - redirectUri
+    connector-listing:
+      description: ''
+      type: object
+      title: ''
+      properties:
+        id:
+          type: string
+          minLength: 1
+          readOnly: true
+        kindId:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+      required:
+      - id
+      - kindId
+      - name
+    auth:
+      title: auth
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - OAuth 2.0 code authorization
+          - Google Service Account Key authorization
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/auth-oauth2-details'
+          - $ref: '#/components/schemas/auth-google-service-account-details'
+      required:
+      - type
+      - details
     connector-config:
       description: ''
       type: array
       title: ''
       items:
         $ref: '#/components/schemas/connector-config-entry'
-    action:
-      title: action
+    epoch-millis:
+      type: integer
+      title: epoch-millis
+      minimum: 0
+      example: 1742922912239
+    connector-config-entry:
+      description: ''
       type: object
       properties:
-        type:
+        value:
           type: string
-          enum:
-          - oauth2-request-authorization
-        url:
+        name:
           type: string
-        fieldName:
-          type: string
+          minLength: 1
       required:
-      - type
-      - url
-      - fieldName
+      - value
+      - name
     error-message:
       title: error-message
       type: object
@@ -196,11 +253,6 @@ components:
               type: string
       required:
       - error
-    epoch-millis:
-      type: integer
-      title: epoch-millis
-      minimum: 0
-      example: 1742922912239
     connector:
       description: ''
       type: object
@@ -251,75 +303,22 @@ components:
       - config
       - name
       - status
-    auth-google-service-account-details:
-      title: auth-google-service-account-details
-      type: object
-      properties:
-        keyFile:
-          type: string
-          minLength: 1
-      required:
-      - keyFile
-    auth:
-      title: auth
+    action:
+      title: action
       type: object
       properties:
         type:
           type: string
           enum:
-          - OAuth 2.0 code authorization
-          - Google Service Account Key authorization
-        details:
-          oneOf:
-          - $ref: '#/components/schemas/auth-oauth2-details'
-          - $ref: '#/components/schemas/auth-google-service-account-details'
+          - oauth2-request-authorization
+        url:
+          type: string
+        fieldName:
+          type: string
       required:
       - type
-      - details
-    auth-oauth2-details:
-      title: auth-oauth2-details
-      type: object
-      properties:
-        authCode:
-          type: string
-          minLength: 1
-        redirectUri:
-          type: string
-          minLength: 1
-      required:
-      - authCode
-      - redirectUri
-    connector-config-entry:
-      description: ''
-      type: object
-      properties:
-        value:
-          type: string
-        name:
-          type: string
-          minLength: 1
-      required:
-      - value
-      - name
-    connector-listing:
-      description: ''
-      type: object
-      title: ''
-      properties:
-        id:
-          type: string
-          minLength: 1
-          readOnly: true
-        kindId:
-          type: string
-          minLength: 1
-        name:
-          type: string
-          minLength: 1
-      required:
-      - id
-      - kindId
-      - name
+      - url
+      - fieldName
   securitySchemes:
     BearerAuth:
       type: http

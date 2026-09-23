@@ -1,9 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: http-api Admin Kinds API
+  title: public-http-api Kinds API
   version: '1.0'
-  summary: The Precog admin HTTP REST API.
-  description: The Precog admin HTTP REST API.
+  description: The Precog public HTTP REST API.
   contact:
     url: https://precog.com
     email: support@precog.com
@@ -127,16 +126,7 @@ paths:
       description: Retrieve the available kinds of destinations.
 components:
   schemas:
-    kind-schema:
-      description: ''
-      type: array
-      title: ''
-      items:
-        oneOf:
-        - $ref: '#/components/schemas/kind-schema-input-entry'
-        - $ref: '#/components/schemas/kind-schema-upload-entry'
-        - $ref: '#/components/schemas/kind-schema-dropdown-entry'
-    connector-kind:
+    kind-schema-dropdown-field:
       description: ''
       type: object
       title: ''
@@ -144,14 +134,18 @@ components:
         name:
           type: string
           minLength: 1
-        id:
+        description:
           type: string
+        values:
+          type: array
           minLength: 1
-        image:
-          type: string
+          uniqueItems: true
+          items:
+            type: string
       required:
+      - description
       - name
-      - id
+      - values
     kind-schema-upload-field:
       description: ''
       type: object
@@ -173,7 +167,7 @@ components:
           $ref: '#/components/schemas/kind-schema-dropdown-field'
       required:
       - input
-    kind-schema-dropdown-field:
+    connector-kind:
       description: ''
       type: object
       title: ''
@@ -181,26 +175,26 @@ components:
         name:
           type: string
           minLength: 1
-        description:
+        id:
           type: string
-        values:
-          type: array
           minLength: 1
+        image:
+          type: string
+      required:
+      - name
+      - id
+    auth-schema-google-service-account-details:
+      title: auth-schema-google-service-account-details
+      type: object
+      properties:
+        scopes:
+          type: array
           uniqueItems: true
           items:
             type: string
+            minLength: 1
       required:
-      - description
-      - name
-      - values
-    kind-schema-upload-entry:
-      title: ''
-      type: object
-      properties:
-        upload:
-          $ref: '#/components/schemas/kind-schema-upload-field'
-      required:
-      - upload
+      - scopes
     auth-schema:
       title: auth-schema
       type: object
@@ -217,26 +211,14 @@ components:
       required:
       - type
       - details
-    auth-schema-google-service-account-details:
-      title: auth-schema-google-service-account-details
-      type: object
-      properties:
-        scopes:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-            minLength: 1
-      required:
-      - scopes
-    kind-schema-input-entry:
+    kind-schema-upload-entry:
       title: ''
       type: object
       properties:
-        input:
-          $ref: '#/components/schemas/kind-schema-input-field'
+        upload:
+          $ref: '#/components/schemas/kind-schema-upload-field'
       required:
-      - input
+      - upload
     kind-schema-input-field:
       description: ''
       type: object
@@ -255,6 +237,23 @@ components:
       - description
       - sensitive
       - name
+    kind-schema:
+      description: ''
+      type: array
+      title: ''
+      items:
+        oneOf:
+        - $ref: '#/components/schemas/kind-schema-input-entry'
+        - $ref: '#/components/schemas/kind-schema-upload-entry'
+        - $ref: '#/components/schemas/kind-schema-dropdown-entry'
+    kind-schema-input-entry:
+      title: ''
+      type: object
+      properties:
+        input:
+          $ref: '#/components/schemas/kind-schema-input-field'
+      required:
+      - input
     auth-schema-oauth2-details:
       title: auth-schema-oauth2-details
       type: object
