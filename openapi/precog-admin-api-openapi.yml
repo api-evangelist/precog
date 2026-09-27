@@ -171,6 +171,24 @@ paths:
       - Admin
 components:
   schemas:
+    job-overrides:
+      type: object
+      description: A complete job override entry identified by id and constrained to a job domain.
+      required:
+      - id
+      - domain
+      - appliesTo
+      - toOverride
+      properties:
+        id:
+          type: string
+          description: The JobOverridesId.
+        domain:
+          $ref: '#/components/schemas/job-domain'
+        appliesTo:
+          $ref: '#/components/schemas/applies-to'
+        toOverride:
+          $ref: '#/components/schemas/job-args-to-override'
     job-args-to-override:
       type: object
       description: 'Concrete job arguments to patch into k8s jobs.
@@ -200,6 +218,33 @@ components:
           description: Simple PodSpec string fields (currently only priorityClassName is supported).
           additionalProperties:
             type: string
+    job-domain:
+      type: string
+      enum:
+      - reader
+      - schema
+      - transactor
+      - discovery
+      - writer
+      - statistic
+      - statistic-verifier
+      - theta-sketch-compute
+      - snowflake-semantic-model-publisher
+      description: The domain a job override applies to.
+    overrides-request:
+      type: object
+      description: Request body for creating or replacing a job override.
+      required:
+      - domain
+      - appliesTo
+      - toOverride
+      properties:
+        domain:
+          $ref: '#/components/schemas/job-domain'
+        appliesTo:
+          $ref: '#/components/schemas/applies-to'
+        toOverride:
+          $ref: '#/components/schemas/job-args-to-override'
     applies-to:
       type: object
       description: 'Defines whether an override is applicable to a certain k8s job.
@@ -244,51 +289,6 @@ components:
           type: array
           items:
             type: string
-    job-overrides:
-      type: object
-      description: A complete job override entry identified by id and constrained to a job domain.
-      required:
-      - id
-      - domain
-      - appliesTo
-      - toOverride
-      properties:
-        id:
-          type: string
-          description: The JobOverridesId.
-        domain:
-          $ref: '#/components/schemas/job-domain'
-        appliesTo:
-          $ref: '#/components/schemas/applies-to'
-        toOverride:
-          $ref: '#/components/schemas/job-args-to-override'
-    job-domain:
-      type: string
-      enum:
-      - reader
-      - schema
-      - transactor
-      - discovery
-      - writer
-      - statistic
-      - statistic-verifier
-      - theta-sketch-compute
-      - snowflake-semantic-model-publisher
-      description: The domain a job override applies to.
-    overrides-request:
-      type: object
-      description: Request body for creating or replacing a job override.
-      required:
-      - domain
-      - appliesTo
-      - toOverride
-      properties:
-        domain:
-          $ref: '#/components/schemas/job-domain'
-        appliesTo:
-          $ref: '#/components/schemas/applies-to'
-        toOverride:
-          $ref: '#/components/schemas/job-args-to-override'
   securitySchemes:
     BearerAuth:
       type: http

@@ -37,6 +37,23 @@ paths:
               $ref: '#/components/schemas/log-message'
 components:
   schemas:
+    error-message:
+      title: error-message
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - details
+          properties:
+            type:
+              type: string
+              minLength: 1
+            details:
+              type: string
+      required:
+      - error
     log-message:
       title: log-message
       type: object
@@ -55,23 +72,6 @@ components:
       - level
       - message
       examples: []
-    error-message:
-      title: error-message
-      type: object
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - details
-          properties:
-            type:
-              type: string
-              minLength: 1
-            details:
-              type: string
-      required:
-      - error
   securitySchemes:
     BearerAuth:
       type: http

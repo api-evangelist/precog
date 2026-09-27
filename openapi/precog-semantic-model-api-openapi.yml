@@ -124,6 +124,34 @@ paths:
       - Semantic Model
 components:
   schemas:
+    semantic-model-generation-job-status:
+      title: Semantic-model generation job status
+      description: "Lifecycle status of a semantic-model generation job. Discriminated by `state`:\n  * `pending` and `running` carry only `state` and `since`;\n  * `succeeded` additionally carries the generated model under `result`;\n  * `errored` additionally carries a human-readable `message`;\n  * `canceled` carries only `state` and `since`.\n"
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+          - pending
+          - running
+          - succeeded
+          - errored
+          - canceled
+        since:
+          description: Timestamp at which the job entered its current state (ISO-8601).
+          type: string
+          format: date-time
+        result:
+          description: 'Generated semantic model payload. Present only when `state` is `succeeded`.
+
+            '
+          $ref: ./schemas/foundation_semantic_model.schema.json
+        message:
+          description: Failure message. Present only when `state` is `errored`.
+          type: string
+      required:
+      - state
+      - since
     semantic-model-generation-job-list:
       title: Semantic-model generation job list
       type: object
@@ -178,6 +206,80 @@ components:
       - datasetNames
       - useCase
       - status
+    semantic-model-generation-job-start-request:
+      title: Semantic-model generation job start request
+      description: Parameters required to start an asynchronous semantic-model generation job.
+      type: object
+      properties:
+        sourceId:
+          description: ID of the source the job will read from.
+          type: string
+          minLength: 1
+        pipelineId:
+          description: ID of the pipeline the generated model will be associated with.
+          type: string
+          minLength: 1
+        datasetNames:
+          description: Non-empty list of dataset names to include in the generated semantic model.
+          type: array
+          minItems: 1
+          items:
+            type: string
+            minLength: 1
+        useCase:
+          description: Use case which determines how the semantic model is generated.
+          type: string
+          minLength: 1
+      required:
+      - sourceId
+      - pipelineId
+      - datasetNames
+      - useCase
+    semantic-model-generation-job-status-summary:
+      title: Semantic-model generation job status (summary)
+      description: 'Lifecycle status as returned by list endpoints. Identical to
+
+        `semantic-model-generation-job-status` except that the `result` payload is never
+
+        included, even when the job has succeeded.
+
+        '
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+          - pending
+          - running
+          - succeeded
+          - errored
+          - canceled
+        since:
+          type: string
+          format: date-time
+        message:
+          description: Failure message. Present only when `state` is `errored`.
+          type: string
+      required:
+      - state
+      - since
+    error-message:
+      title: error-message
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - details
+          properties:
+            type:
+              type: string
+              minLength: 1
+            details:
+              type: string
+      required:
+      - error
     semantic-model-generation-job:
       title: Semantic-model generation job
       description: 'Full representation of a semantic-model generation job, including the generated model
@@ -224,108 +326,6 @@ components:
       - datasetNames
       - useCase
       - status
-    semantic-model-generation-job-status-summary:
-      title: Semantic-model generation job status (summary)
-      description: 'Lifecycle status as returned by list endpoints. Identical to
-
-        `semantic-model-generation-job-status` except that the `result` payload is never
-
-        included, even when the job has succeeded.
-
-        '
-      type: object
-      properties:
-        state:
-          type: string
-          enum:
-          - pending
-          - running
-          - succeeded
-          - errored
-          - canceled
-        since:
-          type: string
-          format: date-time
-        message:
-          description: Failure message. Present only when `state` is `errored`.
-          type: string
-      required:
-      - state
-      - since
-    semantic-model-generation-job-start-request:
-      title: Semantic-model generation job start request
-      description: Parameters required to start an asynchronous semantic-model generation job.
-      type: object
-      properties:
-        sourceId:
-          description: ID of the source the job will read from.
-          type: string
-          minLength: 1
-        pipelineId:
-          description: ID of the pipeline the generated model will be associated with.
-          type: string
-          minLength: 1
-        datasetNames:
-          description: Non-empty list of dataset names to include in the generated semantic model.
-          type: array
-          minItems: 1
-          items:
-            type: string
-            minLength: 1
-        useCase:
-          description: Use case which determines how the semantic model is generated.
-          type: string
-          minLength: 1
-      required:
-      - sourceId
-      - pipelineId
-      - datasetNames
-      - useCase
-    error-message:
-      title: error-message
-      type: object
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - details
-          properties:
-            type:
-              type: string
-              minLength: 1
-            details:
-              type: string
-      required:
-      - error
-    semantic-model-generation-job-status:
-      title: Semantic-model generation job status
-      description: "Lifecycle status of a semantic-model generation job. Discriminated by `state`:\n  * `pending` and `running` carry only `state` and `since`;\n  * `succeeded` additionally carries the generated model under `result`;\n  * `errored` additionally carries a human-readable `message`;\n  * `canceled` carries only `state` and `since`.\n"
-      type: object
-      properties:
-        state:
-          type: string
-          enum:
-          - pending
-          - running
-          - succeeded
-          - errored
-          - canceled
-        since:
-          description: Timestamp at which the job entered its current state (ISO-8601).
-          type: string
-          format: date-time
-        result:
-          description: 'Generated semantic model payload. Present only when `state` is `succeeded`.
-
-            '
-          $ref: ./schemas/foundation_semantic_model.schema.json
-        message:
-          description: Failure message. Present only when `state` is `errored`.
-          type: string
-      required:
-      - state
-      - since
   securitySchemes:
     BearerAuth:
       type: http

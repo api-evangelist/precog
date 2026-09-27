@@ -126,63 +126,15 @@ paths:
       description: Retrieve the available kinds of destinations.
 components:
   schemas:
-    kind-schema-dropdown-field:
+    kind-schema:
       description: ''
-      type: object
+      type: array
       title: ''
-      properties:
-        name:
-          type: string
-          minLength: 1
-        description:
-          type: string
-        values:
-          type: array
-          minLength: 1
-          uniqueItems: true
-          items:
-            type: string
-      required:
-      - description
-      - name
-      - values
-    kind-schema-upload-field:
-      description: ''
-      type: object
-      title: ''
-      properties:
-        name:
-          type: string
-          minLength: 1
-        description:
-          type: string
-      required:
-      - description
-      - name
-    kind-schema-dropdown-entry:
-      title: ''
-      type: object
-      properties:
-        input:
-          $ref: '#/components/schemas/kind-schema-dropdown-field'
-      required:
-      - input
-    connector-kind:
-      description: ''
-      type: object
-      title: ''
-      properties:
-        name:
-          type: string
-          minLength: 1
-        id:
-          type: string
-          minLength: 1
-        image:
-          type: string
-      required:
-      - name
-      - id
+      items:
+        oneOf:
+        - $ref: '#/components/schemas/kind-schema-input-entry'
+        - $ref: '#/components/schemas/kind-schema-upload-entry'
+        - $ref: '#/components/schemas/kind-schema-dropdown-entry'
     auth-schema-google-service-account-details:
       title: auth-schema-google-service-account-details
       type: object
@@ -211,6 +163,28 @@ components:
       required:
       - type
       - details
+    kind-schema-upload-field:
+      description: ''
+      type: object
+      title: ''
+      properties:
+        name:
+          type: string
+          minLength: 1
+        description:
+          type: string
+      required:
+      - description
+      - name
+    auth-schema-oauth2-details:
+      title: auth-schema-oauth2-details
+      type: object
+      properties:
+        uri:
+          type: string
+          minLength: 1
+      required:
+      - uri
     kind-schema-upload-entry:
       title: ''
       type: object
@@ -219,6 +193,34 @@ components:
           $ref: '#/components/schemas/kind-schema-upload-field'
       required:
       - upload
+    kind-schema-input-entry:
+      title: ''
+      type: object
+      properties:
+        input:
+          $ref: '#/components/schemas/kind-schema-input-field'
+      required:
+      - input
+    kind-schema-dropdown-field:
+      description: ''
+      type: object
+      title: ''
+      properties:
+        name:
+          type: string
+          minLength: 1
+        description:
+          type: string
+        values:
+          type: array
+          minLength: 1
+          uniqueItems: true
+          items:
+            type: string
+      required:
+      - description
+      - name
+      - values
     kind-schema-input-field:
       description: ''
       type: object
@@ -237,32 +239,30 @@ components:
       - description
       - sensitive
       - name
-    kind-schema:
-      description: ''
-      type: array
-      title: ''
-      items:
-        oneOf:
-        - $ref: '#/components/schemas/kind-schema-input-entry'
-        - $ref: '#/components/schemas/kind-schema-upload-entry'
-        - $ref: '#/components/schemas/kind-schema-dropdown-entry'
-    kind-schema-input-entry:
+    kind-schema-dropdown-entry:
       title: ''
       type: object
       properties:
         input:
-          $ref: '#/components/schemas/kind-schema-input-field'
+          $ref: '#/components/schemas/kind-schema-dropdown-field'
       required:
       - input
-    auth-schema-oauth2-details:
-      title: auth-schema-oauth2-details
+    connector-kind:
+      description: ''
       type: object
+      title: ''
       properties:
-        uri:
+        name:
           type: string
           minLength: 1
+        id:
+          type: string
+          minLength: 1
+        image:
+          type: string
       required:
-      - uri
+      - name
+      - id
   securitySchemes:
     BearerAuth:
       type: http
