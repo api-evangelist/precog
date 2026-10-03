@@ -40,6 +40,15 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    simple-pipeline-metric:
+      type: object
+      properties:
+        rows:
+          type: number
+          readOnly: true
+        bytes:
+          type: number
+          readOnly: true
     load-metrics-response:
       type: object
       properties:
@@ -53,15 +62,6 @@ components:
       required:
       - metrics
       - total
-    simple-pipeline-metric:
-      type: object
-      properties:
-        rows:
-          type: number
-          readOnly: true
-        bytes:
-          type: number
-          readOnly: true
     dataset-load-metrics:
       type: object
       properties:

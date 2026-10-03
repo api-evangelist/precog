@@ -318,73 +318,6 @@ paths:
       description: Get all available datasets for the provided source.
 components:
   schemas:
-    epoch-millis:
-      type: integer
-      title: epoch-millis
-      minimum: 0
-      example: 1742922912239
-    connector-config-entry:
-      description: ''
-      type: object
-      properties:
-        value:
-          type: string
-        name:
-          type: string
-          minLength: 1
-      required:
-      - value
-      - name
-    connector-listing:
-      description: ''
-      type: object
-      title: ''
-      properties:
-        id:
-          type: string
-          minLength: 1
-          readOnly: true
-        kindId:
-          type: string
-          minLength: 1
-        name:
-          type: string
-          minLength: 1
-      required:
-      - id
-      - kindId
-      - name
-    connector-config:
-      description: ''
-      type: array
-      title: ''
-      items:
-        $ref: '#/components/schemas/connector-config-entry'
-    auth-google-service-account-details:
-      title: auth-google-service-account-details
-      type: object
-      properties:
-        keyFile:
-          type: string
-          minLength: 1
-      required:
-      - keyFile
-    action:
-      title: action
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - oauth2-request-authorization
-        url:
-          type: string
-        fieldName:
-          type: string
-      required:
-      - type
-      - url
-      - fieldName
     auth:
       title: auth
       type: object
@@ -401,53 +334,6 @@ components:
       required:
       - type
       - details
-    auth-oauth2-details:
-      title: auth-oauth2-details
-      type: object
-      properties:
-        authCode:
-          type: string
-          minLength: 1
-        redirectUri:
-          type: string
-          minLength: 1
-      required:
-      - authCode
-      - redirectUri
-    error-message:
-      title: error-message
-      type: object
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - details
-          properties:
-            type:
-              type: string
-              minLength: 1
-            details:
-              type: string
-      required:
-      - error
-    dataset:
-      title: ''
-      type: object
-      properties:
-        id:
-          type: string
-          minLength: 1
-        name:
-          type: string
-          minLength: 1
-        sourceId:
-          type: string
-          minLength: 1
-      required:
-      - id
-      - name
-      - sourceId
     connector:
       description: ''
       type: object
@@ -498,6 +384,120 @@ components:
       - config
       - name
       - status
+    connector-config:
+      description: ''
+      type: array
+      title: ''
+      items:
+        $ref: '#/components/schemas/connector-config-entry'
+    auth-oauth2-details:
+      title: auth-oauth2-details
+      type: object
+      properties:
+        authCode:
+          type: string
+          minLength: 1
+        redirectUri:
+          type: string
+          minLength: 1
+      required:
+      - authCode
+      - redirectUri
+    connector-listing:
+      description: ''
+      type: object
+      title: ''
+      properties:
+        id:
+          type: string
+          minLength: 1
+          readOnly: true
+        kindId:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+      required:
+      - id
+      - kindId
+      - name
+    error-message:
+      title: error-message
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - details
+          properties:
+            type:
+              type: string
+              minLength: 1
+            details:
+              type: string
+      required:
+      - error
+    action:
+      title: action
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - oauth2-request-authorization
+        url:
+          type: string
+        fieldName:
+          type: string
+      required:
+      - type
+      - url
+      - fieldName
+    auth-google-service-account-details:
+      title: auth-google-service-account-details
+      type: object
+      properties:
+        keyFile:
+          type: string
+          minLength: 1
+      required:
+      - keyFile
+    dataset:
+      title: ''
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        sourceId:
+          type: string
+          minLength: 1
+      required:
+      - id
+      - name
+      - sourceId
+    connector-config-entry:
+      description: ''
+      type: object
+      properties:
+        value:
+          type: string
+        name:
+          type: string
+          minLength: 1
+      required:
+      - value
+      - name
+    epoch-millis:
+      type: integer
+      title: epoch-millis
+      minimum: 0
+      example: 1742922912239
   securitySchemes:
     BearerAuth:
       type: http
