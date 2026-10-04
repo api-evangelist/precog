@@ -1,0 +1,38 @@
+slug: precog
+provider: Precog
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Pipelines
+  spec_file: precog-pipelines-api-openapi.yml
+  capability_id: BC-610
+  capability_id_l1: BC-610
+  capability_name: Information & Data Management
+  confidence: 0.8
+  evidence: 'POST /pipelines  Create pipeline; GET /pipelines/{pipeline-id}/datasets  Get the pipeline
+    datasets; schemas: dataset-metadata, drifted-dataset, foreignKey, primary-key-property, table, column'
+  reason: Core surface for creating and operating no-code ETL pipelines, managing datasets, table/column
+    metadata, keys and schema drift — i.e. enterprise data integration and metadata management. Information
+    & Data Management is clearly right at L1; the evidence does not single out one sub-capability (it
+    spans architecture, metadata and quality monitoring), so no L2 asserted.
+- tag: Sources
+  spec_file: precog-sources-api-openapi.yml
+  capability_id: BC-610
+  capability_id_l1: BC-610
+  capability_name: Information & Data Management
+  confidence: 0.7
+  evidence: POST /sources  Create Source; PUT /sources/{source-id}/auth  Authenticate a source that needs
+    authentication; GET /sources/{source-id}/datasets  Get datasets
+  reason: Lifecycle of data source connections (create, redefine, authenticate, refresh, list datasets)
+    feeding the ingest pipelines. That is data integration/source management under Information & Data
+    Management; no sub-capability is named by the operations.
