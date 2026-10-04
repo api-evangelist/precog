@@ -126,15 +126,24 @@ paths:
       description: Retrieve the available kinds of destinations.
 components:
   schemas:
-    kind-schema:
+    kind-schema-input-field:
       description: ''
-      type: array
+      type: object
       title: ''
-      items:
-        oneOf:
-        - $ref: '#/components/schemas/kind-schema-input-entry'
-        - $ref: '#/components/schemas/kind-schema-upload-entry'
-        - $ref: '#/components/schemas/kind-schema-dropdown-entry'
+      properties:
+        description:
+          type: string
+        sensitive:
+          type: boolean
+        name:
+          type: string
+          minLength: 1
+        exampleValue:
+          type: string
+      required:
+      - description
+      - sensitive
+      - name
     kind-schema-input-entry:
       title: ''
       type: object
@@ -143,6 +152,30 @@ components:
           $ref: '#/components/schemas/kind-schema-input-field'
       required:
       - input
+    auth-schema:
+      title: auth-schema
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - OAuth 2.0 code authorization
+          - Google Service Account Key authorization
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/auth-schema-oauth2-details'
+          - $ref: '#/components/schemas/auth-schema-google-service-account-details'
+      required:
+      - type
+      - details
+    kind-schema-upload-entry:
+      title: ''
+      type: object
+      properties:
+        upload:
+          $ref: '#/components/schemas/kind-schema-upload-field'
+      required:
+      - upload
     connector-kind:
       description: ''
       type: object
@@ -159,6 +192,32 @@ components:
       required:
       - name
       - id
+    kind-schema-dropdown-entry:
+      title: ''
+      type: object
+      properties:
+        input:
+          $ref: '#/components/schemas/kind-schema-dropdown-field'
+      required:
+      - input
+    kind-schema:
+      description: ''
+      type: array
+      title: ''
+      items:
+        oneOf:
+        - $ref: '#/components/schemas/kind-schema-input-entry'
+        - $ref: '#/components/schemas/kind-schema-upload-entry'
+        - $ref: '#/components/schemas/kind-schema-dropdown-entry'
+    auth-schema-oauth2-details:
+      title: auth-schema-oauth2-details
+      type: object
+      properties:
+        uri:
+          type: string
+          minLength: 1
+      required:
+      - uri
     kind-schema-dropdown-field:
       description: ''
       type: object
@@ -179,69 +238,6 @@ components:
       - description
       - name
       - values
-    auth-schema-oauth2-details:
-      title: auth-schema-oauth2-details
-      type: object
-      properties:
-        uri:
-          type: string
-          minLength: 1
-      required:
-      - uri
-    auth-schema-google-service-account-details:
-      title: auth-schema-google-service-account-details
-      type: object
-      properties:
-        scopes:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-            minLength: 1
-      required:
-      - scopes
-    kind-schema-upload-entry:
-      title: ''
-      type: object
-      properties:
-        upload:
-          $ref: '#/components/schemas/kind-schema-upload-field'
-      required:
-      - upload
-    kind-schema-input-field:
-      description: ''
-      type: object
-      title: ''
-      properties:
-        description:
-          type: string
-        sensitive:
-          type: boolean
-        name:
-          type: string
-          minLength: 1
-        exampleValue:
-          type: string
-      required:
-      - description
-      - sensitive
-      - name
-    auth-schema:
-      title: auth-schema
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - OAuth 2.0 code authorization
-          - Google Service Account Key authorization
-        details:
-          oneOf:
-          - $ref: '#/components/schemas/auth-schema-oauth2-details'
-          - $ref: '#/components/schemas/auth-schema-google-service-account-details'
-      required:
-      - type
-      - details
     kind-schema-upload-field:
       description: ''
       type: object
@@ -255,14 +251,18 @@ components:
       required:
       - description
       - name
-    kind-schema-dropdown-entry:
-      title: ''
+    auth-schema-google-service-account-details:
+      title: auth-schema-google-service-account-details
       type: object
       properties:
-        input:
-          $ref: '#/components/schemas/kind-schema-dropdown-field'
+        scopes:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
       required:
-      - input
+      - scopes
   securitySchemes:
     BearerAuth:
       type: http

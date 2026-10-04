@@ -75,60 +75,6 @@ paths:
       - Data Model
 components:
   schemas:
-    error-message:
-      title: error-message
-      type: object
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - details
-          properties:
-            type:
-              type: string
-              minLength: 1
-            details:
-              type: string
-      required:
-      - error
-    relationship-candidate-list:
-      title: Relationship candidate list
-      description: A list of scored cross-source join column candidates.
-      type: object
-      properties:
-        candidates:
-          type: array
-          items:
-            $ref: '#/components/schemas/relationship-candidate'
-      required:
-      - candidates
-    column-ref:
-      title: Column reference
-      description: Fully qualified reference to a column in a destination warehouse.
-      type: object
-      properties:
-        database:
-          description: Database name in the destination warehouse.
-          type: string
-          minLength: 1
-        schema:
-          description: Schema name in the destination warehouse.
-          type: string
-          minLength: 1
-        table:
-          description: Table name in the destination warehouse.
-          type: string
-          minLength: 1
-        column:
-          description: Column name in the destination warehouse.
-          type: string
-          minLength: 1
-      required:
-      - database
-      - schema
-      - table
-      - column
     relationship-candidate:
       title: Relationship candidate
       description: 'A scored candidate join between two columns in different sources within a
@@ -179,6 +125,60 @@ components:
       - referent
       - score
       - relationshipType
+    column-ref:
+      title: Column reference
+      description: Fully qualified reference to a column in a destination warehouse.
+      type: object
+      properties:
+        database:
+          description: Database name in the destination warehouse.
+          type: string
+          minLength: 1
+        schema:
+          description: Schema name in the destination warehouse.
+          type: string
+          minLength: 1
+        table:
+          description: Table name in the destination warehouse.
+          type: string
+          minLength: 1
+        column:
+          description: Column name in the destination warehouse.
+          type: string
+          minLength: 1
+      required:
+      - database
+      - schema
+      - table
+      - column
+    error-message:
+      title: error-message
+      type: object
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - details
+          properties:
+            type:
+              type: string
+              minLength: 1
+            details:
+              type: string
+      required:
+      - error
+    relationship-candidate-list:
+      title: Relationship candidate list
+      description: A list of scored cross-source join column candidates.
+      type: object
+      properties:
+        candidates:
+          type: array
+          items:
+            $ref: '#/components/schemas/relationship-candidate'
+      required:
+      - candidates
   securitySchemes:
     BearerAuth:
       type: http

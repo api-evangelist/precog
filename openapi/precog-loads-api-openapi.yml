@@ -40,28 +40,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    simple-pipeline-metric:
-      type: object
-      properties:
-        rows:
-          type: number
-          readOnly: true
-        bytes:
-          type: number
-          readOnly: true
-    load-metrics-response:
-      type: object
-      properties:
-        metrics:
-          type: object
-          description: Per-dataset metrics keyed by dataset ID
-          additionalProperties:
-            $ref: '#/components/schemas/dataset-load-metrics'
-        total:
-          $ref: '#/components/schemas/simple-pipeline-metric'
-      required:
-      - metrics
-      - total
     dataset-load-metrics:
       type: object
       properties:
@@ -75,6 +53,28 @@ components:
       required:
       - metrics
       - total
+    load-metrics-response:
+      type: object
+      properties:
+        metrics:
+          type: object
+          description: Per-dataset metrics keyed by dataset ID
+          additionalProperties:
+            $ref: '#/components/schemas/dataset-load-metrics'
+        total:
+          $ref: '#/components/schemas/simple-pipeline-metric'
+      required:
+      - metrics
+      - total
+    simple-pipeline-metric:
+      type: object
+      properties:
+        rows:
+          type: number
+          readOnly: true
+        bytes:
+          type: number
+          readOnly: true
   securitySchemes:
     BearerAuth:
       type: http

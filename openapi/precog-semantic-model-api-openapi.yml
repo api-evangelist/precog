@@ -124,50 +124,35 @@ paths:
       - Semantic Model
 components:
   schemas:
-    semantic-model-generation-job-summary:
-      title: Semantic-model generation job summary
-      description: 'Summary representation of a semantic-model generation job. Identical to the full
-
-        representation except that the `result` payload is omitted from the status even when the
-
-        job has succeeded; clients must fetch the per-job endpoint to retrieve the generated
-
-        model.
-
-        '
+    semantic-model-generation-job-start-request:
+      title: Semantic-model generation job start request
+      description: Parameters required to start an asynchronous semantic-model generation job.
       type: object
       properties:
-        jobId:
-          type: string
-          minLength: 1
-        createdAt:
-          type: string
-          format: date-time
-        pipelineId:
-          type: string
-          minLength: 1
         sourceId:
+          description: ID of the source the job will read from.
+          type: string
+          minLength: 1
+        pipelineId:
+          description: ID of the pipeline the generated model will be associated with.
           type: string
           minLength: 1
         datasetNames:
+          description: Non-empty list of dataset names to include in the generated semantic model.
           type: array
           minItems: 1
           items:
             type: string
             minLength: 1
         useCase:
+          description: Use case which determines how the semantic model is generated.
           type: string
           minLength: 1
-        status:
-          $ref: '#/components/schemas/semantic-model-generation-job-status-summary'
       required:
-      - jobId
-      - createdAt
-      - pipelineId
       - sourceId
+      - pipelineId
       - datasetNames
       - useCase
-      - status
     semantic-model-generation-job-status-summary:
       title: Semantic-model generation job status (summary)
       description: 'Lifecycle status as returned by list endpoints. Identical to
@@ -224,23 +209,60 @@ components:
       required:
       - state
       - since
-    error-message:
-      title: error-message
+    semantic-model-generation-job-summary:
+      title: Semantic-model generation job summary
+      description: 'Summary representation of a semantic-model generation job. Identical to the full
+
+        representation except that the `result` payload is omitted from the status even when the
+
+        job has succeeded; clients must fetch the per-job endpoint to retrieve the generated
+
+        model.
+
+        '
       type: object
       properties:
-        error:
-          type: object
-          required:
-          - type
-          - details
-          properties:
-            type:
-              type: string
-              minLength: 1
-            details:
-              type: string
+        jobId:
+          type: string
+          minLength: 1
+        createdAt:
+          type: string
+          format: date-time
+        pipelineId:
+          type: string
+          minLength: 1
+        sourceId:
+          type: string
+          minLength: 1
+        datasetNames:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            minLength: 1
+        useCase:
+          type: string
+          minLength: 1
+        status:
+          $ref: '#/components/schemas/semantic-model-generation-job-status-summary'
       required:
-      - error
+      - jobId
+      - createdAt
+      - pipelineId
+      - sourceId
+      - datasetNames
+      - useCase
+      - status
+    semantic-model-generation-job-list:
+      title: Semantic-model generation job list
+      type: object
+      properties:
+        jobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/semantic-model-generation-job-summary'
+      required:
+      - jobs
     semantic-model-generation-job:
       title: Semantic-model generation job
       description: 'Full representation of a semantic-model generation job, including the generated model
@@ -287,45 +309,23 @@ components:
       - datasetNames
       - useCase
       - status
-    semantic-model-generation-job-start-request:
-      title: Semantic-model generation job start request
-      description: Parameters required to start an asynchronous semantic-model generation job.
+    error-message:
+      title: error-message
       type: object
       properties:
-        sourceId:
-          description: ID of the source the job will read from.
-          type: string
-          minLength: 1
-        pipelineId:
-          description: ID of the pipeline the generated model will be associated with.
-          type: string
-          minLength: 1
-        datasetNames:
-          description: Non-empty list of dataset names to include in the generated semantic model.
-          type: array
-          minItems: 1
-          items:
-            type: string
-            minLength: 1
-        useCase:
-          description: Use case which determines how the semantic model is generated.
-          type: string
-          minLength: 1
+        error:
+          type: object
+          required:
+          - type
+          - details
+          properties:
+            type:
+              type: string
+              minLength: 1
+            details:
+              type: string
       required:
-      - sourceId
-      - pipelineId
-      - datasetNames
-      - useCase
-    semantic-model-generation-job-list:
-      title: Semantic-model generation job list
-      type: object
-      properties:
-        jobs:
-          type: array
-          items:
-            $ref: '#/components/schemas/semantic-model-generation-job-summary'
-      required:
-      - jobs
+      - error
   securitySchemes:
     BearerAuth:
       type: http

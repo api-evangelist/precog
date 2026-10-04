@@ -1041,48 +1041,21 @@ paths:
     - url: http://localhost:30000
 components:
   schemas:
-    dataset-metadata:
-      description: Dataset tables
+    pipeline-datasets-properties:
+      description: Datasets properties used in the in-band datasets in this pipeline
       type: object
-      title: Dataset tables
+      title: Pipeline datasets properties
       properties:
-        datasetId:
+        pipelineId:
           type: string
-          minLength: 1
-        tables:
-          type: array
-          title: Datasets
-          items:
-            $ref: '#/components/schemas/table'
-    dataset-properties:
-      description: Dataset properties for a particular dataset in a pipeline
-      type: object
-      title: pipeline dataset properties
-      properties:
-        primaryKey:
-          $ref: '#/components/schemas/primary-key-property'
-    table:
-      description: Table schema
-      type: object
-      title: Table schema
-      properties:
-        tableName:
-          type: string
-          minLength: 1
-        primaryKey:
-          type: array
-          uniqueItems: true
-          items:
-            type: string
-        foreignKeys:
+        datasetProperties:
           type: object
+          title: Datasets properties
           additionalProperties:
-            $ref: '#/components/schemas/foreignKey'
-        columns:
-          type: array
-          title: Columns
-          items:
-            $ref: '#/components/schemas/column'
+            $ref: '#/components/schemas/dataset-properties'
+      required:
+      - pipelineId
+      - datasetProperties
     foreignKey:
       description: Foreign key
       type: object
@@ -1100,59 +1073,13 @@ components:
           items:
             type: string
             minLength: 1
-    pipeline-datasets-properties:
-      description: Datasets properties used in the in-band datasets in this pipeline
-      type: object
-      title: Pipeline datasets properties
-      properties:
-        pipelineId:
-          type: string
-        datasetProperties:
-          type: object
-          title: Datasets properties
-          additionalProperties:
-            $ref: '#/components/schemas/dataset-properties'
-      required:
-      - pipelineId
-      - datasetProperties
-    primary-key-property:
-      description: Primary key for a given dataset
+    dataset-properties:
+      description: Dataset properties for a particular dataset in a pipeline
       type: object
       title: pipeline dataset properties
       properties:
         primaryKey:
-          type: object
-          description: A primary key property
-          properties:
-            type:
-              oneOf:
-              - type: string
-                enum:
-                - strict
-                - optional
-                description: Indicates whether the key is strict or optional
-            components:
-              type: array
-              title: Primary key components
-              items:
-                type: string
-                minLength: 1
-          required:
-          - type
-          - components
-      required:
-      - primaryKey
-      additionalProperties: false
-    pipeline-metadata:
-      description: Tables in this pipeline
-      type: object
-      title: Pipeline metadata
-      properties:
-        metadata:
-          type: array
-          title: Datasets
-          items:
-            $ref: '#/components/schemas/dataset-metadata'
+          $ref: '#/components/schemas/primary-key-property'
     column:
       description: Column
       type: object
@@ -1186,6 +1113,84 @@ components:
           - hash
           - omit
           - nullify
+    table:
+      description: Table schema
+      type: object
+      title: Table schema
+      properties:
+        tableName:
+          type: string
+          minLength: 1
+        primaryKey:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        foreignKeys:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/foreignKey'
+        columns:
+          type: array
+          title: Columns
+          items:
+            $ref: '#/components/schemas/column'
+    dataset-metadata:
+      description: Dataset tables
+      type: object
+      title: Dataset tables
+      properties:
+        datasetId:
+          type: string
+          minLength: 1
+        tables:
+          type: array
+          title: Datasets
+          items:
+            $ref: '#/components/schemas/table'
+    pipeline-metadata:
+      description: Tables in this pipeline
+      type: object
+      title: Pipeline metadata
+      properties:
+        metadata:
+          type: array
+          title: Datasets
+          items:
+            $ref: '#/components/schemas/dataset-metadata'
+    primary-key-property:
+      description: Primary key for a given dataset
+      type: object
+      title: pipeline dataset properties
+      properties:
+        primaryKey:
+          type: object
+          description: A primary key property
+          properties:
+            type:
+              oneOf:
+              - type: string
+                enum:
+                - strict
+                - optional
+                description: Indicates whether the key is strict or optional
+            components:
+              type: array
+              title: Primary key components
+              items:
+                type: string
+                minLength: 1
+          required:
+          - type
+          - components
+      required:
+      - primaryKey
+      additionalProperties: false
+    dataset-update:
+      title: dataset-update
+      oneOf:
+      - $ref: '#/components/schemas/dataset-update-new'
+      - $ref: '#/components/schemas/dataset-update-legacy'
     drifted-dataset:
       title: ''
       type: object
@@ -1218,42 +1223,22 @@ components:
       required:
       - datasetId
       - driftedAt
-    dataset-update-new:
+    action:
+      title: action
       type: object
-      required:
-      - action
-      - dataset
       properties:
-        action:
+        type:
           type: string
           enum:
-          - add
-          - remove
-          - renew
-          - abort
-        dataset:
-          type: object
-          minProperties: 1
-          additionalProperties:
-            $ref: '#/components/schemas/initial-load-params'
-    initial-load-params:
-      title: initial-load-params
-      type: object
-      properties:
-        initialWrite:
-          type: boolean
-        readRequired:
-          type: boolean
-          default: false
-        reusePreviousSchema:
-          type: boolean
-          default: false
-        reusePreviousPrimaryKey:
-          $ref: '#/components/schemas/reuse-previous-primary-key'
-        sampleParameters:
-          $ref: '#/components/schemas/initial-load-params-message-limit'
+          - oauth2-request-authorization
+        url:
+          type: string
+        fieldName:
+          type: string
       required:
-      - initialWrite
+      - type
+      - url
+      - fieldName
     dataset-update-legacy:
       deprecated: true
       type: object
@@ -1277,140 +1262,6 @@ components:
             minLength: 1
         loadParameters:
           $ref: '#/components/schemas/initial-load-params'
-    error-message:
-      title: error-message
-      type: object
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - details
-          properties:
-            type:
-              type: string
-              minLength: 1
-            details:
-              type: string
-      required:
-      - error
-    inband-state:
-      title: ''
-      type: object
-      properties:
-        state:
-          type: string
-          enum:
-          - discovered
-          - staging
-          - writing
-          - waiting
-          - written
-          - failed
-          - errored
-          - aborted
-          - aborting
-        at:
-          $ref: '#/components/schemas/epoch-millis'
-        message:
-          type: string
-        action:
-          $ref: '#/components/schemas/action'
-      required:
-      - state
-      - at
-    pipeline-status:
-      title: ''
-      type: object
-      properties:
-        pipelineId:
-          type: string
-          minLength: 1
-        status:
-          $ref: '#/components/schemas/pipeline-load-state'
-        driftedDatasets:
-          type: array
-          readOnly: true
-          description: Datasets within this pipeline that have drifted from their initial schema. Only present when non-empty.
-          items:
-            $ref: '#/components/schemas/drifted-dataset'
-      required:
-      - pipelineId
-      - status
-    dataset:
-      title: ''
-      type: object
-      properties:
-        id:
-          type: string
-          minLength: 1
-        name:
-          type: string
-          minLength: 1
-        sourceId:
-          type: string
-          minLength: 1
-      required:
-      - id
-      - name
-      - sourceId
-    pipeline-listing:
-      title: ''
-      type: object
-      properties:
-        id:
-          type: string
-          minLength: 1
-          readOnly: true
-        name:
-          type: string
-          minLength: 1
-      required:
-      - id
-      - name
-    dataset-update:
-      title: dataset-update
-      oneOf:
-      - $ref: '#/components/schemas/dataset-update-new'
-      - $ref: '#/components/schemas/dataset-update-legacy'
-    outofband-state:
-      title: ''
-      type: object
-      properties:
-        state:
-          type: string
-          enum:
-          - accepted
-          - staging
-          - scheming
-          - empty
-          - failed
-          - errored
-          - aborted
-          - aborting
-        at:
-          $ref: '#/components/schemas/epoch-millis'
-        message:
-          type: string
-        action:
-          $ref: '#/components/schemas/action'
-      required:
-      - state
-      - at
-    aggregated-pipeline-metrics:
-      type: object
-      properties:
-        lastWeek:
-          $ref: '#/components/schemas/simple-pipeline-metric'
-    simple-pipeline-metric:
-      type: object
-      properties:
-        rows:
-          type: number
-          readOnly: true
-        bytes:
-          type: number
-          readOnly: true
     pipeline:
       title: ''
       type: object
@@ -1469,6 +1320,30 @@ components:
       - id
       - name
       - destinationId
+    outofband-state:
+      title: ''
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+          - accepted
+          - staging
+          - scheming
+          - empty
+          - failed
+          - errored
+          - aborted
+          - aborting
+        at:
+          $ref: '#/components/schemas/epoch-millis'
+        message:
+          type: string
+        action:
+          $ref: '#/components/schemas/action'
+      required:
+      - state
+      - at
     reuse-previous-primary-key:
       description: Legacy boolean or new strategy object.
       oneOf:
@@ -1509,6 +1384,54 @@ components:
           components:
           - $.path.to.id
       - true
+    dataset-status:
+      title: ''
+      type: object
+      description: ''
+      properties:
+        id:
+          type: string
+          minLength: 1
+        outOfBand:
+          $ref: '#/components/schemas/outofband-state'
+        inBand:
+          $ref: '#/components/schemas/inband-state'
+        telemetry:
+          $ref: '#/components/schemas/dataset-telemetry'
+      required:
+      - id
+    dataset-update-new:
+      type: object
+      required:
+      - action
+      - dataset
+      properties:
+        action:
+          type: string
+          enum:
+          - add
+          - remove
+          - renew
+          - abort
+        dataset:
+          type: object
+          minProperties: 1
+          additionalProperties:
+            $ref: '#/components/schemas/initial-load-params'
+    pipeline-name:
+      title: ''
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+      required:
+      - name
+    aggregated-pipeline-metrics:
+      type: object
+      properties:
+        lastWeek:
+          $ref: '#/components/schemas/simple-pipeline-metric'
     pipeline-notification:
       title: ''
       type: object
@@ -1519,6 +1442,125 @@ components:
             type: string
       required:
       - emails
+    pipeline-dataset-status:
+      title: ''
+      type: object
+      properties:
+        pipelineId:
+          type: string
+          minLength: 1
+        status:
+          $ref: '#/components/schemas/pipeline-load-state'
+        datasets:
+          type: array
+          items:
+            $ref: '#/components/schemas/dataset-status'
+        driftedDatasets:
+          type: array
+          readOnly: true
+          description: Datasets within this pipeline that have drifted from their initial schema. Only present when non-empty.
+          items:
+            $ref: '#/components/schemas/drifted-dataset'
+      required:
+      - pipelineId
+      - datasets
+    pipeline-status:
+      title: ''
+      type: object
+      properties:
+        pipelineId:
+          type: string
+          minLength: 1
+        status:
+          $ref: '#/components/schemas/pipeline-load-state'
+        driftedDatasets:
+          type: array
+          readOnly: true
+          description: Datasets within this pipeline that have drifted from their initial schema. Only present when non-empty.
+          items:
+            $ref: '#/components/schemas/drifted-dataset'
+      required:
+      - pipelineId
+      - status
+    pipeline-schedule:
+      title: ''
+      type: object
+      properties:
+        schedule:
+          type: array
+          items:
+            type: string
+      required:
+      - schedule
+    epoch-millis:
+      type: integer
+      title: epoch-millis
+      minimum: 0
+      example: 1742922912239
+    pipeline-listing:
+      title: ''
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+          readOnly: true
+        name:
+          type: string
+          minLength: 1
+      required:
+      - id
+      - name
+    inband-state:
+      title: ''
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+          - discovered
+          - staging
+          - writing
+          - waiting
+          - written
+          - failed
+          - errored
+          - aborted
+          - aborting
+        at:
+          $ref: '#/components/schemas/epoch-millis'
+        message:
+          type: string
+        action:
+          $ref: '#/components/schemas/action'
+      required:
+      - state
+      - at
+    initial-load-params-message-limit:
+      title: initial-load-params-message-limit
+      type: object
+      properties:
+        maxMessages:
+          type: number
+      required:
+      - maxMessages
+    dataset:
+      title: ''
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        sourceId:
+          type: string
+          minLength: 1
+      required:
+      - id
+      - name
+      - sourceId
     pipeline-load-state:
       title: ''
       type: object
@@ -1544,99 +1586,32 @@ components:
           type: string
       required:
       - id
-    dataset-status:
-      title: ''
+    error-message:
+      title: error-message
       type: object
-      description: ''
       properties:
-        id:
-          type: string
-          minLength: 1
-        outOfBand:
-          $ref: '#/components/schemas/outofband-state'
-        inBand:
-          $ref: '#/components/schemas/inband-state'
-        telemetry:
-          $ref: '#/components/schemas/dataset-telemetry'
+        error:
+          type: object
+          required:
+          - type
+          - details
+          properties:
+            type:
+              type: string
+              minLength: 1
+            details:
+              type: string
       required:
-      - id
-    action:
-      title: action
+      - error
+    simple-pipeline-metric:
       type: object
       properties:
-        type:
-          type: string
-          enum:
-          - oauth2-request-authorization
-        url:
-          type: string
-        fieldName:
-          type: string
-      required:
-      - type
-      - url
-      - fieldName
-    initial-load-params-message-limit:
-      title: initial-load-params-message-limit
-      type: object
-      properties:
-        maxMessages:
+        rows:
           type: number
-      required:
-      - maxMessages
-    pipeline-name:
-      title: ''
-      type: object
-      properties:
-        name:
-          type: string
-          minLength: 1
-      required:
-      - name
-    dataset-telemetry:
-      title: dataset-telemetry
-      type: object
-      properties:
-        at:
-          $ref: '#/components/schemas/epoch-millis'
-        bytesStaged:
-          type: integer
-        ratelimitReset:
-          $ref: '#/components/schemas/epoch-millis'
-      required:
-      - at
-    pipeline-dataset-status:
-      title: ''
-      type: object
-      properties:
-        pipelineId:
-          type: string
-          minLength: 1
-        status:
-          $ref: '#/components/schemas/pipeline-load-state'
-        datasets:
-          type: array
-          items:
-            $ref: '#/components/schemas/dataset-status'
-        driftedDatasets:
-          type: array
           readOnly: true
-          description: Datasets within this pipeline that have drifted from their initial schema. Only present when non-empty.
-          items:
-            $ref: '#/components/schemas/drifted-dataset'
-      required:
-      - pipelineId
-      - datasets
-    pipeline-schedule:
-      title: ''
-      type: object
-      properties:
-        schedule:
-          type: array
-          items:
-            type: string
-      required:
-      - schedule
+        bytes:
+          type: number
+          readOnly: true
     pipeline-details:
       title: pipeline-details
       type: object
@@ -1753,11 +1728,36 @@ components:
       - datasets
       - schedule
       - notifications
-    epoch-millis:
-      type: integer
-      title: epoch-millis
-      minimum: 0
-      example: 1742922912239
+    dataset-telemetry:
+      title: dataset-telemetry
+      type: object
+      properties:
+        at:
+          $ref: '#/components/schemas/epoch-millis'
+        bytesStaged:
+          type: integer
+        ratelimitReset:
+          $ref: '#/components/schemas/epoch-millis'
+      required:
+      - at
+    initial-load-params:
+      title: initial-load-params
+      type: object
+      properties:
+        initialWrite:
+          type: boolean
+        readRequired:
+          type: boolean
+          default: false
+        reusePreviousSchema:
+          type: boolean
+          default: false
+        reusePreviousPrimaryKey:
+          $ref: '#/components/schemas/reuse-previous-primary-key'
+        sampleParameters:
+          $ref: '#/components/schemas/initial-load-params-message-limit'
+      required:
+      - initialWrite
   securitySchemes:
     BearerAuth:
       type: http

@@ -117,6 +117,15 @@ paths:
       description: Create a Stripe customer portal session
 components:
   schemas:
+    url:
+      title: url
+      type: object
+      properties:
+        url:
+          type: string
+          minLength: 1
+      required:
+      - url
     error-message:
       title: error-message
       type: object
@@ -134,15 +143,6 @@ components:
               type: string
       required:
       - error
-    url:
-      title: url
-      type: object
-      properties:
-        url:
-          type: string
-          minLength: 1
-      required:
-      - url
   securitySchemes:
     BearerAuth:
       type: http

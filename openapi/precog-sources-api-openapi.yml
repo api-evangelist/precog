@@ -318,6 +318,36 @@ paths:
       description: Get all available datasets for the provided source.
 components:
   schemas:
+    dataset:
+      title: ''
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        sourceId:
+          type: string
+          minLength: 1
+      required:
+      - id
+      - name
+      - sourceId
+    auth-oauth2-details:
+      title: auth-oauth2-details
+      type: object
+      properties:
+        authCode:
+          type: string
+          minLength: 1
+        redirectUri:
+          type: string
+          minLength: 1
+      required:
+      - authCode
+      - redirectUri
     auth:
       title: auth
       type: object
@@ -334,6 +364,28 @@ components:
       required:
       - type
       - details
+    connector-config:
+      description: ''
+      type: array
+      title: ''
+      items:
+        $ref: '#/components/schemas/connector-config-entry'
+    action:
+      title: action
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - oauth2-request-authorization
+        url:
+          type: string
+        fieldName:
+          type: string
+      required:
+      - type
+      - url
+      - fieldName
     connector:
       description: ''
       type: object
@@ -384,25 +436,6 @@ components:
       - config
       - name
       - status
-    connector-config:
-      description: ''
-      type: array
-      title: ''
-      items:
-        $ref: '#/components/schemas/connector-config-entry'
-    auth-oauth2-details:
-      title: auth-oauth2-details
-      type: object
-      properties:
-        authCode:
-          type: string
-          minLength: 1
-        redirectUri:
-          type: string
-          minLength: 1
-      required:
-      - authCode
-      - redirectUri
     connector-listing:
       description: ''
       type: object
@@ -422,6 +455,11 @@ components:
       - id
       - kindId
       - name
+    epoch-millis:
+      type: integer
+      title: epoch-millis
+      minimum: 0
+      example: 1742922912239
     error-message:
       title: error-message
       type: object
@@ -439,22 +477,6 @@ components:
               type: string
       required:
       - error
-    action:
-      title: action
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - oauth2-request-authorization
-        url:
-          type: string
-        fieldName:
-          type: string
-      required:
-      - type
-      - url
-      - fieldName
     auth-google-service-account-details:
       title: auth-google-service-account-details
       type: object
@@ -464,23 +486,6 @@ components:
           minLength: 1
       required:
       - keyFile
-    dataset:
-      title: ''
-      type: object
-      properties:
-        id:
-          type: string
-          minLength: 1
-        name:
-          type: string
-          minLength: 1
-        sourceId:
-          type: string
-          minLength: 1
-      required:
-      - id
-      - name
-      - sourceId
     connector-config-entry:
       description: ''
       type: object
@@ -493,11 +498,6 @@ components:
       required:
       - value
       - name
-    epoch-millis:
-      type: integer
-      title: epoch-millis
-      minimum: 0
-      example: 1742922912239
   securitySchemes:
     BearerAuth:
       type: http
