@@ -1,0 +1,12 @@
+{
+ "url": "https://raw.githubusercontent.com/precog/api-specs/HEAD/reference/metadata-http-api.yaml",
+ "requested_url": "https://raw.githubusercontent.com/precog/api-specs/HEAD/reference/metadata-http-api.yaml",
+ "status": 200,
+ "content_type": "text/plain; charset=utf-8",
+ "bytes": 8426,
+ "sha256": "4b1805db526a91ba1930c58ada44710e286e3b96869ca48b9b4dc6540b74f8f9",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
