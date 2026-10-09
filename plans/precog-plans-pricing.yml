@@ -1,0 +1,47 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://precog.com/pricing
+sources:
+- https://precog.com/pricing
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T104522
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: negotiated
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-07'
+published: false
+note: No numeric price is published on the pricing page; Pricing page describes fixed-price, credits-based
+  annual commitment but shows no numeric prices; only 'Get a demo' CTAs.
+plan_count: 2
+plans:
+- name: Precog Agents
+  price_text: Get a demo
+  period: none
+- name: Precog Ingest
+  price_text: Get a demo
+  period: none
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models: []
+  units: []
+  plans:
+  - name: Precog Agents
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Precog Ingest
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
