@@ -75,56 +75,6 @@ paths:
       - Data Model
 components:
   schemas:
-    relationship-candidate:
-      title: Relationship candidate
-      description: 'A scored candidate join between two columns in different sources within a
-
-        pipeline''s destination.
-
-
-        The two sides are identified as `referrer` (the referencing side) and `referent`
-
-        (the referenced side). For symmetric relationship types (`oneToOne`, `manyToMany`)
-
-        the assignment is arbitrary. For `oneToMany`, `referrer` is the "one" side and
-
-        `referent` is the "many" side.
-
-        '
-      type: object
-      properties:
-        referrer:
-          description: The referencing side of the relationship.
-          $ref: '#/components/schemas/column-ref'
-        referent:
-          description: The referenced side of the relationship.
-          $ref: '#/components/schemas/column-ref'
-        score:
-          description: 'Candidate quality score in the range [0, 1]. Higher is better. Scores are
-
-            ordinal within a single response and must not be compared across calls or
-
-            after configuration changes.
-
-            '
-          type: number
-          format: double
-          minimum: 0
-          maximum: 1
-        relationshipType:
-          description: 'The directionality and dimensionality of the candidate relationship.
-
-            '
-          type: string
-          enum:
-          - oneToOne
-          - oneToMany
-          - manyToMany
-      required:
-      - referrer
-      - referent
-      - score
-      - relationshipType
     column-ref:
       title: Column reference
       description: Fully qualified reference to a column in a destination warehouse.
@@ -179,6 +129,56 @@ components:
             $ref: '#/components/schemas/relationship-candidate'
       required:
       - candidates
+    relationship-candidate:
+      title: Relationship candidate
+      description: 'A scored candidate join between two columns in different sources within a
+
+        pipeline''s destination.
+
+
+        The two sides are identified as `referrer` (the referencing side) and `referent`
+
+        (the referenced side). For symmetric relationship types (`oneToOne`, `manyToMany`)
+
+        the assignment is arbitrary. For `oneToMany`, `referrer` is the "one" side and
+
+        `referent` is the "many" side.
+
+        '
+      type: object
+      properties:
+        referrer:
+          description: The referencing side of the relationship.
+          $ref: '#/components/schemas/column-ref'
+        referent:
+          description: The referenced side of the relationship.
+          $ref: '#/components/schemas/column-ref'
+        score:
+          description: 'Candidate quality score in the range [0, 1]. Higher is better. Scores are
+
+            ordinal within a single response and must not be compared across calls or
+
+            after configuration changes.
+
+            '
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+        relationshipType:
+          description: 'The directionality and dimensionality of the candidate relationship.
+
+            '
+          type: string
+          enum:
+          - oneToOne
+          - oneToMany
+          - manyToMany
+      required:
+      - referrer
+      - referent
+      - score
+      - relationshipType
   securitySchemes:
     BearerAuth:
       type: http

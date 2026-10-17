@@ -156,19 +156,39 @@ paths:
               $ref: '#/components/schemas/connector'
 components:
   schemas:
-    auth-oauth2-details:
-      title: auth-oauth2-details
+    auth-google-service-account-details:
+      title: auth-google-service-account-details
       type: object
       properties:
-        authCode:
-          type: string
-          minLength: 1
-        redirectUri:
+        keyFile:
           type: string
           minLength: 1
       required:
-      - authCode
-      - redirectUri
+      - keyFile
+    connector-listing:
+      description: ''
+      type: object
+      title: ''
+      properties:
+        id:
+          type: string
+          minLength: 1
+          readOnly: true
+        kindId:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+      required:
+      - id
+      - kindId
+      - name
+    epoch-millis:
+      type: integer
+      title: epoch-millis
+      minimum: 0
+      example: 1742922912239
     auth:
       title: auth
       type: object
@@ -185,28 +205,6 @@ components:
       required:
       - type
       - details
-    connector-config:
-      description: ''
-      type: array
-      title: ''
-      items:
-        $ref: '#/components/schemas/connector-config-entry'
-    action:
-      title: action
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - oauth2-request-authorization
-        url:
-          type: string
-        fieldName:
-          type: string
-      required:
-      - type
-      - url
-      - fieldName
     connector:
       description: ''
       type: object
@@ -257,30 +255,53 @@ components:
       - config
       - name
       - status
-    connector-listing:
+    connector-config-entry:
       description: ''
       type: object
-      title: ''
       properties:
-        id:
+        value:
           type: string
-          minLength: 1
-          readOnly: true
-        kindId:
-          type: string
-          minLength: 1
         name:
           type: string
           minLength: 1
       required:
-      - id
-      - kindId
+      - value
       - name
-    epoch-millis:
-      type: integer
-      title: epoch-millis
-      minimum: 0
-      example: 1742922912239
+    connector-config:
+      description: ''
+      type: array
+      title: ''
+      items:
+        $ref: '#/components/schemas/connector-config-entry'
+    auth-oauth2-details:
+      title: auth-oauth2-details
+      type: object
+      properties:
+        authCode:
+          type: string
+          minLength: 1
+        redirectUri:
+          type: string
+          minLength: 1
+      required:
+      - authCode
+      - redirectUri
+    action:
+      title: action
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - oauth2-request-authorization
+        url:
+          type: string
+        fieldName:
+          type: string
+      required:
+      - type
+      - url
+      - fieldName
     error-message:
       title: error-message
       type: object
@@ -298,27 +319,6 @@ components:
               type: string
       required:
       - error
-    auth-google-service-account-details:
-      title: auth-google-service-account-details
-      type: object
-      properties:
-        keyFile:
-          type: string
-          minLength: 1
-      required:
-      - keyFile
-    connector-config-entry:
-      description: ''
-      type: object
-      properties:
-        value:
-          type: string
-        name:
-          type: string
-          minLength: 1
-      required:
-      - value
-      - name
   securitySchemes:
     BearerAuth:
       type: http
