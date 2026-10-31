@@ -64,6 +64,164 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Precog is a company surfaced as a portfolio company of techstars and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Precog is an enterprise AI platform that acts as a "context engine" — turning fragmented, context-stripped data from SaaS applications and databases into live semantic layers that business users can query in natural language through AI assistants like Claude and ChatGPT. Its Intelligent Ingest builds no-code ETL pipelines from any business application into a data warehouse, detecting data relationships automatically and injecting business logic, definitions and relationships during ingestion, while its AI Assistants layer adds source tracing and SQL visibility for trustworthy answers. Precog exposes a public HTTP REST API (sources, destinations, pipelines, datasets, semantic-model generation) and an OAuth-secured Model Context Protocol (MCP) server, and was surfaced through the Techstars portfolio into the API Evangelist network.
 
-Backed by: techstars — https://precog.com/
+**Areas:** Company · Data Integration · ETL · Artificial Intelligence · Semantic Layer · MCP · Data Pipeline · Analytics · Enterprise
+
+## Precog on APIs.io
+
+Everything profiled for Precog is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/precog/](https://apis.io/providers/precog/)** — or go straight to one of the APIs or properties below.
+
+### APIs (12)
+
+- [Precog Admin API](https://apis.io/apis/precog/precog-admin-api/) — The Admin API from Precog — 4 operation(s) for admin.
+- [Precog Data Model API](https://apis.io/apis/precog/precog-data-model-api/) — The Data Model API from Precog — 1 operation(s) for data model.
+- [Precog Datasets API](https://apis.io/apis/precog/precog-datasets-api/) — The Datasets API from Precog — 1 operation(s) for datasets.
+- [Precog Destinations API](https://apis.io/apis/precog/precog-destinations-api/) — The Destinations API from Precog — 2 operation(s) for destinations.
+- [Precog Issues API](https://apis.io/apis/precog/precog-issues-api/) — The Issues API from Precog — 4 operation(s) for issues.
+- [Precog Kinds API](https://apis.io/apis/precog/precog-kinds-api/) — The Kinds API from Precog — 3 operation(s) for kinds.
+- [Precog Loads API](https://apis.io/apis/precog/precog-loads-api/) — The Loads API from Precog — 1 operation(s) for loads.
+- [Precog Log API](https://apis.io/apis/precog/precog-log-api/) — The Log API from Precog — 1 operation(s) for log.
+- [Precog Pipelines API](https://apis.io/apis/precog/precog-pipelines-api/) — The Pipelines API from Precog — 18 operation(s) for pipelines.
+- [Precog Semantic Model API](https://apis.io/apis/precog/precog-semantic-model-api/) — The Semantic Model API from Precog — 3 operation(s) for semantic model.
+- [Precog Sources API](https://apis.io/apis/precog/precog-sources-api/) — The Sources API from Precog — 6 operation(s) for sources.
+- [Precog Stripe API](https://apis.io/apis/precog/precog-stripe-api/) — The Stripe API from Precog — 2 operation(s) for stripe.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [precog](https://apis.io/servers/precog/precog/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Precog Agentic Access](https://apis.io/agentic-access/precog/precog-agentic-access/)
+
+#### JSON Schema (1)
+
+The data models the API reads and writes.
+
+- [Foundation Semantic Model](https://apis.io/schemas/precog/precog-foundation-semantic-model.schema/)
+
+#### Collections (12)
+
+Postman and Open Collection request collections.
+
+- [http-api Admin API](https://apis.io/collections/precog/open-precog-admin-api/)
+- [http-api Admin Data Model API](https://apis.io/collections/precog/open-precog-data-model-api/)
+- [http-api Admin Datasets API](https://apis.io/collections/precog/open-precog-datasets-api/)
+- [http-api Admin Destinations API](https://apis.io/collections/precog/open-precog-destinations-api/)
+- [http-api Admin Issues API](https://apis.io/collections/precog/open-precog-issues-api/)
+- [http-api Admin Kinds API](https://apis.io/collections/precog/open-precog-kinds-api/)
+- [http-api Admin Loads API](https://apis.io/collections/precog/open-precog-loads-api/)
+- [http-api Admin Log API](https://apis.io/collections/precog/open-precog-log-api/)
+- [http-api Admin Pipelines API](https://apis.io/collections/precog/open-precog-pipelines-api/)
+- [http-api Admin Semantic Model API](https://apis.io/collections/precog/open-precog-semantic-model-api/)
+- [http-api Admin Sources API](https://apis.io/collections/precog/open-precog-sources-api/)
+- [http-api Admin Stripe API](https://apis.io/collections/precog/open-precog-stripe-api/)
+
+#### Overlays (3)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Precog Admin Http Api Overlay](https://apis.io/overlays/precog/precog-admin-http-api-overlay/)
+- [Precog Metadata Http Api Overlay](https://apis.io/overlays/precog/precog-metadata-http-api-overlay/)
+- [Precog Public Http Api Overlay](https://apis.io/overlays/precog/precog-public-http-api-overlay/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Precog Authentication](https://apis.io/security/precog/precog-authentication/)
+- [Precog Domain Security](https://apis.io/security/precog/precog-domain-security/)
+- [Precog Trust Center](https://apis.io/security/precog/precog-trust-center/)
+- [Precog Vulnerability Disclosure](https://apis.io/security/precog/precog-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Precog Scopes](https://apis.io/scopes/precog/precog-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Precog Plans Pricing](https://apis.io/plans/precog/precog-plans-pricing/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://precog.com/)
+- [Documentation](https://studio.precog.cloud/docs/)
+- [Pricing](https://precog.com/pricing)
+- [Sign up](https://studio.precog.cloud/login)
+- [Support](https://precog.com/contact)
+- [Blog](https://precog.com/blog)
+- [Security](https://api.precog.cloud/.well-known/security.txt)
+- [Compliance](https://precog.com/express-security)
+- [Terms of service](https://precog.com/end-user-license-agreement)
+- [Privacy policy](https://precog.com/privacy-policy)
+- [GitHub](https://github.com/precog)
+
+## API Evangelist rating
+
+**Kin Score 48.9** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 80.0 |
+| Contract quality | 51.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 39.9 |
+| Access clarity | 68.4 |
+
+**Agent readiness 46.2** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | mostly |
+
+**Regulatory alignment 41.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/precog/](https://apis.io/providers/precog/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Precog: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/precog/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
